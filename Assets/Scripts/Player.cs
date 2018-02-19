@@ -5,12 +5,26 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public float speed = 6.0F;
-//    public float jumpSpeed = 8.0F;
-    public float gravity = 20.0F;
+    public float gravity = 10.0F;
     private Vector3 moveDirection = Vector3.zero;
+    public float cameraSpeed;
 
     public GameObject mainCamera;
-    public float cameraSpeed;
+    
+
+    private void Start()
+    {
+        if (GameManager.hasCamera == false)
+        {
+            mainCamera = Instantiate(mainCamera, transform.position, Quaternion.Euler(90, 0, 0));
+            mainCamera.name = "Main Camera";
+            GameManager.hasCamera = true;
+        }
+        else
+        {
+            mainCamera.transform.position = transform.position;
+        }
+    }
 
     void Update()
     {
