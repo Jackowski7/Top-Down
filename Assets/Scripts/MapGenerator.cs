@@ -6,17 +6,13 @@ using System;
 public class MapGenerator : MonoBehaviour
 {
 
-    public int width;
-    public int height;
+     int width;
+     int height;
 
     public float wallThreshold;
     public float roomThreshold;
     public int mapSmoothness;
     public int hallwaySize;
-
-
-    public int borderSize = 10;
-    public int PreBorder;
 
 
     public string seed;
@@ -26,25 +22,23 @@ public class MapGenerator : MonoBehaviour
     public int randomFillPercent;
 
     int[,] map;
+    MapAnalyzer mapAnalyzer;
+
 
     void Start()
     {
-        GenerateMap();
+        mapAnalyzer = GetComponent<MapAnalyzer>();
     }
 
-
-    public void Update()
+    public void GenerateMap(int mapWidth, int mapHeight)
     {
-        if (Input.GetMouseButtonDown(2))
-        {
-            GenerateMap();
-        }
-    }
 
-    public void GenerateMap()
-    {
-        map = new int[width, height];
+        width = mapWidth;
+        height = mapHeight;
+
+        map = new int[ mapWidth , mapHeight ];
         RandomFillMap();
+
 
         for (int i = 0; i < mapSmoothness; i++)
         {
@@ -52,32 +46,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         ProcessMap();
-
-        /*
-        int[,] borderedMap = new int[width + borderSize * 2, height + borderSize * 2];
-
-        for (int x = 0; x < borderedMap.GetLength(0); x++)
-        {
-            for (int y = 0; y < borderedMap.GetLength(1); y++)
-            {
-                if (x >= borderSize && x < width + borderSize && y >= borderSize && y < height + borderSize)
-                {
-                    borderedMap[x, y] = map[x - borderSize, y - borderSize];
-                }
-                else
-                {
-                    borderedMap[x, y] = 1;
-                }
-            }
-        }
-
-        MeshGenerator meshGen = GetComponent<MeshGenerator>();
-        meshGen.GenerateMesh(borderedMap, 1);
-        */
-
-        MapAnalyzer mapAnalyzer;
-        mapAnalyzer = this.transform.GetComponent<MapAnalyzer>();
-        mapAnalyzer.AnalyzeMap((int)width, (int)height, map, borderSize, PreBorder);
+        mapAnalyzer.generatedMap = map;
 
     }
 
@@ -462,7 +431,7 @@ public class MapGenerator : MonoBehaviour
         {
         }
 
-        public Room(List<Coord> roomTiles, int[,] map)
+        public Room(List<Coord> roomTiles, int[,]map)
         {
             tiles = roomTiles;
             roomSize = tiles.Count;
@@ -471,9 +440,9 @@ public class MapGenerator : MonoBehaviour
             edgeTiles = new List<Coord>();
             foreach (Coord tile in tiles)
             {
-                for (int x = tile.tileX - 1; x <= tile.tileX + 1; x++)
+                for (int x = tile.tileX -1 ; x <= tile.tileX + 1; x++)
                 {
-                    for (int y = tile.tileY - 1; y <= tile.tileY + 1; y++)
+                    for (int y = tile.tileY -1 ; y <= tile.tileY + 1; y++)
                     {
                         if (x == tile.tileX || y == tile.tileY)
                         {

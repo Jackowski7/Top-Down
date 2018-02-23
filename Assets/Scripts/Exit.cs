@@ -20,7 +20,7 @@ public class Exit : MonoBehaviour {
     {
         if (collider.tag == "Player")
         {
-            mapGenerator.GenerateMap();
+            //mapGenerator.GenerateMap();
         }
     }
 }

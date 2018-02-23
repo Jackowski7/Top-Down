@@ -61,7 +61,7 @@ public class WallBuilder : MonoBehaviour
                         pos.z += .578f;
                     }
                     GameObject wallBlock = Instantiate(WallBuilder.wallBlock, pos, Quaternion.Euler(0, 90, 0));
-                    wallBlock.transform.localScale = new Vector3(1, 3 + (closedPoints[x, y] * .2f), 1);
+                    wallBlock.transform.localScale = new Vector3(1, 1 + (closedPoints[x, y] * .2f), 1);
                     wallBlock.name = "WallBlock";
                     wallBlock.transform.parent = wallFolder;
                 }
@@ -80,7 +80,7 @@ public class WallBuilder : MonoBehaviour
                         pos.z += .578f;
                     }
                     GameObject wallBlockX = Instantiate(WallBuilder.wallBlockX, pos, Quaternion.Euler(0, 90, 0));
-                    wallBlockX.transform.localScale = new Vector3(1, 3 + Random.Range(0.1f,1), 1);
+                    wallBlockX.transform.localScale = new Vector3(1, 1 + Random.Range(0.1f,1), 1);
                     wallBlockX.name = "WallBlockX";
                     wallBlockX.transform.parent = wallFolder;
                 }
@@ -92,7 +92,7 @@ public class WallBuilder : MonoBehaviour
                         pos.z += .578f;
                     }
                     GameObject wallBlock = Instantiate(WallBuilder.wallBlock, pos, Quaternion.Euler(0, 90, 0));
-                    wallBlock.transform.localScale = new Vector3(1, 3 + Random.Range(0.1f, 1), 1);
+                    wallBlock.transform.localScale = new Vector3(1, 1 + Random.Range(0.1f, 1), 1);
                     wallBlock.name = "WallBlock";
                     wallBlock.transform.parent = wallFolder;
                 }

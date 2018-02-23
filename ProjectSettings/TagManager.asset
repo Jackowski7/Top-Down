@@ -6,6 +6,7 @@ TagManager:
   tags:
   - exit
   - enter
+  - Lava
   layers:
   - Default
   - TransparentFX

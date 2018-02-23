@@ -15,6 +15,7 @@ public class Enter : MonoBehaviour
             Vector3 pos = new Vector3(transform.position.x, .5f, transform.position.z) ;
             _player = Instantiate(_player, pos, transform.rotation);
             _player.name = "Player";
+            Player.lastEnterPoint = pos;
             GameManager.hasPlayer = true;
         }
         else
@@ -22,6 +23,7 @@ public class Enter : MonoBehaviour
             GameObject player = GameObject.FindGameObjectWithTag("Player");
             Vector3 pos = new Vector3(transform.position.x, .5f, transform.position.z);
             player.transform.position = pos;
+            Player.lastEnterPoint = pos;
             Debug.Log("moving player");
         }
     }

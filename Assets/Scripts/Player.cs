@@ -9,6 +9,8 @@ public class Player : MonoBehaviour {
     private Vector3 moveDirection = Vector3.zero;
     public float cameraSpeed;
 
+    public static Vector3 lastEnterPoint;
+
     public GameObject mainCamera;
     
 
@@ -44,7 +46,20 @@ public class Player : MonoBehaviour {
         Vector3 cameraTargetPos = this.transform.position;
         cameraTargetPos.y = 20;
         mainCamera.transform.position = Vector3.Slerp(mainCamera.transform.position, cameraTargetPos, (cameraSpeed/10) * Time.deltaTime);
+    }
 
+    public void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Lava")
+        {
+            ResetPlayer();
+            Debug.Log("you're on fire!");
+        }
+    }
+
+    public void ResetPlayer()
+    {
+        transform.position = lastEnterPoint;
     }
 
 }
