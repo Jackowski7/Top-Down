@@ -12,7 +12,7 @@ public class Enter : MonoBehaviour
     {
         if (GameManager.hasPlayer == false)
         {
-            Vector3 pos = new Vector3(transform.position.x, .5f, transform.position.z) ;
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z) ;
             _player = Instantiate(_player, pos, transform.rotation);
             _player.name = "Player";
             Player.lastEnterPoint = pos;
@@ -21,7 +21,7 @@ public class Enter : MonoBehaviour
         else
         {
             GameObject player = GameObject.FindGameObjectWithTag("Player");
-            Vector3 pos = new Vector3(transform.position.x, .5f, transform.position.z);
+            Vector3 pos = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
             player.transform.position = pos;
             Player.lastEnterPoint = pos;
             Debug.Log("moving player");

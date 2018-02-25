@@ -43,7 +43,7 @@ public class MapAnalyzer : MonoBehaviour
     //points[x,y].x = tile type
     //points[x,y].y = tile area (adjacent tiles of same type)
     //points[x,y].z = tile height
-    //points[x,y].w = tile rotation (in 60^ snaps)
+    //points[x,y].w = adjacent tiles and rotation ( (int)Math.Floor( x / 6 ) = how many adjacent whatevers, |  x%6 * 60 is rotation )
 
     private void Start()
     {
@@ -87,21 +87,22 @@ public class MapAnalyzer : MonoBehaviour
         }
 
         points = new Vector4[width, height];
-        mapGenerator.GenerateMap(mapWidth, mapHeight);
 
-        
+    mapGenerator.GenerateMap(mapWidth, mapHeight);
+
+
         // set borders and put map inside borders
         for (int x = 0; x < width; x++)
         {
             for (int y = 0; y < height; y++)
             {
                 //make some points
-                points[x, y] = new Vector4(0, 0, 0, 60 * Random.Range(0, 5));
+                points[x, y] = new Vector4(0, 0, 0, 100);
 
                 if (x < 15 || y < 15 || x >= mapWidth + 25 || y >= mapHeight + 25)
                     points[x, y].x = 2; //set to unbreakable tile type
 
-                if (( (x >= 15 && x < 20) || (x >= mapWidth + 20 && x < mapWidth + 25)) && (y >= 15 && y < mapHeight + 25))
+                if (((x >= 15 && x < 20) || (x >= mapWidth + 20 && x < mapWidth + 25)) && (y >= 15 && y < mapHeight + 25))
                     points[x, y].x = 1; // set to breakable wall tile type
 
                 if (((y >= 15 && y < 20) || (y >= mapHeight + 20 && y < mapHeight + 25)) && (x >= 15 && x < mapWidth + 25))
@@ -114,7 +115,7 @@ public class MapAnalyzer : MonoBehaviour
 
             }
         }
-        
+
 
         //calculate area around map tiles
         for (int x = 0; x < width; x++)
@@ -157,6 +158,8 @@ public class MapAnalyzer : MonoBehaviour
             }
         }
 
+        AdjacentTiles();
+
         SetHeightsToArea();
 
         PlaceTiles();
@@ -164,6 +167,157 @@ public class MapAnalyzer : MonoBehaviour
         EntryExit();
     }
 
+    public void AdjacentTiles()
+    {
+
+        SmoothMap();
+
+        for (int x = 0; x < width-1; x++)
+        {
+            for (int y = 0; y < height-1; y++)
+            {
+
+                if (points[x, y].x == 0)
+                {
+
+                    int tileType = (int)points[x, y].x;
+                    Vector3 cubePoint = Evenq_to_cube(x, y);
+                    int cubeX = (int)cubePoint.x;
+                    int cubeY = (int)cubePoint.y;
+                    int cubeZ = (int)cubePoint.z;
+
+                    Vector2 d0 = Cube_to_evenq(cubeX, cubeY + 1, cubeZ - 1);
+                    Vector2 d1 = Cube_to_evenq(cubeX + 1, cubeY, cubeZ - 1);
+                    Vector2 d2 = Cube_to_evenq(cubeX + 1, cubeY - 1, cubeZ);
+                    Vector2 d3 = Cube_to_evenq(cubeX, cubeY - 1, cubeZ + 1);
+                    Vector2 d4 = Cube_to_evenq(cubeX - 1, cubeY, cubeZ + 1);
+                    Vector2 d5 = Cube_to_evenq(cubeX - 1, cubeY + 1, cubeZ);
+
+
+                    bool x0 = false;
+                    bool x1 = false;
+                    bool x2 = false;
+                    bool x3 = false;
+                    bool x4 = false;
+                    bool x5 = false;
+
+                    int adj = 0;
+                    int leftmost = 0;
+
+                    if (points[(int)d0.x, (int)d0.y].x != tileType)
+                    {
+                        adj++;
+                        x0 = true;
+                    }
+                    if (points[(int)d1.x, (int)d1.y].x != tileType)
+                    {
+                        adj++;
+                        x1 = true;
+                    }
+                    if (points[(int)d2.x, (int)d2.y].x != tileType)
+                    {
+                        adj++;
+                        x2 = true;
+                    }
+                    if (points[(int)d3.x, (int)d3.y].x != tileType)
+                    {
+                        adj++;
+                        x3 = true;
+                    }
+                    if (points[(int)d4.x, (int)d4.y].x != tileType)
+                    {
+                        adj++;
+                        x4 = true;
+                    }
+                    if (points[(int)d5.x, (int)d5.y].x != tileType)
+                    {
+                        adj++;
+                        x5 = true;
+                    }
+
+                    if (x0 == true && x5 != true)
+                    {
+                        leftmost = 0;
+                    }
+                    if (x1 == true && x0 != true)
+                    {
+                        leftmost = 1;
+                    }
+                    if (x2 == true && x1 != true)
+                    {
+                        leftmost = 2;
+                    }
+                    if (x3 == true && x2 != true)
+                    {
+                        leftmost = 3;
+                    }
+                    if (x4 == true && x3 != true)
+                    {
+                        leftmost = 4;
+                    }
+                    if (x5 == true && x4 != true)
+                    {
+                        leftmost = 5;
+                    }
+
+                    Debug.Log((leftmost));
+                    points[x, y].w = leftmost;
+                }
+
+                //hey 
+                //what up me?
+                //this is broken ay eff.
+                //i think the dag nabbin.. uh.. offset to cube scripts might be wrong.. verify those are working correctly.
+                //then go from there
+
+            }
+        }
+    }
+
+    public void SmoothMap()
+    {
+        for (int x = 0; x < width-1; x++)
+        {
+            for (int y = 0; y < height-1; y++)
+            {
+
+                if (points[x, y].x == 0)
+                {
+                    int tileType = (int)points[x, y].x;
+                    Vector3 cubePoint = Evenq_to_cube(x, y);
+                    int cubeX = (int)cubePoint.x;
+                    int cubeY = (int)cubePoint.y;
+                    int cubeZ = (int)cubePoint.z;
+
+                    Vector2 d0 = Cube_to_evenq(cubeX, cubeY + 1, cubeZ - 1);
+                    Vector2 d1 = Cube_to_evenq(cubeX + 1, cubeY, cubeZ - 1);
+                    Vector2 d2 = Cube_to_evenq(cubeX + 1, cubeY - 1, cubeZ);
+                    Vector2 d3 = Cube_to_evenq(cubeX, cubeY - 1, cubeZ + 1);
+                    Vector2 d4 = Cube_to_evenq(cubeX - 1, cubeY, cubeZ + 1);
+                    Vector2 d5 = Cube_to_evenq(cubeX - 1, cubeY + 1, cubeZ);
+
+                    int adj = 0;
+
+                    if (points[(int)d0.x, (int)d0.y].x != tileType)
+                        adj++;
+                    if (points[(int)d1.x, (int)d1.y].x != tileType)
+                        adj++;
+                    if (points[(int)d2.x, (int)d2.y].x != tileType)
+                        adj++;
+                    if (points[(int)d3.x, (int)d3.y].x != tileType)
+                        adj++;
+                    if (points[(int)d4.x, (int)d4.y].x != tileType)
+                        adj++;
+                    if (points[(int)d5.x, (int)d5.y].x != tileType)
+                        adj++;
+
+                    if (points[x, y].x == 0 && adj > 3)
+                        points[x, y].x = 1;
+
+                }
+            }
+        }
+    }
 
     public void SetHeightsToArea()
     {
@@ -173,11 +327,28 @@ public class MapAnalyzer : MonoBehaviour
             {
                 if (points[x, y].x == 1 || points[x, y].x == 2)
                 {
-             //       points[x, y].z = 2 + (points[x, y].y * .1f);
+                    //       points[x, y].z = 2 + (points[x, y].y * .1f);
                 }
 
             }
         }
+    }
+
+    public Vector3 Evenq_to_cube(int _x, int _y)
+    {
+        int x = (int)_x;
+        int z = (int)_y - ((int)_x + ((int)_x & 1)) / 2;
+        int y = -x - z;
+        Vector3 cubePoint = new Vector3(x, y, z);
+        return cubePoint;
+    }
+
+    public Vector3 Cube_to_evenq(int _x, int _y, int _z)
+    {
+        int x = _x;
+        int y = _z + (_x + (_x & 1)) / 2;
+        Vector2 offsetPoint = new Vector3(x, y);
+        return offsetPoint;
     }
 
     public void PlaceTiles()
@@ -191,14 +362,19 @@ public class MapAnalyzer : MonoBehaviour
                 GameObject tileType = mapTiles[(int)points[x, y].x];
                 //int area = (int)points[x, y].y;
                 float height = points[x, y].y * .08f;
-                Quaternion rot = Quaternion.Euler(0, points[x, y].w, 0);
+
+                float pointRot;
+
+                pointRot = 60 * (points[x, y].w);
+
+                Quaternion rot = Quaternion.Euler(0, pointRot, 0);
 
                 Vector3 pos = new Vector3(x - halfWidth + .5f, 0, (y - halfHeight + .5f) * 1.155f);
                 if (x % 2 == 0) pos.z += .578f;
 
                 GameObject _groundTile = Instantiate(groundTile, pos, rot);
                 _groundTile.transform.localScale = new Vector3(1, height, 1);
-                _groundTile.name = tileType.name;
+                _groundTile.name = (tileType.name + " ("+x+","+y+")");
                 _groundTile.transform.parent = this.transform;
 
                 if (points[x, y].x != 0)
@@ -237,7 +413,7 @@ public class MapAnalyzer : MonoBehaviour
                     float height = points[x, y].z;
                     Quaternion rot = Quaternion.Euler(0, 0, 0);
 
-                    Vector3 pos = new Vector3(x - halfWidth + .5f, 0, (y - halfHeight + .5f) * 1.155f);
+                    Vector3 pos = new Vector3(x - halfWidth + .5f, height + 1, (y - halfHeight + .5f) * 1.155f);
                     if (x % 2 == 0) pos.z += .578f;
 
                     GameObject tile = Instantiate(tileType, pos, rot);
@@ -245,6 +421,12 @@ public class MapAnalyzer : MonoBehaviour
                     tile.name = tileType.name;
                     tile.transform.parent = this.transform;
                     foundEntry = true;
+
+                    Vector3 cubePoint = Evenq_to_cube(x,y);
+                    Debug.Log("the enter point is at cube point" + cubePoint);
+
+                    Vector2 offsetPoint = Cube_to_evenq((int)cubePoint.x, (int)cubePoint.y, (int)cubePoint.z);
+                    Debug.Log("the enter point is at offset point" + offsetPoint);
                 }
 
             }
@@ -266,7 +448,7 @@ public class MapAnalyzer : MonoBehaviour
                     float height = points[x, y].z;
                     Quaternion rot = Quaternion.Euler(0, points[x, y].w, 0);
 
-                    Vector3 pos = new Vector3(x - halfWidth + .5f, height, (y - halfHeight + .5f) * 1.155f);
+                    Vector3 pos = new Vector3(x - halfWidth + .5f, height + 1, (y - halfHeight + .5f) * 1.155f);
                     if (x % 2 == 0) pos.z += .578f;
 
                     GameObject tile = Instantiate(tileType, pos, rot);
@@ -286,7 +468,7 @@ public class MapAnalyzer : MonoBehaviour
                         float height = points[x, y].z;
                         Quaternion rot = Quaternion.Euler(0, points[x, y].w, 0);
 
-                        Vector3 pos = new Vector3(x - halfWidth + .5f, height, (y - halfHeight + .5f) * 1.155f);
+                        Vector3 pos = new Vector3(x - halfWidth + .5f, height + 1, (y - halfHeight + .5f) * 1.155f);
                         if (x % 2 == 0) pos.z += .578f;
 
                         GameObject tile = Instantiate(tileType, pos, rot);
