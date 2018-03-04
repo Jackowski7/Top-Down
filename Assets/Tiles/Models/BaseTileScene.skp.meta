@@ -1,0 +1,188 @@
+fileFormatVersion: 2
+guid: f3e982a8b2ddafe4eb9840170973afa2
+timeCreated: 1520036498
+licenseType: Free
+SketchUpImporter:
+  generateBackFace: 0
+  mergeCoplanarFaces: 0
+  selectedNodes: 000000000100000002000000030000000400000005000000060000000700000008000000090000000a0000000b0000000c0000000d0000000e0000000f000000100000001100000012000000130000001400000015000000160000001700000018000000190000001a0000001b0000001c0000001d0000001e000000
+  assetHash:
+    serializedVersion: 2
+    Hash: c89552aac4f21e0a6811f13aacee85e5
+  longitude: -105.242139
+  latitude: 40.018309
+  northCorrection: -0
+  fileUnit: 0
+  sketchUpImportData:
+    defaultCamera:
+      position: {x: 3.2674916, y: 3.5772855, z: 8.124505}
+      lookAt: {x: 2.5838509, y: 3.0578527, z: 6.5335536}
+      up: {x: -0.1134344, y: 0.9578342, z: -0.2639816}
+      fov: 35
+      aspectRatio: 0
+      orthoSize: 1
+      isPerspective: 1
+    scenes: []
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: BasicTile
+    100004: GroundTile_0_1
+    100006: GroundTile_0_2
+    100008: GroundTile_0_3
+    100010: WallBase
+    100012: WallTile_0_1
+    100014: 'WallTile_0_2 '
+    100016: WallTile_0_3
+    100018: GroundTile_1_1
+    100020: GroundTile_1_2
+    100022: GroundTile_1_3
+    100024: GroundTile_2_1
+    100026: GroundTile_2_2
+    100028: GroundTile_2_3
+    100030: GroundTile_3_1
+    400000: //RootNode
+    400002: BasicTile
+    400004: GroundTile_0_1
+    400006: GroundTile_0_2
+    400008: GroundTile_0_3
+    400010: WallBase
+    400012: WallTile_0_1
+    400014: 'WallTile_0_2 '
+    400016: WallTile_0_3
+    400018: GroundTile_1_1
+    400020: GroundTile_1_2
+    400022: GroundTile_1_3
+    400024: GroundTile_2_1
+    400026: GroundTile_2_2
+    400028: GroundTile_2_3
+    400030: GroundTile_3_1
+    2100000: '[Color M07]'
+    2100002: _defaultMat
+    2100004: '[Color M08]'
+    2100006: '[Chris_Shoe_Sole]'
+    2300000: BasicTile
+    2300002: GroundTile_0_1
+    2300004: GroundTile_0_2
+    2300006: GroundTile_0_3
+    2300008: WallBase
+    2300010: WallTile_0_1
+    2300012: 'WallTile_0_2 '
+    2300014: WallTile_0_3
+    2300016: GroundTile_1_1
+    2300018: GroundTile_1_2
+    2300020: GroundTile_1_3
+    2300022: GroundTile_2_1
+    2300024: GroundTile_2_2
+    2300026: GroundTile_2_3
+    2300028: GroundTile_3_1
+    3300000: BasicTile
+    3300002: GroundTile_0_1
+    3300004: GroundTile_0_2
+    3300006: GroundTile_0_3
+    3300008: WallBase
+    3300010: WallTile_0_1
+    3300012: 'WallTile_0_2 '
+    3300014: WallTile_0_3
+    3300016: GroundTile_1_1
+    3300018: GroundTile_1_2
+    3300020: GroundTile_1_3
+    3300022: GroundTile_2_1
+    3300024: GroundTile_2_2
+    3300026: GroundTile_2_3
+    3300028: GroundTile_3_1
+    4300000: Mesh BasicTile
+    4300002: Mesh GroundTile_0_1
+    4300004: Mesh GroundTile_0_2
+    4300006: Mesh GroundTile_0_3
+    4300008: Mesh WallTile_0_1
+    4300010: Mesh WallBase
+    4300012: 'Mesh WallTile_0_2 '
+    4300014: Mesh WallTile_0_3
+    4300016: Mesh GroundTile_1_1
+    4300018: Mesh GroundTile_1_2
+    4300020: Mesh GroundTile_1_3
+    4300022: Mesh GroundTile_3_1
+    4300024: Mesh GroundTile_2_1
+    4300026: Mesh GroundTile_2_2
+    4300028: Mesh GroundTile_2_3
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 2
+    materialSearch: 0
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.0254
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

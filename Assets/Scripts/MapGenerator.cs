@@ -6,37 +6,38 @@ using System;
 public class MapGenerator : MonoBehaviour
 {
 
-     int width;
-     int height;
+    int width;
+    int height;
 
-    public float wallThreshold;
-    public float roomThreshold;
-    public int mapSmoothness;
-    public int hallwaySize;
+    float wallThreshold;
+    float roomThreshold;
+    int mapSmoothness;
+    int hallwaySize;
 
 
-    public string seed;
-    public bool useRandomSeed;
+    string seed;
 
     [Range(0, 100)]
-    public int randomFillPercent;
+    int randomFillPercent;
 
     int[,] map;
-    MapAnalyzer mapAnalyzer;
 
+    NewMap newMap;
 
-    void Start()
-    {
-        mapAnalyzer = GetComponent<MapAnalyzer>();
-    }
-
-    public void GenerateMap(int mapWidth, int mapHeight)
+    public void GenerateMap(int mapWidth, int mapHeight, float _wallThreshold, float _roomThreshold, int _mapSmoothness, int _hallwaySize, int _randomFillPercent, float _seed)
     {
 
+        newMap = GetComponent<NewMap>();
         width = mapWidth;
         height = mapHeight;
+        wallThreshold = _wallThreshold;
+        roomThreshold = _roomThreshold;
+        mapSmoothness = _mapSmoothness;
+        hallwaySize = _hallwaySize;
+        randomFillPercent = _randomFillPercent;
+        seed = _seed.ToString();
 
-        map = new int[ mapWidth , mapHeight ];
+        map = new int[mapWidth, mapHeight];
         RandomFillMap();
 
 
@@ -46,7 +47,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         ProcessMap();
-        mapAnalyzer.generatedMap = map;
+        newMap.generatedMap = map;
 
     }
 
@@ -341,11 +342,6 @@ public class MapGenerator : MonoBehaviour
 
     void RandomFillMap()
     {
-        if (useRandomSeed)
-        {
-            seed = Time.time.ToString();
-        }
-
         System.Random pseudoRandom = new System.Random(seed.GetHashCode());
 
         for (int x = 0; x < width; x++)
@@ -431,7 +427,7 @@ public class MapGenerator : MonoBehaviour
         {
         }
 
-        public Room(List<Coord> roomTiles, int[,]map)
+        public Room(List<Coord> roomTiles, int[,] map)
         {
             tiles = roomTiles;
             roomSize = tiles.Count;
@@ -440,9 +436,9 @@ public class MapGenerator : MonoBehaviour
             edgeTiles = new List<Coord>();
             foreach (Coord tile in tiles)
             {
-                for (int x = tile.tileX -1 ; x <= tile.tileX + 1; x++)
+                for (int x = tile.tileX - 1; x <= tile.tileX + 1; x++)
                 {
-                    for (int y = tile.tileY -1 ; y <= tile.tileY + 1; y++)
+                    for (int y = tile.tileY - 1; y <= tile.tileY + 1; y++)
                     {
                         if (x == tile.tileX || y == tile.tileY)
                         {

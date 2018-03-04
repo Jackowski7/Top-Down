@@ -37,11 +37,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4479288821227480}
-  - component: {fileID: 114279801288458692}
   - component: {fileID: 65708531192271546}
   m_Layer: 0
   m_Name: Exit
-  m_TagString: exit
+  m_TagString: Exit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,17 +125,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 3, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114279801288458692
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1666143633380788}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1786d87c5af41f140bc205e7d650a080, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!136 &136446407801841438
 CapsuleCollider:
   m_ObjectHideFlags: 1
