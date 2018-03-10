@@ -81,7 +81,7 @@ public class NewMap : MonoBehaviour
 
         cavePopulator.PopulateMap(width, height, halfWidth, halfHeight, points);
 
-        enemyPopulator.SpawnEnemies(width, height, halfWidth, halfHeight, points, seed, levelDifficulty);
+        enemyPopulator.SpawnEnemies(width, height, halfWidth, halfHeight, points, seed, levelDifficulty, enterPoint);
 
         gameManager.MovePlayer(enterPoint);
 

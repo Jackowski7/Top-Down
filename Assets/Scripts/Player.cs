@@ -2,78 +2,45 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
 
 
     GameManager gameManager;
 
+    public float health;
+    public float energy;
 
-    public float speed = 6.0F;
-    public float rotationSpeed = 10;
+    public Transform[] equipmentSlots;
+    public Transform weaponSlot1;
+    public Transform weaponSlot2;
+    public Transform weaponSlot3;
 
-    public float gravity = 10.0F;
-    public Vector3 moveDirection;
+    public GameObject[] equipment;
+    public GameObject startWeapon1;
+    public GameObject startWeapon2;
+    public GameObject startWeapon3;
 
-    public float cameraSpeed;
-    public float cameraHeight;
-
-    public static Vector3 lastEnterPoint;
-
-    Camera mainCamera;
-    GameObject playerBody;
+    [HideInInspector]
+    public bool dead;
+    [HideInInspector]
+    public bool invincible;
 
     private void Start()
     {
-        mainCamera = Camera.main;
         gameManager = transform.parent.GetComponent<GameManager>();
-
-        playerBody = transform.Find("Player Body").gameObject;
+        SetUpEquipment();
+        SetUpSlots();
+        EquipGear();
     }
 
     void Update()
     {
-        CharacterController controller = GetComponent<CharacterController>();
-        if (controller.isGrounded)
+        if (health <= 0)
         {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            moveDirection = transform.TransformDirection(moveDirection);
-            moveDirection *= speed;
-        }
-
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
-
-        Vector3 cameraTargetPos = this.transform.position;
-        cameraTargetPos.y = cameraHeight;
-        mainCamera.transform.position = Vector3.Slerp(mainCamera.transform.position, cameraTargetPos, (cameraSpeed/10) * Time.deltaTime);
-    }
-
-
-    void FixedUpdate()
-    {
-        // rotate player body towards mouse
-        Plane playerPlane = new Plane(Vector3.up, playerBody.transform.position);
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float hitdist = 0.0f;
-        if (playerPlane.Raycast(ray, out hitdist))
-        {
-            Vector3 targetPoint = ray.GetPoint(hitdist);
-            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - playerBody.transform.position);
-            playerBody.transform.rotation = Quaternion.Slerp(playerBody.transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            Debug.Log("oh dear, you have died!");
         }
     }
-
-
-    public void OnCollisionEnter(Collision collision)
-    {
-            if (collision.gameObject.tag == "Lava")
-        {
-            ResetPlayer();
-            Debug.Log("you're on fire!");
-        }
-    }
-
 
     public void OnTriggerEnter(Collider col)
     {
@@ -84,10 +51,48 @@ public class Player : MonoBehaviour {
         }
     }
 
-
-    public void ResetPlayer()
+    void SetUpEquipment()
     {
-        transform.position = lastEnterPoint;
+        equipment = new GameObject[3];
+
+        // 0 = weapon1, 1 = weapon 2, 2 = weapon 3, 3 = helmet;
+
+        if (equipment[0] == null)
+        {
+            equipment[0] = startWeapon1;
+        }
+        if (equipment[1] == null)
+        {
+            equipment[1] = startWeapon2;
+        }
+        if (equipment[2] == null)
+        {
+            equipment[2] = startWeapon3;
+        }
+    }
+
+
+    void SetUpSlots()
+    {
+        equipmentSlots = new Transform[3];
+
+        // 0 = weapon1, 1 = weapon 2, 2 = weapon 3, 3 = helmet;
+        equipmentSlots[0] = weaponSlot1;
+        equipmentSlots[1] = weaponSlot2;
+        equipmentSlots[2] = weaponSlot3;
+    }
+
+    void EquipGear()
+    {
+
+        for (int x = 0; x < equipmentSlots.Length; x++)
+        {
+            Transform slot = equipmentSlots[x];
+            GameObject item = Instantiate(equipment[x], slot.position, slot.rotation);
+            item.transform.parent = slot.transform;
+            item.name = equipment[x].name;
+        }
+  
     }
 
 }

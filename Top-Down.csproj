@@ -293,6 +293,9 @@
     <Compile Include="Assets\Scripts\MapProcessor.cs" />
     <Compile Include="Assets\Scripts\NewMap.cs" />
     <Compile Include="Assets\Scripts\Player.cs" />
+    <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Weapons\Effects\bulletBehavior.cs" />
+    <Compile Include="Assets\Weapons\WeaponBehavior.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\FXWaterLowpoly.shader" />

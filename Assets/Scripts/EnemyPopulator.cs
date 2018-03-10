@@ -7,6 +7,7 @@ public class EnemyPopulator : MonoBehaviour
 
     public GameObject enemyPrefab;
     public GameObject enemySpawnPoint;
+
     string[] enemyNames;
 
     // Use this for initialization
@@ -16,224 +17,110 @@ public class EnemyPopulator : MonoBehaviour
         enemyNames[0] = "jim";
     }
 
-    // Update is called once per frame
-    void Update()
+
+
+
+    public void SpawnEnemies(int width, int height, float halfWidth, float halfHeight, Vector4[,] points, float seed, float levelDifficulty, Vector3 enterPoint)
     {
 
-    }
+        List<Vector2> enemySpawners = new List<Vector2>();
+        List<Vector2> enemies = new List<Vector2>();
 
-    public void SpawnEnemies(int width, int height, float halfWidth, float halfHeight, Vector4[,] points, float seed, float levelDifficulty)
-    {
+        enemySpawners.Add(new Vector2(enterPoint.x + (width/2), enterPoint.z + (height / 2) ));
+        Debug.Log("spawn - " + enemySpawners[0]);
 
-        Vector2 enterPoint = GameManager.enterPoint;
+        int numGroups = (int)(((width - 10) * (height - 10)) / 600 * (1 + (levelDifficulty * .25f)));
+        int enemiesPerGroup = (int)(5 * (1 + (levelDifficulty * .25f)));
 
-        int numGroups = (int)(((width - 10) * (height - 10)) / 600 * (1 + (levelDifficulty * .25f)) );
-        int enemiesPerGroup = (int)(5 * (1 + (levelDifficulty * .25f) ) );
-        int numEnemies = numGroups * enemiesPerGroup;
-
-        Debug.Log(numEnemies +"="+ numGroups + "*" + enemiesPerGroup);
-
-
-        Vector2[] enemyGroups;
-        enemyGroups = new Vector2[(int)numGroups];
-
-
-        for (int g = 0; g < numGroups; g++)
+        for (int n = 0; n < numGroups; n++)
         {
 
-            bool groupSpawned = false;
-            for (int x = 5; x < width - 1 && groupSpawned == false; x++)
+            bool spawnPointFound = false;
+            int tries = 100;
+            while (spawnPointFound != true && tries > 0)
             {
-                for (int y = 5; y < height - 1 && groupSpawned == false; y++)
+                int x = Random.Range(0, width);
+                int y = Random.Range(0, height);
+
+                //is this point an open ground tile?
+                if (points[x, y].x == 0 && points[x, y].y > 2)
                 {
 
-                    int randomX = x + Random.Range(-(width / width), (width / width));
-                    int randomY = y + Random.Range(-(height / height), (height / height));
-
-                    //is this random point still in the points array?
-                    if (randomX < width && randomX > 5 && randomY < height && randomY > 5)
+                    bool tooClose = false;
+                    int j = enemySpawners.Count;
+                    for (int i = 0; i < j; i++)
                     {
-                        //is this point an open ground tile?
-                        if (points[randomX, randomY].x == 0 && points[randomX, randomY].y > 3)
+
+                        // is this point close to another enemy spawn point?
+                        if (((x > enemySpawners[i].x - 10) && x < enemySpawners[i].x + 10) && (y > enemySpawners[i].y - 10 && y < enemySpawners[i].y + 10))
                         {
-
-                            // is this point far enough away from player spawn?
-                            if ((randomX >= enterPoint.x + 8 || randomX <= enterPoint.x - 8) && (randomY >= enterPoint.y + 8 || randomY <= enterPoint.y - 8))
-                            {
-                                bool tooClose = false;
-                                for (int h = 0; h < numGroups; h++)
-                                {
-                                    // is this point close to another enemy spawn point?
-                                    if (((randomX > enemyGroups[h].x - (width * 2 / numGroups) && randomX < enemyGroups[h].x + (width * 2 / numGroups)) && (randomY > enemyGroups[h].y - (height * 2 / numGroups) && randomY < enemyGroups[h].y + (height * 2 / numGroups))))
-                                    {
-                                        tooClose = true;
-                                        break;
-                                    }
-                                }
-
-                                if (tooClose == false)
-                                {
-                                    enemyGroups[g] = new Vector2(randomX, randomY);
-                                    groupSpawned = true;
-                                    Debug.Log(enemyGroups[g]);
-
-                                    Vector3 pos = new Vector3(randomX - halfWidth + .5f, 0, -(randomY - halfHeight + .5f) * 1.155f);
-                                    if (randomX % 2 == 0) pos.z -= .578f;
-
-                                    float _rot = Random.Range(0, 6);
-                                    Quaternion rot = Quaternion.Euler(0, _rot * 60, 0);
-
-                                    GameObject enemy = Instantiate(enemySpawnPoint, pos, rot);
-                                    enemy.name = (enemyNames[Random.Range(0, enemyNames.Length)]);
-                                    enemy.transform.parent = transform.Find("Enemies").transform;
-                                }
-
-                            }
+                            tooClose = true;
+                            break;
                         }
                     }
-                }
-            }
 
-            //if we didnt spawn a enemyspawnpoint, we need to try again
-            if (groupSpawned == false)
-            {
-                for (int x = width - 1; x > 5 && groupSpawned == false; x--)
-                {
-                    for (int y = height - 1; y > 5 && groupSpawned == false; y--)
+                    if (tooClose == false)
                     {
+                        enemySpawners.Add(new Vector2(x, y));
+                        spawnPointFound = true;
+                        Debug.Log(new Vector2(x, y));
 
-                        int randomX = x + Random.Range(-(width / 10), (width / 10));
-                        int randomY = y + Random.Range(-(height / 10), (height / 10));
 
-                        //is this random point still in the points array?
-                        if (randomX < width && randomX > 5 && randomY < height && randomY > 5)
-                        {
-                            //is this point an open ground tile?
-                            if (points[randomX, randomY].x == 0 && points[randomX, randomY].y > 1)
-                            {
+                        Vector3 pos = new Vector3(x - halfWidth + .5f, 0, -(y - halfHeight + .5f) * 1.155f);
+                        if (x % 2 == 0) pos.z -= .578f;
 
-                                // is this point far enough away from player spawn?
-                                if ((randomX >= enterPoint.x + 8 || randomX <= enterPoint.x - 8) && (randomY >= enterPoint.y + 8 || randomY <= enterPoint.y - 8))
-                                {
-                                    bool tooClose = false;
-                                    for (int h = 0; h < numGroups; h++)
-                                    {
-                                        // is this point close to another enemy spawn point?
-                                        if (((randomX > enemyGroups[h].x - (width * 1 / numGroups) && randomX < enemyGroups[h].x + (width * 1 / numGroups)) && (randomY > enemyGroups[h].y - (height * 1 / numGroups) && randomY < enemyGroups[h].y + (height * 1 / numGroups))))
-                                        {
-                                            tooClose = true;
-                                            break;
-                                        }
-                                    }
+                        float _rot = Random.Range(0, 6);
+                        Quaternion rot = Quaternion.Euler(0, _rot * 60, 0);
 
-                                    if (tooClose == false)
-                                    {
-                                        enemyGroups[g] = new Vector2(randomX, randomY);
-                                        groupSpawned = true;
-                                        Debug.Log("Backup Spawn" + enemyGroups[g]);
+                        GameObject enemy = Instantiate(enemySpawnPoint, pos, rot);
+                        enemy.name = (enemyNames[Random.Range(0, enemyNames.Length)]);
+                        enemy.transform.parent = transform.Find("Enemies").transform;
 
-                                        Vector3 pos = new Vector3(randomX - halfWidth + .5f, 0, -(randomY - halfHeight + .5f) * 1.155f);
-                                        if (randomX % 2 == 0) pos.z -= .578f;
-
-                                        float _rot = Random.Range(0, 6);
-                                        Quaternion rot = Quaternion.Euler(0, _rot * 60, 0);
-
-                                        GameObject enemy = Instantiate(enemySpawnPoint, pos, rot);
-                                        enemy.name = (enemyNames[Random.Range(0, enemyNames.Length)]);
-                                        enemy.transform.parent = transform.Find("Enemies").transform;
-                                    }
-
-                                }
-                            }
-                        }
                     }
                 }
 
+                tries--;
             }
-
-            //if we didnt spawn a enemyspawnpoint, we need to try again
-            if (groupSpawned == false)
-            {
-                for (int x = 5; x < width - 1 && groupSpawned == false; x++)
-                {
-                    for (int y = 5; y < height - 1 && groupSpawned == false; y++)
-                    {
-
-                        int randomX = x + Random.Range(-(width / 5), (width / 5));
-                        int randomY = y + Random.Range(-(height / 5), (height / 5));
-
-                        //is this random point still in the points array?
-                        if (randomX < width && randomX > 5 && randomY < height && randomY > 5)
-                        {
-                            //is this point an open ground tile?
-                            if (points[randomX, randomY].x == 0 && points[randomX, randomY].y > 0)
-                            {
-
-                                // is this point far enough away from player spawn?
-                                if ((randomX >= enterPoint.x + 8 || randomX <= enterPoint.x - 8) && (randomY >= enterPoint.y + 8 || randomY <= enterPoint.y - 8))
-                                {
-                                    bool tooClose = false;
-                                    for (int h = 0; h < numGroups; h++)
-                                    {
-                                        // is this point close to another enemy spawn point?
-                                        if (((randomX > enemyGroups[h].x - (width * .25 / numGroups) && randomX < enemyGroups[h].x + (width * .25 / numGroups)) && (randomY > enemyGroups[h].y - (height * .25 / numGroups) && randomY < enemyGroups[h].y + (height * .25 / numGroups))))
-                                        {
-                                            tooClose = true;
-                                            break;
-                                        }
-                                    }
-
-                                    if (tooClose == false)
-                                    {
-                                        enemyGroups[g] = new Vector2(randomX, randomY);
-                                        groupSpawned = true;
-                                        Debug.Log("SECOND Backup Spawn" + enemyGroups[g]);
-
-                                        Vector3 pos = new Vector3(randomX - halfWidth + .5f, 0, -(randomY - halfHeight + .5f) * 1.155f);
-                                        if (randomX % 2 == 0) pos.z -= .578f;
-
-                                        float _rot = Random.Range(0, 6);
-                                        Quaternion rot = Quaternion.Euler(0, _rot * 60, 0);
-
-                                        GameObject enemy = Instantiate(enemySpawnPoint, pos, rot);
-                                        enemy.name = (enemyNames[Random.Range(0, enemyNames.Length)]);
-                                        enemy.transform.parent = transform.Find("Enemies").transform;
-                                    }
-
-                                }
-                            }
-                        }
-                    }
-                }
-
-            }
-
         }
 
-        
 
 
-        for (int g = 0; g < numGroups; g++)
+        for (int n = 1; n < enemySpawners.Count; n++)
         {
-
             float enemiesLeftToSpawnInGroup = enemiesPerGroup;
 
-            for (int x = (int)enemyGroups[g].x - 3; x < (int)enemyGroups[g].x + 3  && enemiesLeftToSpawnInGroup >= 0; x++)
+            int tries = 100;
+            while (enemiesLeftToSpawnInGroup > 0 && tries > 0)
             {
-                for (int y = (int)enemyGroups[g].y - 3; y < (int)enemyGroups[g].y + 3 && enemiesLeftToSpawnInGroup >= 0; y++)
+                Vector2 spawnerLocation = enemySpawners[n];
+
+                int x = Random.Range((int)spawnerLocation.x - 3, (int)spawnerLocation.x + 3);
+                int y = Random.Range((int)spawnerLocation.y - 3, (int)spawnerLocation.y + 3);
+
+                if (x < width - 1 && x > 1 && y < height - 1 && y > 1)
                 {
-                    int randomX = x + Random.Range(-1, 1);
-                    int randomY = y + Random.Range(-1, 1);
-
-                    // is this point still in the points array?
-                    if (randomX < width && randomX > 0 && randomY < height && randomY > 0)
+                    // is this point an open ground tile?
+                    if (points[x, y].x == 0 && points[x, y].y > 1)
                     {
-                        // is this point an open ground tile?
-                        if (points[randomX, randomY].x == 0 && points[randomX, randomY].y > 1)
-                        {
 
-                            Vector3 pos = new Vector3(randomX - halfWidth + .5f, 0, -(randomY - halfHeight + .5f) * 1.155f);
-                            if (randomX % 2 == 0) pos.z -= .578f;
+                        bool tooClose = false;
+                        int j = enemies.Count;
+                        for (int i = 0; i < j; i++)
+                        {
+                            // is this point on another enemy point?
+                            if ((x == enemies[i].x) && (y == enemies[i].y))
+                            {
+                                tooClose = true;
+                                break;
+                            }
+                        }
+
+                        if (tooClose == false)
+                        {
+                            enemies.Add(new Vector2(x, y));
+
+                            Vector3 pos = new Vector3(x - halfWidth + .5f, 0, -(y - halfHeight + .5f) * 1.155f);
+                            if (x % 2 == 0) pos.z -= .578f;
 
                             float _rot = Random.Range(0, 6);
                             Quaternion rot = Quaternion.Euler(0, _rot * 60, 0);
@@ -243,48 +130,12 @@ public class EnemyPopulator : MonoBehaviour
                             enemy.transform.parent = transform.Find("Enemies").transform;
 
                             enemiesLeftToSpawnInGroup--;
-
                         }
                     }
-
                 }
+
+                tries--;
             }
-
-            if (enemiesLeftToSpawnInGroup > 0)
-            {
-                for (int x = (int)enemyGroups[g].x - 3; x < (int)enemyGroups[g].x + 3 && enemiesLeftToSpawnInGroup >= 0; x++)
-                {
-                    for (int y = (int)enemyGroups[g].y - 3; y < (int)enemyGroups[g].y + 3 && enemiesLeftToSpawnInGroup >= 0; y++)
-                    {
-                        int randomX = x + Random.Range(-1, 1);
-                        int randomY = y + Random.Range(-1, 1);
-
-                        // is this point still in the points array?
-                        if (randomX < width && randomX > 0 && randomY < height && randomY > 0)
-                        {
-                            // is this point an open ground tile?
-                            if (points[randomX, randomY].x == 0 && points[randomX, randomY].y > 0)
-                            {
-
-                                Vector3 pos = new Vector3(randomX - halfWidth + .5f, 0, -(randomY - halfHeight + .5f) * 1.155f);
-                                if (randomX % 2 == 0) pos.z -= .578f;
-
-                                float _rot = Random.Range(0, 6);
-                                Quaternion rot = Quaternion.Euler(0, _rot * 60, 0);
-
-                                GameObject enemy = Instantiate(enemyPrefab, pos, rot);
-                                enemy.name = (enemyNames[Random.Range(0, enemyNames.Length)]) + ".2";
-                                enemy.transform.parent = transform.Find("Enemies").transform;
-
-                                enemiesLeftToSpawnInGroup--;
-
-                            }
-                        }
-
-                    }
-                }
-            }
-
         }
     }
 
