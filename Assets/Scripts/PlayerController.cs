@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     Transform playerBody;
 
 
-    bool firing;
+    public static bool firing;
 
     private void Start()
     {
@@ -93,19 +93,21 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(chargeTime);
 
         rotationSpeed = rotationSpeed - (rotationSpeed * playerRotSlow / 100);
+	
 
-        while (Input.GetButton(button) && player.energy - energyDrainAmount >= 0)
-        {
-            Vector3 playerVelocity;
+			while (Input.GetButton (button) && player.energy - energyDrainAmount >= 0) {
 
-                playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
-                _prevPosition = transform.position;
+				Vector3 playerVelocity;
 
-                weapon.FireWeapon(playerBody, playerVelocity);
-                player.energy -= energyDrainAmount;
+				playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
+				_prevPosition = transform.position;
 
-                yield return new WaitForSeconds(fireSpeed);
-        }
+				weapon.FireWeapon (playerBody, playerVelocity);
+				player.energy -= energyDrainAmount;
+
+				yield return new WaitForSeconds (fireSpeed);
+			}
+
         rotationSpeed = _rotationSpeed;
         firing = false;
 

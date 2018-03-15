@@ -8,9 +8,13 @@ public class bulletBehavior : MonoBehaviour
     Transform player;
     WeaponBehavior weapon;
 
+	[HideInInspector]
     public float durability;
+	[HideInInspector]
     public float damage;
+	[HideInInspector]
     public float lifetime;
+	[HideInInspector]
     public float knockback;
 
     // Use this for initialization
@@ -36,6 +40,7 @@ public class bulletBehavior : MonoBehaviour
         {
             EnemyBehavior enemy = col.GetComponent<EnemyBehavior>();
             enemy.health -= damage;
+			Debug.Log ("I got one!");
 
             enemy.GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity.normalized * knockback, ForceMode.Impulse);
         }

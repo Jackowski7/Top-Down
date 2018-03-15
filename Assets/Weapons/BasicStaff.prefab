@@ -296,10 +296,10 @@ MonoBehaviour:
     type: 2}
   sword: 0
   staff: 1
-  sheild: 0
+  shield: 0
   fireSpeed: 0.15
   ChargeTime: 0
-  PlayerRotSlow: 0
+  PlayerRotSlow: 50
   EnergyDrainAmount: 0
   baseDamage: 10
   bulletKnockback: 1

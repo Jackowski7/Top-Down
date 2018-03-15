@@ -8,7 +8,7 @@ public class WeaponBehavior : MonoBehaviour
 
     public bool sword;
     public bool staff;
-    public bool sheild;
+    public bool shield;
 
     public float fireSpeed;
     public float ChargeTime;
@@ -46,21 +46,21 @@ public class WeaponBehavior : MonoBehaviour
     {
 
         Vector3 pos = playerBody.transform.position;
-        Vector3 rot = playerBody.transform.forward.normalized;
+		Vector3 _rot = playerBody.transform.forward;
+		Quaternion rot = playerBody.transform.rotation;
 
-        GameObject bullet = Instantiate(bulletPrefab);       
+		pos += _rot;
+
+
+		GameObject bullet = Instantiate(bulletPrefab, pos, rot);       
         bulletBehavior bulletBehavior = bullet.GetComponent<bulletBehavior>();
-        bulletBehavior.damage = bulletDamage;
+		bulletBehavior.damage = baseDamage;
         bulletBehavior.durability = bulletDurability;
         bulletBehavior.lifetime = bulletLifetime;
         bulletBehavior.knockback = bulletKnockback;
 
         if (staff == true)
-        {
-            pos += rot;
-            bullet.transform.position = pos;
-            bullet.transform.rotation = Quaternion.Euler(rot);
-
+		{
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             Vector3 dir = playerBody.forward.normalized;
             dir.x += Random.Range(-bulletSpread / 100, bulletSpread / 100);
@@ -70,10 +70,15 @@ public class WeaponBehavior : MonoBehaviour
         if (sword == true)
         {
 
-            bullet.transform.position = pos;
-            bullet.transform.rotation = Quaternion.Euler(rot);
+		}
 
-        }
+		if (shield == true)
+		{
+
+
+		}
+
+		return;
 
     }
 

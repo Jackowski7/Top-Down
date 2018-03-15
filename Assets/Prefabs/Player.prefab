@@ -158,7 +158,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1379236666458510}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.33, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4792575673735632}
@@ -175,7 +175,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883906103401588}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.249, z: -0.516}
+  m_LocalPosition: {x: 0, y: 0.249, z: 0.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4766604697904932}
@@ -339,7 +339,7 @@ MonoBehaviour:
     type: 2}
   startWeapon2: {fileID: 1684792491197442, guid: a6128fd7a8c1ac14cab766a9e268039e,
     type: 2}
-  startWeapon3: {fileID: 1218915751960328, guid: a159f57c3b6aa5842ba7ffbaa89c31c7,
+  startWeapon3: {fileID: 1684792491197442, guid: dad08fb36b521cb4098d9b5f46d089c9,
     type: 2}
   dead: 0
   invincible: 0
