@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 10;
     public float gravity = 10.0F;
 
+    public GameObject myCamera;
     public float cameraSpeed;
     public float cameraHeight;
 
@@ -21,10 +22,10 @@ public class PlayerController : MonoBehaviour
 
 
     public static bool firing;
+    int activeWeapon = 0;
 
     private void Start()
     {
-        mainCamera = Camera.main;
         gameManager = transform.parent.GetComponent<GameManager>();
         player = GetComponent<Player>();
         playerBody = transform.Find("Player Body");
@@ -56,9 +57,18 @@ public class PlayerController : MonoBehaviour
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
 
+        //move camera
         Vector3 cameraTargetPos = this.transform.position;
         cameraTargetPos.y = cameraHeight;
-        mainCamera.transform.position = Vector3.Slerp(mainCamera.transform.position, cameraTargetPos, (cameraSpeed / 10) * Time.deltaTime);
+        myCamera.transform.position = Vector3.Slerp(myCamera.transform.position, cameraTargetPos, (cameraSpeed / 10) * Time.deltaTime);
+
+        Vector3 targetDir = myCamera.transform.position - transform.position;
+        Vector3 newDir = Vector3.RotateTowards(new Vector3(90,0,0), targetDir, 10, 0.0F);
+        newDir.x = newDir.x * .15f;
+        newDir.z = newDir.z * .15f;
+        newDir.y = 90;
+        myCamera.transform.rotation = Quaternion.Euler(newDir);
+
 
         if (Input.GetButton("Fire1") && firing == false)
         {
@@ -77,6 +87,15 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator _FireWeapon(int weaponNumber, string button)
     {
+        if (activeWeapon != weaponNumber && weaponNumber < 2)
+        {
+            GameObject oldWeaponSlot = player.equipmentSlots[activeWeapon].gameObject;
+            oldWeaponSlot.SetActive(false);
+
+            GameObject weaponSlot = player.equipmentSlots[weaponNumber].gameObject;
+            weaponSlot.SetActive(true);
+            activeWeapon = weaponNumber;
+        }
 
         WeaponBehavior weapon = player.equipment[weaponNumber].GetComponent<WeaponBehavior>();
 
@@ -112,5 +131,6 @@ public class PlayerController : MonoBehaviour
         firing = false;
 
     }
+
 
 }

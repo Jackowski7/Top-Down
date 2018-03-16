@@ -100,7 +100,7 @@ public class EnemyPopulator : MonoBehaviour
                 if (x < width - 1 && x > 1 && y < height - 1 && y > 1)
                 {
                     // is this point an open ground tile?
-                    if (points[x, y].x == 0 && points[x, y].y > 1)
+                    if (points[x, y].x == 0 && points[x, y].y > 2)
                     {
 
                         bool tooClose = false;
@@ -119,7 +119,7 @@ public class EnemyPopulator : MonoBehaviour
                         {
                             enemies.Add(new Vector2(x, y));
 
-                            Vector3 pos = new Vector3(x - halfWidth + .5f, 0, -(y - halfHeight + .5f) * 1.155f);
+                            Vector3 pos = new Vector3(x - halfWidth + .5f, 1f, -(y - halfHeight + .5f) * 1.155f);
                             if (x % 2 == 0) pos.z -= .578f;
 
                             float _rot = Random.Range(0, 6);
