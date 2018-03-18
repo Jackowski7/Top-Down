@@ -8,13 +8,17 @@ public class bulletBehavior : MonoBehaviour
     Transform player;
     WeaponBehavior weapon;
 
-	[HideInInspector]
+    [HideInInspector]
+    public string target;
+    [HideInInspector]
+    public string firer;
+    [HideInInspector]
     public float durability;
-	[HideInInspector]
+    [HideInInspector]
     public float damage;
-	[HideInInspector]
+    [HideInInspector]
     public float lifetime;
-	[HideInInspector]
+    [HideInInspector]
     public float knockback;
 
     // Use this for initialization
@@ -34,25 +38,55 @@ public class bulletBehavior : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider col)
-    {
-        if (col.tag == "Enemy")
-        {
-            EnemyBehavior enemy = col.GetComponent<EnemyBehavior>();
-            enemy.health -= damage;
-			Debug.Log ("I got one!");
 
-            enemy.GetComponent<Rigidbody>().AddForce(GetComponent<Rigidbody>().velocity.normalized * knockback, ForceMode.Impulse);
+    private void OnCollisionEnter(Collision col)
+    {
+        //only works for magic
+        if (col.transform.tag == target)
+        {
+            Stats stats = col.gameObject.GetComponent<Stats>();
+            stats.health -= damage;
+            Debug.Log("Bullet Hit target" + target);
+            stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
+            Destroy(gameObject);
         }
 
-        if (col.tag != "Player")
+        if (col.gameObject.tag != firer)
         {
             durability--;
         }
 
-        if (col.tag == "Player")
+        if (col.gameObject.tag == firer)
         {
-            Debug.Log("Stop Hitting yourself!");
+//            Debug.Log("Stop Hitting yourself!");
+        }
+
+        if (col.gameObject.tag == "Shield")
+        {
+            var _target = target;
+            target = firer;
+            firer = _target;
+
+            StopCoroutine(DestroySelf());
+            StartCoroutine(DestroySelf());
+        }
+
+    }
+
+    private void OnTriggerEnter(Collider col)
+    {
+        // for sword swings
+        if (col.tag == target)
+        {
+            Stats stats = col.gameObject.GetComponent<Stats>();
+            stats.health -= damage;
+            Debug.Log("Bullet Hit target" + target);
+            stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
+        }
+
+        if (col.tag != firer)
+        {
+            durability--;
         }
 
     }

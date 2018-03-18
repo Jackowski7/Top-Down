@@ -35,10 +35,12 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4991348472706088}
-  - component: {fileID: 114830175373143586}
+  - component: {fileID: 114709388264327366}
+  - component: {fileID: 65901376925492478}
+  - component: {fileID: 54941168710510676}
   m_Layer: 8
   m_Name: BasicShield
-  m_TagString: Untagged
+  m_TagString: Shield
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63,14 +65,41 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684792491197442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.591229, y: -0.5, z: -1.0098337}
+  m_LocalPosition: {x: -4.604059, y: -1, z: 1.6567674}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4041635293974676}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114830175373143586
+--- !u!54 &54941168710510676
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684792491197442}
+  serializedVersion: 2
+  m_Mass: 0.0000001
+  m_Drag: 0
+  m_AngularDrag: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &65901376925492478
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684792491197442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.67, y: 0.5, z: 0.38}
+  m_Center: {x: 0, y: 0, z: 0.09}
+--- !u!114 &114709388264327366
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -78,25 +107,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1684792491197442}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5eb9e8aa5da22774daeadd13730f8643, type: 3}
+  m_Script: {fileID: 11500000, guid: 89bbf29eaee73c14fb67d7f1a0ebc942, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1572913392945714, guid: f85bebde63583894e83c6eea60ba4f14,
-    type: 2}
-  sword: 0
-  staff: 0
-  shield: 1
   fireSpeed: 0
   ChargeTime: 0
-  PlayerRotSlow: 50
+  PlayerRotSlow: 0
   EnergyDrainAmount: 0
-  baseDamage: 0
-  bulletKnockback: 5
-  bulletSpeed: 0.1
-  bulletSpread: 0
-  bulletDurability: 1
-  bulletLifetime: 0
-  bulletDamage: 0
+  knockBack: 10
+  kineticReduction: 0
+  reduction1: 0
+  reduction2: 0
+  reduction3: 0
 --- !u!212 &212144041884126956
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -86,17 +86,17 @@ MonoBehaviour:
   sword: 1
   staff: 0
   shield: 0
-  fireSpeed: 0.25
+  fireSpeed: 1.5
   ChargeTime: 0
   PlayerRotSlow: 20
   EnergyDrainAmount: 0
-  baseDamage: 25
-  bulletKnockback: 5
+  bulletDamage: 15
+  bulletKnockback: 4
   bulletSpeed: 0
   bulletSpread: 0
   bulletDurability: 5
   bulletLifetime: 1
-  bulletDamage: 0
+  shieldOut: 0
 --- !u!212 &212436893081102402
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33546200738790212}
   - component: {fileID: 23721439385625510}
   - component: {fileID: 64091561264640626}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mesh1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4977363942696340}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundTile_1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4398374891875518}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundTile_1_1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -67,7 +67,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4590588143559320}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: GroundTile_1_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 14
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 4300000, guid: 4c7b64278fd39ef4593c16f3690b6c07, type: 3}

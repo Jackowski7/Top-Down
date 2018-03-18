@@ -9,6 +9,7 @@ TagManager:
   - Lava
   - Exit
   - Enemy
+  - Shield
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - 
   - Player
-  - 
+  - Environment
   - 
   - 
   - 

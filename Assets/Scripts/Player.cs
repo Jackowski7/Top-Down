@@ -8,18 +8,15 @@ public class Player : MonoBehaviour
 
     GameManager gameManager;
 
-    public float health;
-    public float energy;
-
     public Transform[] equipmentSlots;
-    public Transform weaponSlot1;
-    public Transform weaponSlot2;
-    public Transform weaponSlot3;
+    public Transform magicWeaponSlot;
+    public Transform meleeWeaponSlot;
+    public Transform shieldSlot;
 
     public GameObject[] equipment;
-    public GameObject startWeapon1;
-    public GameObject startWeapon2;
-    public GameObject startWeapon3;
+    public GameObject magicWeapon;
+    public GameObject meleeWeapon;
+    public GameObject shield;
 
     [HideInInspector]
     public bool dead;
@@ -32,14 +29,6 @@ public class Player : MonoBehaviour
         SetUpEquipment();
         SetUpSlots();
         EquipGear();
-    }
-
-    void Update()
-    {
-        if (health <= 0)
-        {
-            Debug.Log("oh dear, you have died!");
-        }
     }
 
     public void OnTriggerEnter(Collider col)
@@ -59,15 +48,15 @@ public class Player : MonoBehaviour
 
         if (equipment[0] == null)
         {
-            equipment[0] = startWeapon1;
+            equipment[0] = magicWeapon;
         }
         if (equipment[1] == null)
         {
-            equipment[1] = startWeapon2;
+            equipment[1] = meleeWeapon;
         }
         if (equipment[2] == null)
         {
-            equipment[2] = startWeapon3;
+            equipment[2] = shield;
         }
     }
 
@@ -77,10 +66,10 @@ public class Player : MonoBehaviour
         equipmentSlots = new Transform[3];
 
         // 0 = weapon1, 1 = weapon 2, 2 = weapon 3, 3 = helmet;
-        equipmentSlots[0] = weaponSlot1;
-        equipmentSlots[1] = weaponSlot2;
-        equipmentSlots[2] = weaponSlot3;
-    }
+        equipmentSlots[0] = magicWeaponSlot;
+        equipmentSlots[1] = meleeWeaponSlot;
+        equipmentSlots[2] = shieldSlot;
+}
 
     void EquipGear()
     {

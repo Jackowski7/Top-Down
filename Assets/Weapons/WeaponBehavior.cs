@@ -15,17 +15,14 @@ public class WeaponBehavior : MonoBehaviour
     public float PlayerRotSlow;
     public float EnergyDrainAmount;
 
-    public float baseDamage;
-
+    public float bulletDamage;
     public float bulletKnockback;
     public float bulletSpeed;
     public float bulletSpread;
     public float bulletDurability;
     public float bulletLifetime;
 
-
-    [HideInInspector]
-    public float bulletDamage;
+    public bool shieldOut = false;
 
     // Use this for initialization
     void Start()
@@ -36,6 +33,7 @@ public class WeaponBehavior : MonoBehaviour
     {
         Vector4 weaponInfo = new Vector4(0, 0, 0, 0);
         weaponInfo.x = fireSpeed;
+
         weaponInfo.y = ChargeTime;
         weaponInfo.z = PlayerRotSlow;
         weaponInfo.w = EnergyDrainAmount;
@@ -46,21 +44,41 @@ public class WeaponBehavior : MonoBehaviour
     {
 
         Vector3 pos = playerBody.transform.position;
-		Vector3 _rot = playerBody.transform.forward;
-		Quaternion rot = playerBody.transform.rotation;
+        Vector3 _rot = playerBody.transform.forward;
+        Quaternion rot = playerBody.transform.rotation;
 
-		pos += _rot;
+        pos += _rot;
 
 
-		GameObject bullet = Instantiate(bulletPrefab, pos, rot);       
+        GameObject bullet = Instantiate(bulletPrefab, pos, rot);
         bulletBehavior bulletBehavior = bullet.GetComponent<bulletBehavior>();
-		bulletBehavior.damage = baseDamage;
+        bulletBehavior.damage = bulletDamage;
         bulletBehavior.durability = bulletDurability;
         bulletBehavior.lifetime = bulletLifetime;
         bulletBehavior.knockback = bulletKnockback;
 
+        //get target, and don't hit friendlies
+        string user = playerBody.transform.parent.tag;
+        string target = null;
+        string firer = null;
+
+        if (user == "Enemy")
+        {
+            target = "Player";
+            firer = "Enemy";
+        }
+
+        if (user == "Player")
+        {
+            target = "Enemy";
+            firer = "Player";
+        }
+
+        bulletBehavior.target = target;
+        bulletBehavior.firer = firer;
+
         if (staff == true)
-		{
+        {
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             Vector3 dir = playerBody.forward.normalized;
             dir.x += Random.Range(-bulletSpread / 100, bulletSpread / 100);
@@ -70,18 +88,11 @@ public class WeaponBehavior : MonoBehaviour
         if (sword == true)
         {
 
-		}
+        }
 
-		if (shield == true)
-		{
-
-
-		}
-
-		return;
+        return;
 
     }
 
-
-
 }
+

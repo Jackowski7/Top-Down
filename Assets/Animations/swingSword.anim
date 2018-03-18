@@ -18,130 +18,70 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: {x: -163.8, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.1
-        value: {x: -185.9, y: 26.77, z: 13}
-        inSlope: {x: -33.60022, y: 343.8, z: 312}
-        outSlope: {x: -33.60022, y: 343.8, z: 312}
         tangentMode: 0
       - serializedVersion: 2
         time: 0.16666667
-        value: {x: -187.3, y: 57.3, z: 65.2}
-        inSlope: {x: 0, y: 0, z: 264.0002}
-        outSlope: {x: 0, y: 0, z: 264.0002}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.21666667
-        value: {x: -184, y: 56.2, z: 72.9}
-        inSlope: {x: 73.333336, y: 0, z: 112.66669}
-        outSlope: {x: 73.333336, y: 0, z: 112.66669}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.31666666
-        value: {x: -176.3, y: 72.9, z: 82.1}
-        inSlope: {x: 0, y: 235.63637, z: 0}
-        outSlope: {x: 0, y: 235.63637, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.4
-        value: {x: -179.9, y: 99.4, z: 82.1}
-        inSlope: {x: 0, y: 245.64703, z: 0}
-        outSlope: {x: 0, y: 245.64703, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.6
-        value: {x: -172.8, y: 142.5, z: 82.1}
+        value: {x: 0, y: 74.809006, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.68333334
-        value: {x: -180.7, y: 89.4, z: 76.7}
-        inSlope: {x: 0, y: -356.25003, z: -54.00002}
-        outSlope: {x: 0, y: -356.25003, z: -54.00002}
+        time: 0.3
+        value: {x: 0, y: 26.075, z: 0}
+        inSlope: {x: 0, y: -302.04636, z: 0}
+        outSlope: {x: 0, y: -302.04636, z: 0}
+        tangentMode: 0
+      - serializedVersion: 2
+        time: 0.48333332
+        value: {x: 0, y: -20.839, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
         time: 1
-        value: {x: -163.8, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
   m_PositionCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: {x: -0.58, y: -0.129, z: 0}
+        value: {x: 1.119, y: -0.13, z: 0.264}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.18333334
-        value: {x: -0.49, y: 0.16, z: 0.46}
-        inSlope: {x: 0.7764705, y: 0, z: 2.2941177}
-        outSlope: {x: 0.7764705, y: 0, z: 2.2941177}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.28333333
-        value: {x: -0.36, y: 0.15008916, z: 0.65}
-        inSlope: {x: 2.3999999, y: 0, z: 1.1076922}
-        outSlope: {x: 2.3999999, y: 0, z: 1.1076922}
+        time: 0.16666667
+        value: {x: 1.119, y: -0.13, z: 0.279}
+        inSlope: {x: 0, y: 0, z: 0.15000015}
+        outSlope: {x: 0, y: 0, z: 0.15000015}
         tangentMode: 0
       - serializedVersion: 2
         time: 0.4
-        value: {x: 0.13, y: 0.15008916, z: 0.71}
-        inSlope: {x: 3.3692307, y: 0, z: 0}
-        outSlope: {x: 3.3692307, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.5
-        value: {x: 0.37, y: 0.15008916, z: 0.53}
-        inSlope: {x: 1.9999998, y: 0, z: -0.59999937}
-        outSlope: {x: 1.9999998, y: 0, z: -0.59999937}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.6
-        value: {x: 0.53, y: 0.15008916, z: 0.5}
+        value: {x: -0.392, y: -0.13, z: 0.339}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.6333333
-        value: {x: 0.37, y: 0.15008916, z: 0.53}
-        inSlope: {x: -8.000008, y: 0, z: 2.3999999}
-        outSlope: {x: -8.000008, y: 0, z: 2.3999999}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.65
-        value: {x: 0.13, y: 0.15008916, z: 0.71}
-        inSlope: {x: -4.866666, y: 0, z: 0}
-        outSlope: {x: -4.866666, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.78333336
-        value: {x: -0.36, y: 0.15008916, z: 0.65}
-        inSlope: {x: -2.0285711, y: 0, z: -0.68571424}
-        outSlope: {x: -2.0285711, y: 0, z: -0.68571424}
-        tangentMode: 0
-      - serializedVersion: 2
         time: 1
-        value: {x: -0.58, y: -0.129, z: 0}
+        value: {x: 1.119, y: -0.13, z: 0.264}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -151,21 +91,7 @@ AnimationClip:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   m_ClipBindingConstant:
-    genericBindings:
-    - serializedVersion: 2
-      path: 1808301281
-      attribute: 1
-      script: {fileID: 0}
-      typeID: 4
-      customType: 0
-      isPPtrCurve: 0
-    - serializedVersion: 2
-      path: 1808301281
-      attribute: 4
-      script: {fileID: 0}
-      typeID: 4
-      customType: 4
-      isPPtrCurve: 0
+    genericBindings: []
     pptrCurveMapping: []
   m_AnimationClipSettings:
     serializedVersion: 2
@@ -193,61 +119,25 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: -0.58
+        value: 1.119
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.18333334
-        value: -0.49
-        inSlope: 0.7764705
-        outSlope: 0.7764705
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.28333333
-        value: -0.36
-        inSlope: 2.3999999
-        outSlope: 2.3999999
+        time: 0.16666667
+        value: 1.119
+        inSlope: 0
+        outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.4
-        value: 0.13
-        inSlope: 3.3692307
-        outSlope: 3.3692307
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.5
-        value: 0.37
-        inSlope: 1.9999998
-        outSlope: 1.9999998
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: 0.53
+        value: -0.392
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.6333333
-        value: 0.37
-        inSlope: -8.000008
-        outSlope: -8.000008
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.65
-        value: 0.13
-        inSlope: -4.866666
-        outSlope: -4.866666
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.78333336
-        value: -0.36
-        inSlope: -2.0285711
-        outSlope: -2.0285711
-        tangentMode: 136
-      - serializedVersion: 2
         time: 1
-        value: -0.58
+        value: 1.119
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -255,7 +145,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -263,61 +153,25 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: -0.129
+        value: -0.13
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.18333334
-        value: 0.16
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.28333333
-        value: 0.15008916
+        time: 0.16666667
+        value: -0.13
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.4
-        value: 0.15008916
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.5
-        value: 0.15008916
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: 0.15008916
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6333333
-        value: 0.15008916
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.65
-        value: 0.15008916
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.78333336
-        value: 0.15008916
+        value: -0.13
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 1
-        value: -0.129
+        value: -0.13
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -325,7 +179,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -333,61 +187,25 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0
+        value: 0.264
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.18333334
-        value: 0.46
-        inSlope: 2.2941177
-        outSlope: 2.2941177
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.28333333
-        value: 0.65
-        inSlope: 1.1076922
-        outSlope: 1.1076922
+        time: 0.16666667
+        value: 0.279
+        inSlope: 0.15000015
+        outSlope: 0.15000015
         tangentMode: 136
       - serializedVersion: 2
         time: 0.4
-        value: 0.71
+        value: 0.339
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.5
-        value: 0.53
-        inSlope: -0.59999937
-        outSlope: -0.59999937
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: 0.5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6333333
-        value: 0.53
-        inSlope: 2.3999999
-        outSlope: 2.3999999
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.65
-        value: 0.71
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.78333336
-        value: 0.65
-        inSlope: -0.68571424
-        outSlope: -0.68571424
         tangentMode: 136
       - serializedVersion: 2
         time: 1
-        value: 0
+        value: 0.264
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -395,71 +213,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: WeaponSlot2
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: -163.8
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.1
-        value: -185.9
-        inSlope: -33.60022
-        outSlope: -33.60022
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.16666667
-        value: -187.3
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.21666667
-        value: -184
-        inSlope: 73.333336
-        outSlope: 73.333336
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.31666666
-        value: -176.3
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.4
-        value: -179.9
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: -172.8
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.68333334
-        value: -180.7
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
-        value: -163.8
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.x
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -472,46 +226,62 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.1
-        value: 26.77
-        inSlope: 343.8
-        outSlope: 343.8
+        time: 0.16666667
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.3
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.48333332
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.x
+    path: Player Body/Equipment/meleeWeaponSlot
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.16666667
-        value: 57.3
+        value: 74.809006
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.21666667
-        value: 56.2
+        time: 0.3
+        value: 26.075
+        inSlope: -302.04636
+        outSlope: -302.04636
+        tangentMode: 136
+      - serializedVersion: 2
+        time: 0.48333332
+        value: -20.839
         inSlope: 0
         outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.31666666
-        value: 72.9
-        inSlope: 235.63637
-        outSlope: 235.63637
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.4
-        value: 99.4
-        inSlope: 245.64703
-        outSlope: 245.64703
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: 142.5
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.68333334
-        value: 89.4
-        inSlope: -356.25003
-        outSlope: -356.25003
         tangentMode: 136
       - serializedVersion: 2
         time: 1
@@ -523,7 +293,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -536,40 +306,22 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.1
-        value: 13
-        inSlope: 312
-        outSlope: 312
-        tangentMode: 136
-      - serializedVersion: 2
         time: 0.16666667
-        value: 65.2
-        inSlope: 264.0002
-        outSlope: 264.0002
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.21666667
-        value: 72.9
-        inSlope: 112.66669
-        outSlope: 112.66669
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.31666666
-        value: 82.1
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.6
-        value: 82.1
+        time: 0.3
+        value: 0
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.68333334
-        value: 76.7
-        inSlope: -54.00002
-        outSlope: -54.00002
+        time: 0.48333332
+        value: 0
+        inSlope: 0
+        outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 1
@@ -581,7 +333,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -592,7 +344,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -602,7 +354,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -612,7 +364,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: WeaponSlot2
+    path: Player Body/Equipment/meleeWeaponSlot
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

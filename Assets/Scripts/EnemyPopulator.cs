@@ -27,10 +27,10 @@ public class EnemyPopulator : MonoBehaviour
         List<Vector2> enemies = new List<Vector2>();
 
         enemySpawners.Add(new Vector2(enterPoint.x + (width/2), enterPoint.z + (height / 2) ));
-        Debug.Log("spawn - " + enemySpawners[0]);
+        //Debug.Log("spawn - " + enemySpawners[0]);
 
         int numGroups = (int)(((width - 10) * (height - 10)) / 600 * (1 + (levelDifficulty * .25f)));
-        int enemiesPerGroup = (int)(5 * (1 + (levelDifficulty * .25f)));
+        int enemiesPerGroup = (int)(1 * (1 + (levelDifficulty * .25f)));
 
         for (int n = 0; n < numGroups; n++)
         {
@@ -63,7 +63,7 @@ public class EnemyPopulator : MonoBehaviour
                     {
                         enemySpawners.Add(new Vector2(x, y));
                         spawnPointFound = true;
-                        Debug.Log(new Vector2(x, y));
+                        //Debug.Log(new Vector2(x, y));
 
 
                         Vector3 pos = new Vector3(x - halfWidth + .5f, 0, -(y - halfHeight + .5f) * 1.155f);
