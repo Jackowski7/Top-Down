@@ -9,14 +9,14 @@ public class Player : MonoBehaviour
     GameManager gameManager;
 
     public Transform[] equipmentSlots;
-    public Transform magicWeaponSlot;
-    public Transform meleeWeaponSlot;
-    public Transform shieldSlot;
+    public Transform slot0;
+    public Transform slot1;
+    public Transform slot2;
 
     public GameObject[] equipment;
-    public GameObject magicWeapon;
-    public GameObject meleeWeapon;
-    public GameObject shield;
+    public GameObject slot0Equipped;
+    public GameObject slot1Equipped;
+    public GameObject slot2Equipped;
 
     [HideInInspector]
     public bool dead;
@@ -48,15 +48,15 @@ public class Player : MonoBehaviour
 
         if (equipment[0] == null)
         {
-            equipment[0] = magicWeapon;
+            equipment[0] = slot0Equipped;
         }
         if (equipment[1] == null)
         {
-            equipment[1] = meleeWeapon;
+            equipment[1] = slot1Equipped;
         }
         if (equipment[2] == null)
         {
-            equipment[2] = shield;
+            equipment[2] = slot2Equipped;
         }
     }
 
@@ -66,9 +66,9 @@ public class Player : MonoBehaviour
         equipmentSlots = new Transform[3];
 
         // 0 = weapon1, 1 = weapon 2, 2 = weapon 3, 3 = helmet;
-        equipmentSlots[0] = magicWeaponSlot;
-        equipmentSlots[1] = meleeWeaponSlot;
-        equipmentSlots[2] = shieldSlot;
+        equipmentSlots[0] = slot0;
+        equipmentSlots[1] = slot1;
+        equipmentSlots[2] = slot2;
 }
 
     void EquipGear()

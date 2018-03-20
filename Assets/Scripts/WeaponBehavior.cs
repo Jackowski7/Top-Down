@@ -10,7 +10,7 @@ public class WeaponBehavior : MonoBehaviour
     public bool staff;
     public bool shield;
 
-    public float fireSpeed;
+    public float fireTime;
     public float ChargeTime;
     public float PlayerRotSlow;
     public float EnergyDrainAmount;
@@ -32,8 +32,7 @@ public class WeaponBehavior : MonoBehaviour
     public Vector4 WeaponInfo()
     {
         Vector4 weaponInfo = new Vector4(0, 0, 0, 0);
-        weaponInfo.x = fireSpeed;
-
+        weaponInfo.x = fireTime;
         weaponInfo.y = ChargeTime;
         weaponInfo.z = PlayerRotSlow;
         weaponInfo.w = EnergyDrainAmount;

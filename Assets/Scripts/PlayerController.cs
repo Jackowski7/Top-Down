@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         speed_Animation = Vector3.Distance(transform.position, _prevPosition);
         _prevPosition = transform.position;
 
-        animator.SetFloat("Speed", speed_Animation);
+        animator.SetFloat("MovementSpeed", speed_Animation);
 
         //move camera
         Vector3 cameraTargetPos = this.transform.position;
@@ -119,12 +119,13 @@ public class PlayerController : MonoBehaviour
 
         Vector4 weaponInfo = weapon.WeaponInfo();
 
-        float fireSpeed = weaponInfo.x;
+        float fireTime = weaponInfo.x;
         float chargeTime = weaponInfo.y;
         float playerRotSlow = weaponInfo.z;
         float energyDrainAmount = weaponInfo.w;
+        string weaponType = player.transform.Find("Player Body").Find("Equipment").GetChild(weaponNumber).GetChild(0).tag;
 
-        if (weaponNumber == 0)
+        if (weaponType == "Staff")
         {
             Animate(Casting_Animation);
         }
@@ -137,34 +138,33 @@ public class PlayerController : MonoBehaviour
         while (Input.GetButton(button) && stats.energy - energyDrainAmount >= 0)
         {
 
-            if (weaponNumber == 1)
+            if (weaponType == "Sword" || weaponType == "Dagger" ) // or any melee type..
             {
-                Animate(Meleeing_Animation);
+                Animate(Meleeing_Animation); // animate appropriate weapon type animation
                 weapon.FireWeapon(playerBody, playerVelocity);
                 stats.energy -= energyDrainAmount;
-                yield return new WaitForSeconds(fireSpeed);
+                yield return new WaitForSeconds(fireTime);
                 Animate(Idle_Animation);
-                yield return new WaitForSeconds(.1f);
+                yield return new WaitForSeconds(.01f);
 
             }
 
-            if (weaponNumber == 0)
+            if (weaponType == "Staff")
             {
                 weapon.FireWeapon(playerBody, playerVelocity);
                 stats.energy -= energyDrainAmount;
 
-                yield return new WaitForSeconds(fireSpeed);
-            }            
+                yield return new WaitForSeconds(fireTime);
+            }
+
+            yield return new WaitForSeconds(.01f);
+
 
         }
 
         //set rotation speed to normal
         rotationSpeed = _rotationSpeed;
-
         Animate(Idle_Animation);
-
-        yield return new WaitForSeconds(.01f);
-
         firing = false;
 
     }
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
 
         Vector4 weaponInfo = shield.ShieldInfo();
 
-        float fireSpeed = weaponInfo.x;
+        float fireTime = weaponInfo.x;
         float chargeTime = weaponInfo.y;
         float playerRotSlow = weaponInfo.z;
         float energyDrainAmount = weaponInfo.w;
@@ -200,7 +200,7 @@ public class PlayerController : MonoBehaviour
                 Animate(Shielding_Animation);
                 }
 
-                yield return new WaitForSeconds(fireSpeed);
+                yield return new WaitForSeconds(fireTime);
                 stats.energy -= energyDrainAmount;
             
         }
@@ -224,7 +224,7 @@ public class PlayerController : MonoBehaviour
     {
         foreach(AnimatorControllerParameter parameter in animator.parameters)
         {
-            if (parameter.name != animation && parameter.name != "Speed")
+            if (parameter.name != animation && parameter.name != "MovementSpeed")
             {
                 animator.SetBool(parameter.name, false);
             }

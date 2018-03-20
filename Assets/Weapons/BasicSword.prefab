@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 114830175373143586}
   m_Layer: 8
   m_Name: BasicSword
-  m_TagString: Untagged
+  m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,7 +86,7 @@ MonoBehaviour:
   sword: 1
   staff: 0
   shield: 0
-  fireSpeed: 0.75
+  fireTime: 1
   ChargeTime: 0
   PlayerRotSlow: 20
   EnergyDrainAmount: 0

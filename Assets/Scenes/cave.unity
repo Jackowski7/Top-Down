@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311992, g: 0.38074034, b: 0.35872713, a: 1}
 --- !u!157 &4
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -495,6 +495,14 @@ Prefab:
       propertyPath: myCamera
       value: 
       objectReference: {fileID: 1979899857}
+    - target: {fileID: 1846088972929020, guid: 99e6917988e249d4881b14a1f268502a, type: 2}
+      propertyPath: m_Name
+      value: slot1 - melee
+      objectReference: {fileID: 0}
+    - target: {fileID: 1714501939841612, guid: 99e6917988e249d4881b14a1f268502a, type: 2}
+      propertyPath: m_Name
+      value: slot0 - magic
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 99e6917988e249d4881b14a1f268502a, type: 2}
   m_IsPrefabParent: 0

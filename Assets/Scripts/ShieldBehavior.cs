@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ShieldBehavior : MonoBehaviour {
 
-    public float fireSpeed;
+    public float fireTime;
     public float ChargeTime;
     public float PlayerRotSlow;
     public float EnergyDrainAmount;
@@ -32,7 +32,7 @@ public class ShieldBehavior : MonoBehaviour {
     public Vector4 ShieldInfo()
     {
         Vector4 weaponInfo = new Vector4(0, 0, 0, 0);
-        weaponInfo.x = fireSpeed;
+        weaponInfo.x = fireTime;
         weaponInfo.y = ChargeTime;
         weaponInfo.z = PlayerRotSlow;
         weaponInfo.w = EnergyDrainAmount;
