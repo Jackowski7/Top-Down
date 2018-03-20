@@ -231,7 +231,7 @@ MonoBehaviour:
   sword: 0
   staff: 1
   shield: 0
-  fireSpeed: 0.5
+  fireSpeed: 0.1
   ChargeTime: 0
   PlayerRotSlow: 50
   EnergyDrainAmount: 0

@@ -20,6 +20,14 @@ public class PlayerController : MonoBehaviour
     Camera mainCamera;
     Transform playerBody;
 
+    Vector3 playerVelocity;
+
+    private Animator animator;
+    private const string Idle_Animation = "Idle"; 
+    private const string Casting_Animation = "Casting";
+    private const string Meleeing_Animation = "Meleeing";
+    private const string Shielding_Animation = "Shielding";
+    private float speed_Animation;
 
     public static bool firing;
     int activeWeapon = 0;
@@ -27,6 +35,8 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         gameManager = transform.parent.GetComponent<GameManager>();
+
+        animator = GetComponent<Animator>();
         player = GetComponent<Player>();
         stats = GetComponent<Stats>();
         playerBody = transform.Find("Player Body");
@@ -52,6 +62,12 @@ public class PlayerController : MonoBehaviour
         moveDirection = transform.TransformDirection(moveDirection);
         moveDirection *= speed * 100;
         rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
+
+        playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
+        speed_Animation = Vector3.Distance(transform.position, _prevPosition);
+        _prevPosition = transform.position;
+
+        animator.SetFloat("Speed", speed_Animation);
 
         //move camera
         Vector3 cameraTargetPos = this.transform.position;
@@ -108,25 +124,47 @@ public class PlayerController : MonoBehaviour
         float playerRotSlow = weaponInfo.z;
         float energyDrainAmount = weaponInfo.w;
 
+        if (weaponNumber == 0)
+        {
+            Animate(Casting_Animation);
+        }
+
         yield return new WaitForSeconds(chargeTime);
 
+        //slow player rotation by weapon amount
         rotationSpeed = rotationSpeed - (rotationSpeed * playerRotSlow / 100);
 
         while (Input.GetButton(button) && stats.energy - energyDrainAmount >= 0)
         {
 
-            Vector3 playerVelocity;
-
-            playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
-            _prevPosition = transform.position;
-
+            if (weaponNumber == 1)
+            {
+                Animate(Meleeing_Animation);
                 weapon.FireWeapon(playerBody, playerVelocity);
                 stats.energy -= energyDrainAmount;
                 yield return new WaitForSeconds(fireSpeed);
-        }
-       
+                Animate(Idle_Animation);
+                yield return new WaitForSeconds(.1f);
 
+            }
+
+            if (weaponNumber == 0)
+            {
+                weapon.FireWeapon(playerBody, playerVelocity);
+                stats.energy -= energyDrainAmount;
+
+                yield return new WaitForSeconds(fireSpeed);
+            }            
+
+        }
+
+        //set rotation speed to normal
         rotationSpeed = _rotationSpeed;
+
+        Animate(Idle_Animation);
+
+        yield return new WaitForSeconds(.01f);
+
         firing = false;
 
     }
@@ -158,7 +196,8 @@ public class PlayerController : MonoBehaviour
                 if (shielding == false)
                 {
                 shield.DrawShield(playerBody);
-                    shielding = true;
+                shielding = true;
+                Animate(Shielding_Animation);
                 }
 
                 yield return new WaitForSeconds(fireSpeed);
@@ -167,9 +206,29 @@ public class PlayerController : MonoBehaviour
         }
 
         shield.PutAway();
+        animator.SetBool(Shielding_Animation, false);
+
 
         rotationSpeed = _rotationSpeed;
         firing = false;
+
+    }
+
+    private void Animate(string boolName)
+    {
+        DisableOtherAnimations(animator, boolName);
+        animator.SetBool(boolName, true);
+    }
+
+    private void DisableOtherAnimations(Animator animator, string animation)
+    {
+        foreach(AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.name != animation && parameter.name != "Speed")
+            {
+                animator.SetBool(parameter.name, false);
+            }
+        }
 
     }
 
