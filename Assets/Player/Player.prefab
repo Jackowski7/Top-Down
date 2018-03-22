@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4691874974180872}
   m_Layer: 8
-  m_Name: slot2 - shield
+  m_Name: ShieldSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -93,6 +93,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1543434622026070
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4883115626060400}
+  m_Layer: 8
+  m_Name: Slot1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1591652333499920
 GameObject:
   m_ObjectHideFlags: 1
@@ -118,22 +133,22 @@ GameObject:
   m_Component:
   - component: {fileID: 4188819561907544}
   m_Layer: 8
-  m_Name: slot0
+  m_Name: WeaponSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1846088972929020
+--- !u!1 &1774413024994852
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4905013871181238}
+  - component: {fileID: 4346786178749358}
   m_Layer: 8
-  m_Name: slot1
+  m_Name: Slot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -164,7 +179,9 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.581, y: -0.13000003, z: 0.379}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 4883115626060400}
+  - {fileID: 4346786178749358}
   m_Father: {fileID: 4538692663777544}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 3.5258405, z: 0}
@@ -195,6 +212,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4346786178749358
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1774413024994852}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4188819561907544}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4379512765539378
 Transform:
   m_ObjectHideFlags: 1
@@ -222,7 +252,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4188819561907544}
-  - {fileID: 4905013871181238}
   - {fileID: 4691874974180872}
   - {fileID: 4792575673735632}
   m_Father: {fileID: 4379512765539378}
@@ -252,7 +281,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4538692663777544}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: -17.193, z: 0}
 --- !u!4 &4792575673735632
 Transform:
@@ -265,21 +294,21 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4538692663777544}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4905013871181238
+--- !u!4 &4883115626060400
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1846088972929020}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.523, y: 0, z: 0.361}
+  m_GameObject: {fileID: 1543434622026070}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4538692663777544}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -0.0073643844, y: 4.462817, z: 0.08554015}
+  m_Father: {fileID: 4188819561907544}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &54599532394363628
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -389,16 +418,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   equipmentSlots: []
-  slot0: {fileID: 4188819561907544}
-  slot1: {fileID: 4905013871181238}
-  slot2: {fileID: 4691874974180872}
+  WeaponSlot1: {fileID: 4883115626060400}
+  WeaponSlot2: {fileID: 4346786178749358}
+  ShieldSlot: {fileID: 4691874974180872}
+  HelmetSlot: {fileID: 4225045282313776}
   equipment: []
-  slot0Equipped: {fileID: 1218915751960328, guid: a159f57c3b6aa5842ba7ffbaa89c31c7,
-    type: 2}
-  slot1Equipped: {fileID: 1684792491197442, guid: a6128fd7a8c1ac14cab766a9e268039e,
-    type: 2}
-  slot2Equipped: {fileID: 1684792491197442, guid: dad08fb36b521cb4098d9b5f46d089c9,
-    type: 2}
+  Weapon1: {fileID: 1218915751960328, guid: a159f57c3b6aa5842ba7ffbaa89c31c7, type: 2}
+  Weapon2: {fileID: 1684792491197442, guid: a6128fd7a8c1ac14cab766a9e268039e, type: 2}
+  Shield: {fileID: 1684792491197442, guid: dad08fb36b521cb4098d9b5f46d089c9, type: 2}
+  Helmet: {fileID: 1395378586678072, guid: 1c125f5d45319cf45a358b61fe7bc78f, type: 2}
   dead: 0
   invincible: 0
 --- !u!136 &136528382092014992

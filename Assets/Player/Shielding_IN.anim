@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Meleeing
+  m_Name: Shielding_IN
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -23,14 +23,8 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.5
-        value: {x: 90.00001, y: 0, z: 7.74}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: {x: 90.00001, y: 0, z: 0}
+        time: 0.26666668
+        value: {x: 90.00001, y: 0, z: -22.35}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -48,14 +42,8 @@ AnimationClip:
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
-        time: 0.5
-        value: {x: 0, y: -7.74, z: 0}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: {x: 0, y: 0, z: 0}
+        time: 0.26666668
+        value: {x: 0, y: 36.09, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
@@ -68,64 +56,40 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: -10.348001, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
         time: 0.26666668
-        value: {x: 0, y: 72.95901, z: 0}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.6
-        value: {x: 0, y: 2.9580002, z: 0}
-        inSlope: {x: 0, y: -16.134535, z: 0}
-        outSlope: {x: 0, y: -16.134535, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: -10.348001, z: 0}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
   m_PositionCurves:
   - curve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: {x: 0.633, y: -0.13000003, z: 0.243}
+        value: {x: -0.6, y: -0.13000003, z: 0.2}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       - serializedVersion: 2
         time: 0.26666668
-        value: {x: 0.779, y: -0.13000003, z: 0.343}
-        inSlope: {x: 0, y: 0, z: 0.66666657}
-        outSlope: {x: 0, y: 0, z: 0.66666657}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 0.6
-        value: {x: -0.305, y: -0.13000003, z: 0.653}
-        inSlope: {x: 0, y: 0, z: 0}
-        outSlope: {x: 0, y: 0, z: 0}
-        tangentMode: 0
-      - serializedVersion: 2
-        time: 1
-        value: {x: 0.633, y: -0.13000003, z: 0.243}
+        value: {x: -0.508, y: -0.13000003, z: 0.503}
         inSlope: {x: 0, y: 0, z: 0}
         outSlope: {x: 0, y: 0, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -137,7 +101,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 2193525534
+      path: 1612397182
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -158,7 +122,7 @@ AnimationClip:
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2193525534
+      path: 1612397182
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -170,12 +134,12 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1
+    m_StopTime: 0.26666668
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
     m_HasAdditiveReferencePose: 0
-    m_LoopTime: 1
+    m_LoopTime: 0
     m_LoopBlend: 0
     m_LoopBlendOrientation: 0
     m_LoopBlendPositionY: 0
@@ -196,7 +160,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1
+        time: 0.26666668
         value: 90.00001
         inSlope: 0
         outSlope: 0
@@ -218,7 +182,7 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1
+        time: 0.26666668
         value: 0
         inSlope: 0
         outSlope: 0
@@ -240,14 +204,8 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 0.5
-        value: 7.74
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
-        value: 0
+        time: 0.26666668
+        value: -22.35
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -268,7 +226,23 @@ AnimationClip:
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
-        time: 1
+        time: 0.26666668
+        value: 36.09
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: localEulerAnglesRaw.y
+    path: Player Body/Equipment
+    classID: 4
+    script: {fileID: 0}
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 2
+        time: 0
         value: 0
         inSlope: 0
         outSlope: 0
@@ -289,40 +263,6 @@ AnimationClip:
         inSlope: 0
         outSlope: 0
         tangentMode: 136
-      - serializedVersion: 2
-        time: 0.5
-        value: -7.74
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: localEulerAnglesRaw.y
-    path: Player Body/Equipment
-    classID: 4
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 2
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
@@ -335,25 +275,13 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.633
+        value: -0.6
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.26666668
-        value: 0.779
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: -0.305
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
-        value: 0.633
+        value: -0.508
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -361,7 +289,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -375,18 +303,6 @@ AnimationClip:
         tangentMode: 136
       - serializedVersion: 2
         time: 0.26666668
-        value: -0.13000003
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: -0.13000003
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
         value: -0.13000003
         inSlope: 0
         outSlope: 0
@@ -395,7 +311,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -403,25 +319,13 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0.243
+        value: 0.2
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.26666668
-        value: 0.343
-        inSlope: 0.66666657
-        outSlope: 0.66666657
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: 0.653
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
-        value: 0.243
+        value: 0.503
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -429,7 +333,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -443,18 +347,6 @@ AnimationClip:
         tangentMode: 136
       - serializedVersion: 2
         time: 0.26666668
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
         value: 0
         inSlope: 0
         outSlope: 0
@@ -463,7 +355,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -471,25 +363,13 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 2
         time: 0
-        value: 0
+        value: -10.348001
         inSlope: 0
         outSlope: 0
         tangentMode: 136
       - serializedVersion: 2
         time: 0.26666668
-        value: 72.95901
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: 2.9580002
-        inSlope: -16.134535
-        outSlope: -16.134535
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
-        value: 0
+        value: -10.348001
         inSlope: 0
         outSlope: 0
         tangentMode: 136
@@ -497,7 +377,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -511,18 +391,6 @@ AnimationClip:
         tangentMode: 136
       - serializedVersion: 2
         time: 0.26666668
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 0.6
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 136
-      - serializedVersion: 2
-        time: 1
         value: 0
         inSlope: 0
         outSlope: 0
@@ -531,7 +399,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -602,7 +470,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -612,7 +480,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -622,7 +490,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Player Body/Equipment/slot1 - melee
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

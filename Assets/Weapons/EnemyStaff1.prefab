@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 33435487234692594}
   - component: {fileID: 136601213629940440}
   - component: {fileID: 23401128791137522}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Stick
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4152483145037828}
   - component: {fileID: 114237217478721092}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: EnemyStaff1
   m_TagString: Staff
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 33003973270975022}
   - component: {fileID: 135080638406785730}
   - component: {fileID: 23582548398046600}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Orb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4005082873046778}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -231,8 +231,8 @@ MonoBehaviour:
   sword: 0
   staff: 1
   shield: 0
-  fireTime: 1
-  ChargeTime: 0
+  fireSpeed: 0.5
+  ChargeTime: 0.5
   PlayerRotSlow: 50
   EnergyDrainAmount: 0
   bulletDamage: 10

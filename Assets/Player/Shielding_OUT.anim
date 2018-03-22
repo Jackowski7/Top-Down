@@ -5,7 +5,7 @@ AnimationClip:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: ShieldOut
+  m_Name: Shielding_OUT
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
@@ -69,7 +69,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
   m_PositionCurves:
   - curve:
       serializedVersion: 2
@@ -89,7 +89,7 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
   m_ScaleCurves: []
   m_FloatCurves: []
   m_PPtrCurves: []
@@ -101,7 +101,7 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 2922880518
+      path: 1612397182
       attribute: 1
       script: {fileID: 0}
       typeID: 4
@@ -122,7 +122,7 @@ AnimationClip:
       customType: 4
       isPPtrCurve: 0
     - serializedVersion: 2
-      path: 2922880518
+      path: 1612397182
       attribute: 4
       script: {fileID: 0}
       typeID: 4
@@ -242,6 +242,12 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+      - serializedVersion: 2
         time: 0.16666667
         value: 0
         inSlope: 0
@@ -257,6 +263,12 @@ AnimationClip:
   - curve:
       serializedVersion: 2
       m_Curve:
+      - serializedVersion: 2
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
       - serializedVersion: 2
         time: 0.16666667
         value: 0
@@ -289,7 +301,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.x
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -311,7 +323,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.y
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -333,7 +345,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalPosition.z
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -355,7 +367,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.x
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -377,7 +389,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.y
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -399,7 +411,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: localEulerAnglesRaw.z
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   m_EulerEditorCurves:
@@ -410,7 +422,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Player Body/Body
+    path: Player Body/Equipment
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -420,7 +432,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Player Body/Body
+    path: Player Body/Equipment
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -430,7 +442,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Player Body/Body
+    path: Player Body/Equipment
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -440,7 +452,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Player Body/Equipment
+    path: Player Body/Body
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -450,7 +462,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Player Body/Equipment
+    path: Player Body/Body
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -460,7 +472,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Player Body/Equipment
+    path: Player Body/Body
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -470,7 +482,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -480,7 +492,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -490,7 +502,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Player Body/Equipment/slot2 - shield
+    path: Player Body/Equipment/ShieldSlot
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

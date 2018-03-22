@@ -10,7 +10,7 @@ public class WeaponBehavior : MonoBehaviour
     public bool staff;
     public bool shield;
 
-    public float fireTime;
+    public float fireSpeed;
     public float ChargeTime;
     public float PlayerRotSlow;
     public float EnergyDrainAmount;
@@ -24,15 +24,24 @@ public class WeaponBehavior : MonoBehaviour
 
     public bool shieldOut = false;
 
+    void OnValidate()
+    {
+        fireSpeed = Mathf.Max(fireSpeed, .5f);
+        ChargeTime = Mathf.Max(ChargeTime, .2f);
+    }
+
+
     // Use this for initialization
     void Start()
     {
+        
     }
+
 
     public Vector4 WeaponInfo()
     {
         Vector4 weaponInfo = new Vector4(0, 0, 0, 0);
-        weaponInfo.x = fireTime;
+        weaponInfo.x = fireSpeed;
         weaponInfo.y = ChargeTime;
         weaponInfo.z = PlayerRotSlow;
         weaponInfo.w = EnergyDrainAmount;
@@ -76,17 +85,12 @@ public class WeaponBehavior : MonoBehaviour
         bulletBehavior.target = target;
         bulletBehavior.firer = firer;
 
-        if (staff == true)
+        if (tag == "Staff")
         {
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
             Vector3 dir = playerBody.forward.normalized;
             dir.x += Random.Range(-bulletSpread / 100, bulletSpread / 100);
             rb.velocity = dir * bulletSpeed + (playerVelocity);
-        }
-
-        if (sword == true)
-        {
-
         }
 
         return;

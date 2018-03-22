@@ -9,14 +9,16 @@ public class Player : MonoBehaviour
     GameManager gameManager;
 
     public Transform[] equipmentSlots;
-    public Transform slot0;
-    public Transform slot1;
-    public Transform slot2;
+    public Transform WeaponSlot1;
+    public Transform WeaponSlot2;
+    public Transform ShieldSlot;
+    public Transform HelmetSlot;
 
     public GameObject[] equipment;
-    public GameObject slot0Equipped;
-    public GameObject slot1Equipped;
-    public GameObject slot2Equipped;
+    public GameObject Weapon1;
+    public GameObject Weapon2;
+    public GameObject Shield;
+    public GameObject Helmet;
 
     [HideInInspector]
     public bool dead;
@@ -42,34 +44,39 @@ public class Player : MonoBehaviour
 
     void SetUpEquipment()
     {
-        equipment = new GameObject[3];
+        equipment = new GameObject[4];
 
         // 0 = weapon1, 1 = weapon 2, 2 = weapon 3, 3 = helmet;
 
         if (equipment[0] == null)
         {
-            equipment[0] = slot0Equipped;
+            equipment[0] = Weapon1;
         }
         if (equipment[1] == null)
         {
-            equipment[1] = slot1Equipped;
+            equipment[1] = Weapon2;
         }
         if (equipment[2] == null)
         {
-            equipment[2] = slot2Equipped;
+            equipment[2] = Shield;
+        }
+        if (equipment[3] == null)
+        {
+            equipment[3] = Helmet;
         }
     }
 
 
     void SetUpSlots()
     {
-        equipmentSlots = new Transform[3];
+        equipmentSlots = new Transform[4];
 
         // 0 = weapon1, 1 = weapon 2, 2 = weapon 3, 3 = helmet;
-        equipmentSlots[0] = slot0;
-        equipmentSlots[1] = slot1;
-        equipmentSlots[2] = slot2;
-}
+        equipmentSlots[0] = WeaponSlot1;
+        equipmentSlots[1] = WeaponSlot2;
+        equipmentSlots[2] = ShieldSlot;
+        equipmentSlots[3] = HelmetSlot;
+    }
 
     void EquipGear()
     {
@@ -81,6 +88,8 @@ public class Player : MonoBehaviour
             item.transform.parent = slot.transform;
             item.name = equipment[x].name;
         }
+
+
   
     }
 

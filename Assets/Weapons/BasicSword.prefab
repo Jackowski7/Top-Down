@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4991348472706088}
   - component: {fileID: 114830175373143586}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: BasicSword
   m_TagString: Sword
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4858184638073346}
   - component: {fileID: 212436893081102402}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,8 +86,8 @@ MonoBehaviour:
   sword: 1
   staff: 0
   shield: 0
-  fireTime: 1
-  ChargeTime: 0
+  fireSpeed: 1
+  ChargeTime: 0.5
   PlayerRotSlow: 20
   EnergyDrainAmount: 0
   bulletDamage: 15
