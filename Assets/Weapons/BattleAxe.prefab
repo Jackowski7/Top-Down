@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4991348472706088}
   - component: {fileID: 114830175373143586}
   m_Layer: 0
-  m_Name: BasicSword
+  m_Name: BattleAxe
   m_TagString: Sword
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,13 +49,13 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1733766479425560}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0.108, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalRotation: {x: 0.6532815, y: 0.27059805, z: -0.27059805, w: 0.6532815}
+  m_LocalPosition: {x: -0.028, y: 0, z: 0.392}
+  m_LocalScale: {x: -0.1, y: 0.1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 4991348472706088}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 45, z: 0}
 --- !u!4 &4991348472706088
 Transform:
   m_ObjectHideFlags: 1
@@ -63,7 +63,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684792491197442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -1.9834406, y: -1, z: 0.62244844}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4858184638073346}
@@ -83,11 +83,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1572913392945714, guid: f85bebde63583894e83c6eea60ba4f14,
     type: 2}
-  sword: 1
-  staff: 0
-  shield: 0
+  animated: 0
   fireSpeed: 1
-  ChargeTime: 0.5
+  chargeSpeed: 1
   PlayerRotSlow: 20
   EnergyDrainAmount: 0
   bulletDamage: 15
@@ -131,7 +129,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 9234f3b06540cd74f83bac2a67a1e618, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 873044ec9f560da49a01fa46c5fbb482, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

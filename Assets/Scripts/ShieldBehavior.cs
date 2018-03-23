@@ -5,7 +5,7 @@ using UnityEngine;
 public class ShieldBehavior : MonoBehaviour {
 
     public float fireSpeed;
-    public float ChargeTime;
+    public float chargeSpeed;
     public float PlayerRotSlow;
     public float EnergyDrainAmount;
     public float knockBack;
@@ -20,7 +20,7 @@ public class ShieldBehavior : MonoBehaviour {
     void OnValidate()
     {
         fireSpeed = Mathf.Max(fireSpeed, .5f);
-        ChargeTime = Mathf.Max(ChargeTime, .2f);
+        chargeSpeed = Mathf.Max(chargeSpeed, .2f);
     }
 
     private void OnCollisionEnter(Collision col)
@@ -39,7 +39,7 @@ public class ShieldBehavior : MonoBehaviour {
     {
         Vector4 weaponInfo = new Vector4(0, 0, 0, 0);
         weaponInfo.x = fireSpeed;
-        weaponInfo.y = ChargeTime;
+        weaponInfo.y = chargeSpeed;
         weaponInfo.z = PlayerRotSlow;
         weaponInfo.w = EnergyDrainAmount;
         return weaponInfo;
@@ -63,6 +63,11 @@ public class ShieldBehavior : MonoBehaviour {
 
         Collider col = GetComponent<Collider>();
         col.enabled = true;
+    }
+
+    public void FireShield()
+    {
+        Debug.Log("Fired my shield?");
     }
 
     public void PutAway()

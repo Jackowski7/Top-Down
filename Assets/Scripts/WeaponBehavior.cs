@@ -6,12 +6,10 @@ public class WeaponBehavior : MonoBehaviour
 {
     public GameObject bulletPrefab;
 
-    public bool sword;
-    public bool staff;
-    public bool shield;
+    public bool animated;
 
     public float fireSpeed;
-    public float ChargeTime;
+    public float chargeSpeed;
     public float PlayerRotSlow;
     public float EnergyDrainAmount;
 
@@ -27,7 +25,7 @@ public class WeaponBehavior : MonoBehaviour
     void OnValidate()
     {
         fireSpeed = Mathf.Max(fireSpeed, .5f);
-        ChargeTime = Mathf.Max(ChargeTime, .2f);
+        chargeSpeed = Mathf.Max(chargeSpeed, .2f);
     }
 
 
@@ -42,7 +40,7 @@ public class WeaponBehavior : MonoBehaviour
     {
         Vector4 weaponInfo = new Vector4(0, 0, 0, 0);
         weaponInfo.x = fireSpeed;
-        weaponInfo.y = ChargeTime;
+        weaponInfo.y = chargeSpeed;
         weaponInfo.z = PlayerRotSlow;
         weaponInfo.w = EnergyDrainAmount;
         return weaponInfo;

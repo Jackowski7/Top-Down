@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     Vector3 playerVelocity;
 
-    private Animator animator;
+    private Animator playerAnimator;
     private const string Idle_Animation = "Idle";
     private const string Casting_Animation = "Casting";
     private const string Meleeing_Animation = "Meleeing";
@@ -30,13 +30,14 @@ public class PlayerController : MonoBehaviour
     private float speed_Animation;
 
     public static bool firing;
+    public bool charged = false;
     int activeWeapon = 0;
 
     private void Start()
     {
         gameManager = transform.parent.GetComponent<GameManager>();
 
-        animator = GetComponent<Animator>();
+        playerAnimator = GetComponent<Animator>();
         player = GetComponent<Player>();
         stats = GetComponent<Stats>();
         playerBody = transform.Find("Player Body");
@@ -67,7 +68,7 @@ public class PlayerController : MonoBehaviour
         speed_Animation = Vector3.Distance(transform.position, _prevPosition);
         _prevPosition = transform.position;
 
-        animator.SetFloat("MovementSpeed", speed_Animation);
+        playerAnimator.SetFloat("MovementSpeed", speed_Animation);
 
         //move camera
         Vector3 cameraTargetPos = this.transform.position;
@@ -101,7 +102,6 @@ public class PlayerController : MonoBehaviour
     {
         //we're firing, dont fire again until we're done
         firing = true;
-        animator.SetBool("Charged", false);
 
         //swap weapons on fire
         if (activeWeapon != weaponNumber)
@@ -116,12 +116,18 @@ public class PlayerController : MonoBehaviour
 
         WeaponBehavior weapon = player.transform.Find("Player Body").Find("Equipment").Find("WeaponSlot").GetChild(weaponNumber).GetChild(0).GetComponent<WeaponBehavior>();
 
+        Animator weaponAnimator = null;
+        if (weapon.animated == true)
+        {
+            weaponAnimator = player.transform.Find("Player Body").Find("Equipment").Find("WeaponSlot").GetChild(weaponNumber).GetChild(0).GetComponent<Animator>();
+        }
+
         float _rotationSpeed = rotationSpeed;
 
         Vector4 weaponInfo = weapon.WeaponInfo();
 
         float fireSpeed = weaponInfo.x;
-        float chargeTime = weaponInfo.y;
+        float chargeSpeed = weaponInfo.y;
         float playerRotSlow = weaponInfo.z;
         float energyDrainAmount = weaponInfo.w;
         string weaponType = player.transform.Find("Player Body").Find("Equipment").Find("WeaponSlot").GetChild(weaponNumber).GetChild(0).tag;
@@ -135,39 +141,77 @@ public class PlayerController : MonoBehaviour
             Animate(Meleeing_Animation); // animate appropriate weapon type animation
         }
 
+        playerAnimator.SetFloat("FireSpeed", fireSpeed);
+        playerAnimator.SetFloat("ChargeSpeed", chargeSpeed);
+
+        if (weapon.animated == true)
+        {
+            weaponAnimator.SetBool("Firing", true);
+            weaponAnimator.SetFloat("ChargeSpeed", chargeSpeed);
+            weaponAnimator.SetFloat("FireSpeed", fireSpeed);
+        }
+
         //slow player rotation by weapon amount
         rotationSpeed = rotationSpeed - (rotationSpeed * playerRotSlow / 100);
 
-        yield return new WaitForSeconds(chargeTime);
-        animator.SetBool("Charged", true);
+        float lastFireTime = 0;
 
-        while (Input.GetButton(button) && stats.energy - energyDrainAmount >= 0)
+        while (Input.GetButton(button) && stats.energy - energyDrainAmount >= 0 )
         {
-            weapon.FireWeapon(playerBody, playerVelocity);
-            stats.energy -= energyDrainAmount;
+ 
+            if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
+            {
+                lastFireTime = Time.time;
 
-            animator.SetBool("Fire", true);
+                stats.energy -= energyDrainAmount;
+                playerAnimator.SetTrigger("Fire");
+
+                if (weapon.animated == true)
+                {
+                    weaponAnimator.SetTrigger("Fire");
+                }
+
+            }
             yield return new WaitForFixedUpdate();
-            animator.SetBool("Fire", false);
 
-            yield return new WaitForSeconds(1 / fireSpeed);
         }
 
         //set rotation speed to normal
         rotationSpeed = _rotationSpeed;
         Animate(Idle_Animation);
+        playerAnimator.SetFloat("FireSpeed", 1);
+         
+        if (weapon.animated == true)
+        {
+            weaponAnimator.SetFloat("FireSpeed", 1);
+            weaponAnimator.SetBool("Firing", false);
+        }
+
         firing = false;
 
     }
+    
+    public void SetCharged()
+    {
+        charged = true;
+    }
+    public void SetNotCharged()
+    {
+        charged = false;
+    }
 
-
+    void FireWeapon()
+    {
+        WeaponBehavior weapon = player.transform.Find("Player Body").Find("Equipment").Find("WeaponSlot").GetChild(activeWeapon).GetChild(0).GetComponent<WeaponBehavior>();
+        weapon.FireWeapon(playerBody, playerVelocity);
+    }
 
 
     IEnumerator _FireShield(int weaponNumber, string button)
     {
         //we're firing, dont fire again until we're done
         firing = true;
-        animator.SetBool("Charged", false);
+        playerAnimator.SetBool("Charged", false);
 
         ShieldBehavior shield = player.transform.Find("Player Body").Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
 
@@ -176,29 +220,29 @@ public class PlayerController : MonoBehaviour
         Vector4 weaponInfo = shield.ShieldInfo();
 
         float fireSpeed = weaponInfo.x;
-        float chargeTime = weaponInfo.y;
+        float chargeSpeed = weaponInfo.y;
         float playerRotSlow = weaponInfo.z;
         float energyDrainAmount = weaponInfo.w;
 
         Animate(Shielding_Animation);
         rotationSpeed = rotationSpeed - (rotationSpeed * playerRotSlow / 100);
 
-        yield return new WaitForSeconds(chargeTime);
-        animator.SetBool("Charged", true);
+        playerAnimator.SetFloat("FireSpeed", fireSpeed);
+        playerAnimator.SetFloat("ChargeSpeed", chargeSpeed);
 
+        float lastFireTime = 0;
         while ((Input.GetButton(button) && stats.energy - energyDrainAmount >= 0))
         {
-            shield.DrawShield(playerBody);
-            stats.energy -= energyDrainAmount;
 
-            animator.SetBool("Fire", true);
+            if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
+            {
+                stats.energy -= energyDrainAmount;
+                playerAnimator.SetTrigger("Fire");
+                lastFireTime = Time.time;
+            }
             yield return new WaitForFixedUpdate();
-            animator.SetBool("Fire", false);
 
-            yield return new WaitForSeconds(1 / fireSpeed);
         }
-
-        shield.PutAway();
 
         //set rotation speed to normal
         rotationSpeed = _rotationSpeed;
@@ -207,20 +251,36 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void DrawShield()
+    {
+        ShieldBehavior shield = player.transform.Find("Player Body").Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
+        shield.DrawShield(playerBody);
+    }
 
+    void FireShield()
+    {
+        ShieldBehavior shield = player.transform.Find("Player Body").Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
+        shield.FireShield();
+    }
+
+    void PutAwayShield()
+    {
+        ShieldBehavior shield = player.transform.Find("Player Body").Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
+        shield.PutAway();
+    }
 
 
     private void Animate(string boolName)
     {
-        DisableOtherAnimations(animator, boolName);
-        animator.SetBool(boolName, true);
+        DisableOtherAnimations(playerAnimator, boolName);
+        playerAnimator.SetBool(boolName, true);
     }
 
     private void DisableOtherAnimations(Animator animator, string animation)
     {
         foreach (AnimatorControllerParameter parameter in animator.parameters)
         {
-            if (parameter.name != animation && parameter.name != "MovementSpeed")
+            if (parameter.name != animation && parameter.name != "MovementSpeed" && parameter.name != "FireSpeed" && parameter.name != "ChargeSpeed")
             {
                 animator.SetBool(parameter.name, false);
             }

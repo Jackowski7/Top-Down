@@ -177,7 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireSpeed: 1
-  ChargeTime: 0.5
+  chargeSpeed: 2
   PlayerRotSlow: 0
   EnergyDrainAmount: 0
   knockBack: 10
