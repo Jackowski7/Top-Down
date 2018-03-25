@@ -5,13 +5,13 @@ using UnityEngine;
 public class bulletBehavior : MonoBehaviour
 {
 
+    public GameObject explosionPrefab;
+
     Transform player;
     WeaponBehavior weapon;
 
     [HideInInspector]
-    public string target;
-    [HideInInspector]
-    public string firer;
+    public string team;
     [HideInInspector]
     public float durability;
     [HideInInspector]
@@ -30,71 +30,48 @@ public class bulletBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (durability <= 0)
         {
-            Destroy(gameObject);
-        }
-
-    }
-
-
-    private void OnCollisionEnter(Collision col)
-    {
-        //only works for magic
-        if (col.transform.tag == target)
-        {
-            Stats stats = col.gameObject.GetComponent<Stats>();
-            stats.health -= damage;
-            Debug.Log("Bullet Hit target" + target);
-            stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
-            Destroy(gameObject);
-        }
-
-        if (col.gameObject.tag != firer)
-        {
-            durability--;
-        }
-
-        if (col.gameObject.tag == firer)
-        {
-//            Debug.Log("Stop Hitting yourself!");
-        }
-
-        if (col.gameObject.tag == "Shield")
-        {
-            var _target = target;
-            target = firer;
-            firer = _target;
-
-            StopCoroutine(DestroySelf());
-            StartCoroutine(DestroySelf());
+            StartCoroutine(Explode());
         }
 
     }
 
     private void OnTriggerEnter(Collider col)
     {
-        // for sword swings
-        if (col.tag == target)
-        {
-            Stats stats = col.gameObject.GetComponent<Stats>();
-            stats.health -= damage;
-            Debug.Log("Bullet Hit target" + target);
-            stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
-        }
 
-        if (col.tag != firer)
+        if (col.tag == "Enemy" || col.tag == "Player" || col.tag == "Destructible")
+        {
+            if (col.gameObject.tag != team)
+            {
+                Stats stats = col.gameObject.GetComponent<Stats>();
+                stats.health -= damage;
+                //Debug.Log("Bullet Hit " + col.transform.name);
+                stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
+                durability--;
+            }
+        }
+        if (col.tag != "Enemy" && col.tag != "Player" && col.tag != "Destructible" && col.tag != "Effect")
         {
             durability--;
         }
 
     }
 
+    IEnumerator Explode()
+    {
+        if (explosionPrefab != null)
+        {
+            Instantiate(explosionPrefab, transform.position, transform.rotation);
+            yield return new WaitForFixedUpdate();
+        }
+        Destroy(gameObject);
+    }
+
     IEnumerator DestroySelf()
     {
         yield return new WaitForSeconds(lifetime);
-        Destroy(gameObject);
+        StartCoroutine(Explode());
     }
 
 

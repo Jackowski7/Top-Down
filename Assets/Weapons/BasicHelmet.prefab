@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4736269305384910}
   - component: {fileID: 33940678283295650}
-  - component: {fileID: 135062389610203852}
   - component: {fileID: 23618820542577540}
   m_Layer: 0
   m_Name: BasicHelmet
@@ -83,15 +82,3 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1395378586678072}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!135 &135062389610203852
-SphereCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1395378586678072}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}

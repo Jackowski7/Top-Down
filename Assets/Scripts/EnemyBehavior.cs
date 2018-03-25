@@ -5,9 +5,10 @@ using UnityEngine;
 public class EnemyBehavior : MonoBehaviour
 {
 
-    Player player;
+    GameObject player;
     Stats playerStats;
     Stats stats;
+    Equipment equipment;
 
     public float thornsDamage;
     public float thornsKnockback;
@@ -16,16 +17,6 @@ public class EnemyBehavior : MonoBehaviour
     public float rotationSpeed;
 
     int lookingMask;
-
-    public Transform[] equipmentSlots;
-    public Transform magicWeaponSlot;
-    public Transform meleeWeaponSlot;
-    public Transform shieldSlot;
-
-    public GameObject[] equipment;
-    public GameObject magicWeapon;
-    public GameObject meleeWeapon;
-    public GameObject shield;
 
     [HideInInspector]
     public bool dead;
@@ -36,28 +27,32 @@ public class EnemyBehavior : MonoBehaviour
     Rigidbody rb;
     Vector3 moveDirection;
     Vector3 _prevPosition;
-    Transform EnemyBody;
+    Vector3 playerVelocity;
 
-    bool applyThorns;
-    bool firing;
-    int activeWeapon = 0;
-    int firingWeapon = 3;
+    private Animator playerAnimator;
+    private string Idle_Animation = "Idle";
+    private string Casting_Animation = "Casting";
+    private string Meleeing_Animation = "Meleeing";
+    private string Shielding_Animation = "Shielding";
+    private float speed_Animation;
+
+    private bool firing;
+    private bool charged = false;
+    private int activeWeapon = 0;
+    private int firingWeapon;
+    private bool applyThorns;
 
     // Use this for initialization
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-        playerStats = GameObject.FindGameObjectWithTag("Player").GetComponent<Stats>();
+        player = GameObject.FindGameObjectWithTag("Player");
+        playerStats = player.GetComponent<Stats>();
         stats = GetComponent<Stats>();
+        equipment = GetComponent<Equipment>();
+        playerAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
-        EnemyBody= transform.Find("EnemyBody");
 
         lookingMask = LayerMask.GetMask("Player", "Environment");
-
-
-        SetUpEquipment();
-        SetUpSlots();
-        EquipGear();
     }
 
     // Update is called once per frame
@@ -70,10 +65,17 @@ public class EnemyBehavior : MonoBehaviour
             Debug.Log("Enemy Killed");
         }
 
+        playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
+        playerVelocity.y = 0;
+        speed_Animation = Vector3.Distance(transform.position, _prevPosition);
+        _prevPosition = transform.position;
+
+        playerAnimator.SetFloat("MovementSpeed", speed_Animation);
+
         Vector3 playerDirection = (player.transform.position - transform.position);
 
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, playerDirection, out hit, seeDistance, lookingMask) && (hit.transform.tag == "Player" || hit.transform.tag == "Shield" ))
+        if (Physics.Raycast(transform.position, playerDirection, out hit, seeDistance, lookingMask) && (hit.transform.tag == "Player" || hit.transform.tag == "Shield"))
         {
 
             playerDirection.y = 0;
@@ -85,13 +87,13 @@ public class EnemyBehavior : MonoBehaviour
 
             if (hit.distance > 3f && firing == false)
             {
-                StartCoroutine(_FireWeapon(0, "Fire1"));
+                StartCoroutine(_FireWeapon(0));
                 firingWeapon = 0;
             }
 
-            if (hit.distance <= 3f && firing == false)
+            if (hit.distance <= 5f && firing == false)
             {
-                StartCoroutine(_FireWeapon(1, "Fire2"));
+                StartCoroutine(_FireWeapon(1));
                 firingWeapon = 1;
             }
 
@@ -100,7 +102,7 @@ public class EnemyBehavior : MonoBehaviour
             {
                 rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
             }
-            
+
 
         }
         else
@@ -110,57 +112,190 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
-    IEnumerator _FireWeapon(int weaponNumber, string button)
+    IEnumerator _FireWeapon(int weaponNumber)
     {
         //we're firing, dont fire again until we're done
         firing = true;
+        Transform weapon = transform.Find("Equipment").Find("WeaponSlot").GetChild(weaponNumber).transform.GetChild(0);
+        string weaponType = weapon.tag;
 
-        //swap weapons on fire
-        if (activeWeapon != weaponNumber && weaponNumber < 2)
-        {
-            GameObject oldWeaponSlot = equipmentSlots[activeWeapon].gameObject;
-            oldWeaponSlot.SetActive(false);
-
-            GameObject weaponSlot = equipmentSlots[weaponNumber].gameObject;
-            weaponSlot.SetActive(true);
-            activeWeapon = weaponNumber;
-        }
-
-        WeaponBehavior weapon = equipment[weaponNumber].GetComponent<WeaponBehavior>();
+        WeaponBehavior weaponBehavior = weapon.GetComponent<WeaponBehavior>();
+        Vector4 weaponInfo = weaponBehavior.WeaponInfo();
 
         float _rotationSpeed = rotationSpeed;
-
-        Vector4 weaponInfo = weapon.WeaponInfo();
-
         float fireSpeed = weaponInfo.x;
-        float chargeTime = weaponInfo.y;
+        float chargeSpeed = weaponInfo.y;
         float playerRotSlow = weaponInfo.z;
         float energyDrainAmount = weaponInfo.w;
 
-        yield return new WaitForSeconds(chargeTime);
+        Animator weaponAnimator = null;
+        if (weaponBehavior.animated == true)
+        {
+            weaponAnimator = weapon.GetComponent<Animator>();
+        }
 
+        //swap weapons on fire
+        if (activeWeapon != weaponNumber)
+        {
+            GameObject oldWeaponSlot = equipment.equipmentSlots[activeWeapon].gameObject;
+            oldWeaponSlot.SetActive(false);
+
+            GameObject weaponSlot = equipment.equipmentSlots[weaponNumber].gameObject;
+            weaponSlot.SetActive(true);
+
+            activeWeapon = weaponNumber;
+        }
+
+        playerAnimator.SetFloat("FireSpeed", fireSpeed);
+        playerAnimator.SetFloat("ChargeSpeed", chargeSpeed);
+
+        if (weaponType == "Staff")
+        {
+            Animate(Casting_Animation);
+        }
+        if (weaponType == "Sword" || weaponType == "Dagger") // or any melee type..
+        {
+            Animate(Meleeing_Animation); // animate appropriate weapon type animation
+        }
+
+        if (weaponBehavior.animated == true)
+        {
+            weaponAnimator.SetBool("Firing", true);
+            weaponAnimator.SetFloat("ChargeSpeed", chargeSpeed);
+            weaponAnimator.SetFloat("FireSpeed", fireSpeed);
+        }
+
+        //slow player rotation by weapon amount
         rotationSpeed = rotationSpeed - (rotationSpeed * playerRotSlow / 100);
 
-
+        float lastFireTime = 0;
         while (firingWeapon == weaponNumber && stats.energy - energyDrainAmount >= 0)
         {
 
-            Vector3 velocity;
+            if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
+            {
+                lastFireTime = Time.time;
 
-            velocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
-            _prevPosition = transform.position;
+                stats.energy -= energyDrainAmount;
+                playerAnimator.SetTrigger("Fire");
 
-            weapon.FireWeapon(EnemyBody, velocity);
-            stats.energy -= energyDrainAmount;
+                if (weaponBehavior.animated == true)
+                {
+                    weaponAnimator.SetTrigger("Fire");
+                }
 
-            yield return new WaitForSeconds(fireSpeed);
+            }
+            yield return new WaitForFixedUpdate();
+
         }
 
+        //set rotation speed to normal
         rotationSpeed = _rotationSpeed;
+        Animate(Idle_Animation);
+        playerAnimator.SetFloat("FireSpeed", 1);
+
+        if (weaponBehavior.animated == true)
+        {
+            weaponAnimator.SetFloat("FireSpeed", 1);
+            weaponAnimator.SetBool("Firing", false);
+        }
+
+        firing = false;
+        charged = false;
+
+    }
+
+    IEnumerator _FireShield(int weaponNumber, string button)
+    {
+        //we're firing, dont fire again until we're done
+        firing = true;
+        Transform shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).transform;
+        string shieldType = shield.tag;
+
+        ShieldBehavior shieldBehavior = shield.GetComponent<ShieldBehavior>();
+
+        float _rotationSpeed = rotationSpeed;
+
+        Vector4 weaponInfo = shieldBehavior.ShieldInfo();
+
+        float fireSpeed = weaponInfo.x;
+        float chargeSpeed = weaponInfo.y;
+        float playerRotSlow = weaponInfo.z;
+        float energyDrainAmount = weaponInfo.w;
+
+        Animate(Shielding_Animation);
+        rotationSpeed = rotationSpeed - (rotationSpeed * playerRotSlow / 100);
+
+        playerAnimator.SetFloat("FireSpeed", fireSpeed);
+        playerAnimator.SetFloat("ChargeSpeed", chargeSpeed);
+
+        float lastFireTime = 0;
+        while ((Input.GetButton(button) && stats.energy - energyDrainAmount >= 0))
+        {
+
+            if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
+            {
+                stats.energy -= energyDrainAmount;
+                playerAnimator.SetTrigger("Fire");
+                lastFireTime = Time.time;
+            }
+            yield return new WaitForFixedUpdate();
+
+        }
+
+        //set rotation speed to normal
+        rotationSpeed = _rotationSpeed;
+        Animate(Idle_Animation);
         firing = false;
 
     }
 
+    public void SetCharged()
+    {
+        charged = true;
+    }
+
+    void FireWeapon()
+    {
+        WeaponBehavior weapon = transform.Find("Equipment").Find("WeaponSlot").GetChild(activeWeapon).GetChild(0).GetComponent<WeaponBehavior>();
+        weapon.FireWeapon(transform, playerVelocity);
+    }
+
+    void DrawShield()
+    {
+        ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
+        shield.DrawShield(transform);
+    }
+
+    void FireShield()
+    {
+        ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
+        shield.FireShield();
+    }
+
+    void PutAwayShield()
+    {
+        ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
+        shield.PutAway();
+    }
+
+    private void Animate(string boolName)
+    {
+        DisableOtherAnimations(playerAnimator, boolName);
+        playerAnimator.SetBool(boolName, true);
+    }
+
+    private void DisableOtherAnimations(Animator animator, string animation)
+    {
+        foreach (AnimatorControllerParameter parameter in animator.parameters)
+        {
+            if (parameter.name != animation && parameter.name != "MovementSpeed" && parameter.name != "FireSpeed" && parameter.name != "ChargeSpeed")
+            {
+                animator.SetBool(parameter.name, false);
+            }
+        }
+
+    }
 
 
     public void OnCollisionEnter(Collision col)
@@ -185,9 +320,10 @@ public class EnemyBehavior : MonoBehaviour
 
     IEnumerator ThornsDamage(GameObject damagee)
     {
-        while (applyThorns == true && player.invincible != true && player.dead != true)
+        while (applyThorns == true && playerStats.invincible != true && playerStats.dead != true)
         {
-            playerStats.health -= thornsDamage;
+            Stats stats = player.GetComponent<Stats>();
+            stats.health -= thornsDamage;
             Debug.Log(thornsDamage + " thorns damage applied" + damagee.name);
             Rigidbody rb = damagee.GetComponent<Rigidbody>();
             Vector3 dir = (transform.position - damagee.transform.position).normalized;
@@ -196,50 +332,5 @@ public class EnemyBehavior : MonoBehaviour
             yield return new WaitForSeconds(1f);
         }
     }
-
-    void SetUpEquipment()
-    {
-        equipment = new GameObject[3];
-
-        // 0 = weapon1, 1 = weapon 2, 2 = weapon 3, 3 = helmet;
-
-        if (equipment[0] == null)
-        {
-            equipment[0] = magicWeapon;
-        }
-        if (equipment[1] == null)
-        {
-            equipment[1] = meleeWeapon;
-        }
-        if (equipment[2] == null)
-        {
-            equipment[2] = shield;
-        }
-    }
-
-
-    void SetUpSlots()
-    {
-        equipmentSlots = new Transform[3];
-
-        // 0 = weapon1, 1 = weapon 2, 2 = weapon 3, 3 = helmet;
-        equipmentSlots[0] = magicWeaponSlot;
-        equipmentSlots[1] = meleeWeaponSlot;
-        equipmentSlots[2] = shieldSlot;
-    }
-
-    void EquipGear()
-    {
-
-        for (int x = 0; x < equipmentSlots.Length; x++)
-        {
-            Transform slot = equipmentSlots[x];
-            GameObject item = Instantiate(equipment[x], slot.position, slot.rotation);
-            item.transform.parent = slot.transform;
-            item.name = equipment[x].name;
-        }
-
-    }
-
 
 }

@@ -12,6 +12,7 @@ TagManager:
   - Shield
   - Sword
   - Staff
+  - Effect
   layers:
   - Default
   - TransparentFX
@@ -23,8 +24,8 @@ TagManager:
   - 
   - Player
   - Environment
-  - 
-  - 
+  - Effects
+  - NPCs
   - 
   - 
   - 

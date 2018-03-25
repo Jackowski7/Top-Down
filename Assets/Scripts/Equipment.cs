@@ -2,12 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerEquipment : MonoBehaviour
+public class Equipment : MonoBehaviour
 {
-
-
-    GameManager gameManager;
-
     public Transform[] equipmentSlots;
     public Transform WeaponSlot1;
     public Transform WeaponSlot2;
@@ -20,26 +16,11 @@ public class PlayerEquipment : MonoBehaviour
     public GameObject Shield;
     public GameObject Helmet;
 
-    [HideInInspector]
-    public bool dead;
-    [HideInInspector]
-    public bool invincible;
-
     private void Start()
     {
-        gameManager = transform.parent.GetComponent<GameManager>();
         SetUpEquipment();
         SetUpSlots();
         EquipGear();
-    }
-
-    public void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Exit")
-        {
-            gameManager.LevelFinished();
-            Debug.Log("level Finished");
-        }
     }
 
     void SetUpEquipment()

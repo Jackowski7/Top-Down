@@ -7,6 +7,12 @@ public class Stats : MonoBehaviour {
     public float health;
     public float energy;
 
+    [HideInInspector]
+    public bool dead;
+    [HideInInspector]
+    public bool invincible;
+
+
     // Use this for initialization
     void Start () {
 		

@@ -288,6 +288,7 @@
     <Compile Include="Assets\Scripts\CavePopulator.cs" />
     <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
     <Compile Include="Assets\Scripts\EnemyPopulator.cs" />
+    <Compile Include="Assets\Scripts\Equipment.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
     <Compile Include="Assets\Scripts\MapProcessor.cs" />
@@ -298,6 +299,7 @@
     <Compile Include="Assets\Scripts\Stats.cs" />
     <Compile Include="Assets\Scripts\WeaponBehavior.cs" />
     <Compile Include="Assets\Weapons\Effects\bulletBehavior.cs" />
+    <Compile Include="Assets\Weapons\Effects\Explosions\DestroyParticles.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\FXWaterLowpoly.shader" />

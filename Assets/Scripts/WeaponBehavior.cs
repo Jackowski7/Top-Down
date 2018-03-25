@@ -26,6 +26,7 @@ public class WeaponBehavior : MonoBehaviour
     {
         fireSpeed = Mathf.Max(fireSpeed, .5f);
         chargeSpeed = Mathf.Max(chargeSpeed, .2f);
+        bulletLifetime = Mathf.Max(chargeSpeed, .1f);
     }
 
 
@@ -46,50 +47,31 @@ public class WeaponBehavior : MonoBehaviour
         return weaponInfo;
     }
 
-    public void FireWeapon(Transform playerBody, Vector3 playerVelocity)
+    public void FireWeapon(Transform player, Vector3 playerVelocity)
     {
 
-        Vector3 pos = playerBody.transform.position;
-        Vector3 _rot = playerBody.transform.forward;
-        Quaternion rot = playerBody.transform.rotation;
-
-        pos += _rot;
-
+        Vector3 pos = player.position;
+        Vector3 _rot = player.forward.normalized;
+        Quaternion rot = player.rotation;
+        pos += _rot;    
 
         GameObject bullet = Instantiate(bulletPrefab, pos, rot);
         bulletBehavior bulletBehavior = bullet.GetComponent<bulletBehavior>();
-        bulletBehavior.damage = bulletDamage;
-        bulletBehavior.durability = bulletDurability;
-        bulletBehavior.lifetime = bulletLifetime;
-        bulletBehavior.knockback = bulletKnockback;
-
-        //get target, and don't hit friendlies
-        string user = playerBody.transform.parent.tag;
-        string target = null;
-        string firer = null;
-
-        if (user == "Enemy")
-        {
-            target = "Player";
-            firer = "Enemy";
-        }
-
-        if (user == "Player")
-        {
-            target = "Enemy";
-            firer = "Player";
-        }
-
-        bulletBehavior.target = target;
-        bulletBehavior.firer = firer;
 
         if (tag == "Staff")
         {
             Rigidbody rb = bullet.GetComponent<Rigidbody>();
-            Vector3 dir = playerBody.forward.normalized;
+            Vector3 dir = player.forward.normalized;
+            dir.y = 0;
             dir.x += Random.Range(-bulletSpread / 100, bulletSpread / 100);
             rb.velocity = dir * bulletSpeed + (playerVelocity);
         }
+
+        bulletBehavior.damage = bulletDamage;
+        bulletBehavior.durability = bulletDurability;
+        bulletBehavior.lifetime = bulletLifetime;
+        bulletBehavior.knockback = bulletKnockback;
+        bulletBehavior.team = player.tag;
 
         return;
 
