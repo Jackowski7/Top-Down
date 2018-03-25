@@ -13,13 +13,20 @@ public class WeaponBehavior : MonoBehaviour
     public float PlayerRotSlow;
     public float EnergyDrainAmount;
 
+    public bool kineticDamage;
+    public bool fireDamage;
+    public bool iceDamage;
+    public bool electricDamage;
+
     public float bulletDamage;
-    public string damageType;
     public float bulletKnockback;
     public float bulletSpeed;
     public float bulletSpread;
     public float bulletDurability;
     public float bulletLifetime;
+
+    [HideInInspector]
+    public string damageType;
 
     public bool shieldOut = false;
 
@@ -34,7 +41,22 @@ public class WeaponBehavior : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
+        if (kineticDamage == true || (kineticDamage != true && iceDamage != true && fireDamage != true && electricDamage != true))
+        {
+            damageType = "Kinetic";
+        }
+        else if (fireDamage == true)
+        {
+            damageType = "Fire";
+        }
+        else if (iceDamage == true)
+        {
+            damageType = "Ice";
+        }
+        else if (electricDamage == true)
+        {
+            damageType = "Electric";
+        }
     }
 
 
@@ -70,7 +92,10 @@ public class WeaponBehavior : MonoBehaviour
         dir.x += Random.Range(-bulletSpread / 100, bulletSpread / 100);
         rb.velocity = dir * bulletSpeed + (playerVelocity);
 
-        bulletBehavior.damage = bulletDamage;
+        //little variation on damage
+        float _bulletDamage = bulletDamage * Mathf.RoundToInt((Random.Range(.9f, 1.1f)) * 10) * .1f;
+
+        bulletBehavior.damage = _bulletDamage;
         bulletBehavior.damageType = damageType;
         bulletBehavior.durability = bulletDurability;
         bulletBehavior.lifetime = bulletLifetime;

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShieldBehavior : MonoBehaviour {
+public class ShieldBehavior : MonoBehaviour
+{
 
     public float fireSpeed;
     public float chargeSpeed;
@@ -11,6 +12,12 @@ public class ShieldBehavior : MonoBehaviour {
     public float EnergyDrainAmount;
     public float knockBack;
 
+    public bool kineticDamage;
+    public bool fireDamage;
+    public bool iceDamage;
+    public bool electricDamage;
+
+    [HideInInspector]
     public string damageType;
     public float damageAbsorb;
 
@@ -21,6 +28,26 @@ public class ShieldBehavior : MonoBehaviour {
     {
         fireSpeed = Mathf.Max(fireSpeed, .5f);
         chargeSpeed = Mathf.Max(chargeSpeed, .2f);
+    }
+
+    void Start()
+    {
+        if (kineticDamage == true || (kineticDamage != true && iceDamage != true && fireDamage != true && electricDamage != true))
+        {
+            damageType = "Kinetic";
+        }
+        else if (fireDamage == true)
+        {
+            damageType = "Fire";
+        }
+        else if (iceDamage == true)
+        {
+            damageType = "Ice";
+        }
+        else if (electricDamage == true)
+        {
+            damageType = "Electric";
+        }
     }
 
     private void OnCollisionEnter(Collision col)

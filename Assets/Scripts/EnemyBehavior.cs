@@ -56,7 +56,7 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
 
         if (stats.health <= 0)
@@ -83,7 +83,7 @@ public class EnemyBehavior : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
 
             moveDirection = playerDirection.normalized;
-            moveDirection *= speed * 100;
+            moveDirection *= speed * 200;
 
             if (hit.distance > 3f && firing == false)
             {

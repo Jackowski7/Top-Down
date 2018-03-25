@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
         stats = GetComponent<Stats>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // rotate player body towards mouse
         Plane playerPlane = new Plane(Vector3.up, transform.position);
@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
         //move player
         Rigidbody rb = GetComponent<Rigidbody>();
         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));       
-        moveDirection *= speed * 100;
+        moveDirection *= speed * 200;
         rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
 
         playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
@@ -231,6 +231,8 @@ public class PlayerController : MonoBehaviour
         rotationSpeed = _rotationSpeed;
         Animate(Idle_Animation);
         firing = false;
+        charged = false;
+
 
     }
 
