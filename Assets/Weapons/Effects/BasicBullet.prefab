@@ -204,7 +204,9 @@ MonoBehaviour:
   explosionPrefab: {fileID: 1865308414767878, guid: c27bc7ca00e0fe5468327ac5485a36d1,
     type: 2}
   team: 
+  damageType: 
   durability: 0
+  invincible: 0
   damage: 0
   lifetime: 0
   knockback: 0
@@ -214,7 +216,7 @@ SphereCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1572913392945714}
-  m_Material: {fileID: 13400000, guid: ce839aa4f1b720f49b1891412226a531, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2

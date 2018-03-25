@@ -84,16 +84,17 @@ MonoBehaviour:
   bulletPrefab: {fileID: 1572913392945714, guid: f85bebde63583894e83c6eea60ba4f14,
     type: 2}
   animated: 0
-  fireSpeed: 2
+  fireSpeed: 1
   chargeSpeed: 1
   PlayerRotSlow: 20
   EnergyDrainAmount: 0
   bulletDamage: 20
+  damageType: 
   bulletKnockback: 10
-  bulletSpeed: 0
+  bulletSpeed: 10
   bulletSpread: 0
-  bulletDurability: 5
-  bulletLifetime: 1
+  bulletDurability: 0
+  bulletLifetime: 0.1
   shieldOut: 0
 --- !u!212 &212436893081102402
 SpriteRenderer:

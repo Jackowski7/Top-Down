@@ -362,7 +362,6 @@ MonoBehaviour:
   rotationSpeed: 9
   dead: 0
   invincible: 0
-  charged: 0
 --- !u!114 &114977182079393672
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -376,6 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   energy: 100
+  hitMarker: {fileID: 1741298198480972, guid: ec3fc635a00e6b34985cb11712e3d7bc, type: 2}
   dead: 0
   invincible: 0
 --- !u!212 &212068337169042872

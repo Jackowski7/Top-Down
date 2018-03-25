@@ -56,7 +56,7 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         if (stats.health <= 0)
@@ -92,6 +92,19 @@ public class EnemyBehavior : MonoBehaviour
             }
 
             if (hit.distance <= 5f && firing == false)
+            {
+                StartCoroutine(_FireWeapon(1));
+                firingWeapon = 1;
+            }
+
+
+            if (hit.distance > 3f && firing == true && firingWeapon == 1)
+            {
+                StartCoroutine(_FireWeapon(0));
+                firingWeapon = 0;
+            }
+
+            if (hit.distance <= 5f && firing == true && firingWeapon == 0)
             {
                 StartCoroutine(_FireWeapon(1));
                 firingWeapon = 1;

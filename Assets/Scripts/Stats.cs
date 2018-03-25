@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Stats : MonoBehaviour {
 
     public float health;
     public float energy;
+
+    public GameObject hitMarker;
 
     [HideInInspector]
     public bool dead;
@@ -22,4 +25,15 @@ public class Stats : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void Damage(float damageAmount, string damageType, Vector3 hitDirection, GameObject entity)
+    {
+        health -= damageAmount;
+        GameObject hit = Instantiate(hitMarker);
+        hit.transform.position = transform.position - hitDirection;
+        hit.transform.rotation = Quaternion.Euler(90,0,0);
+
+        HitMarker hitScript = hit.GetComponent<HitMarker>();
+        hitScript.SetHitMarker(damageAmount, damageType, entity);
+    }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class bulletBehavior : MonoBehaviour
+public class BulletBehavior : MonoBehaviour
 {
 
     public GameObject explosionPrefab;
@@ -13,7 +13,11 @@ public class bulletBehavior : MonoBehaviour
     [HideInInspector]
     public string team;
     [HideInInspector]
+    public string damageType;
+    [HideInInspector]
     public float durability;
+    [HideInInspector]
+    public bool invincible;
     [HideInInspector]
     public float damage;
     [HideInInspector]
@@ -30,9 +34,9 @@ public class bulletBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (durability <= 0)
+        if (durability <= 0 && invincible == false)
         {
-            StartCoroutine(Explode());
+            Explode();
         }
 
     }
@@ -40,17 +44,34 @@ public class bulletBehavior : MonoBehaviour
     private void OnTriggerEnter(Collider col)
     {
 
-        if (col.tag == "Enemy" || col.tag == "Player" || col.tag == "Destructible")
+        if (col.tag == "Enemy" || col.tag == "Player")
         {
             if (col.gameObject.tag != team)
             {
                 Stats stats = col.gameObject.GetComponent<Stats>();
-                stats.health -= damage;
-                //Debug.Log("Bullet Hit " + col.transform.name);
+
+                if (col.gameObject.tag == "Shield")
+                {
+                    ShieldBehavior shield = col.gameObject.GetComponent<ShieldBehavior>();
+                    if (shield.damageType == damageType)
+                    {
+                        damage -= shield.damageAbsorb;
+                    }
+                    else
+                    {
+                        damage -= (shield.damageAbsorb / 2);
+                    }
+
+                    knockback = knockback / 4;
+                }
+
+                stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
                 stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
                 durability--;
+
             }
         }
+
         if (col.tag != "Enemy" && col.tag != "Player" && col.tag != "Destructible" && col.tag != "Effect")
         {
             durability--;
@@ -58,12 +79,11 @@ public class bulletBehavior : MonoBehaviour
 
     }
 
-    IEnumerator Explode()
+    void Explode()
     {
         if (explosionPrefab != null)
         {
             Instantiate(explosionPrefab, transform.position, transform.rotation);
-            yield return new WaitForFixedUpdate();
         }
         Destroy(gameObject);
     }
@@ -71,7 +91,7 @@ public class bulletBehavior : MonoBehaviour
     IEnumerator DestroySelf()
     {
         yield return new WaitForSeconds(lifetime);
-        StartCoroutine(Explode());
+        Explode();
     }
 
 

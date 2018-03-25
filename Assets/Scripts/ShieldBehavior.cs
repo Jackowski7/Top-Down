@@ -7,12 +7,12 @@ public class ShieldBehavior : MonoBehaviour {
     public float fireSpeed;
     public float chargeSpeed;
     public float PlayerRotSlow;
+
     public float EnergyDrainAmount;
     public float knockBack;
-    public float kineticReduction;
-    public float reduction1;
-    public float reduction2;
-    public float reduction3;
+
+    public string damageType;
+    public float damageAbsorb;
 
     string target = null;
     string firer = null;

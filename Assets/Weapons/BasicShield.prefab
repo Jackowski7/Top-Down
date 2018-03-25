@@ -115,10 +115,8 @@ MonoBehaviour:
   PlayerRotSlow: 0
   EnergyDrainAmount: 0
   knockBack: 10
-  kineticReduction: 0
-  reduction1: 0
-  reduction2: 0
-  reduction3: 0
+  damageType: 
+  damageAbsorb: 25
 --- !u!212 &212144041884126956
 SpriteRenderer:
   m_ObjectHideFlags: 1
