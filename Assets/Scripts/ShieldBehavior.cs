@@ -21,6 +21,8 @@ public class ShieldBehavior : MonoBehaviour
     public string damageType;
     public float damageAbsorb;
 
+    Transform playerBody;
+
     string target = null;
     string firer = null;
 
@@ -72,8 +74,11 @@ public class ShieldBehavior : MonoBehaviour
         return weaponInfo;
     }
 
-    public void DrawShield(Transform playerBody)
+    public void DrawShield(Transform _playerBody)
     {
+
+        playerBody = _playerBody;
+
         string user = playerBody.transform.parent.tag;
 
         if (user == "Enemy")
@@ -88,8 +93,9 @@ public class ShieldBehavior : MonoBehaviour
             firer = "Player";
         }
 
-        Collider col = GetComponent<Collider>();
-        col.enabled = true;
+        Stats stats = playerBody.GetComponent<Stats>();
+        stats.shielding = true;
+
     }
 
     public void FireShield()
@@ -99,8 +105,8 @@ public class ShieldBehavior : MonoBehaviour
 
     public void PutAway()
     {
-        Collider col = GetComponent<Collider>();
-        col.enabled = false;
+        Stats stats = playerBody.GetComponent<Stats>();
+        stats.shielding = false;
     }
 
 

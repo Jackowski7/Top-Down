@@ -15,6 +15,7 @@ public class Stats : MonoBehaviour {
     [HideInInspector]
     public bool invincible;
 
+    public bool shielding;
 
     // Use this for initialization
     void Start () {

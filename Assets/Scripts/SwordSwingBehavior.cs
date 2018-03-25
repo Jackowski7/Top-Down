@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletBehavior : MonoBehaviour
+public class SwordSwingBehavior : MonoBehaviour
 {
-
-    public GameObject explosionPrefab;
 
     Transform player;
     WeaponBehavior weapon;
@@ -15,13 +13,7 @@ public class BulletBehavior : MonoBehaviour
     [HideInInspector]
     public string damageType;
     [HideInInspector]
-    public float durability;
-    [HideInInspector]
-    public bool invincible;
-    [HideInInspector]
     public float damage;
-    [HideInInspector]
-    public float lifetime;
     [HideInInspector]
     public float knockback;
 
@@ -34,11 +26,7 @@ public class BulletBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (durability <= 0 && invincible == false)
-        {
-            Explode();
-        }
-
+        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, 5f * Time.time);
     }
 
     private void OnTriggerEnter(Collider col)
@@ -52,7 +40,8 @@ public class BulletBehavior : MonoBehaviour
 
                 if (stats.shielding == true)
                 {
-                    Transform shield = col.gameObject.transform.Find("Equipment").Find("ShieldSlot").GetChild(0).transform;
+
+                    Transform shield = col.transform.Find("Equipment").Find("ShieldSlot").GetChild(0).transform;
                     ShieldBehavior shieldBehavior = shield.GetComponent<ShieldBehavior>();
 
 
@@ -68,41 +57,27 @@ public class BulletBehavior : MonoBehaviour
                     knockback = knockback / 4;
                     stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
                     stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
-                    durability--;
-                    Explode();
                 }
                 else
                 {
                     stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
                     stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
-                    durability--;
                 }
 
             }
         }
+
         else if (col.tag == "Destructible" || col.tag == "Effect")
         {
-            durability--;
+            //
         }
 
-    }
-
-    void Explode()
-    {
-        if (explosionPrefab != null)
-        {
-            Instantiate(explosionPrefab, transform.position, transform.rotation);
-        }
-        Destroy(gameObject);
     }
 
     IEnumerator DestroySelf()
     {
-        yield return new WaitForSeconds(lifetime);
-        Explode();
+        yield return new WaitForSeconds(.1f);
+        Destroy(gameObject);
     }
-
-
-
 
 }

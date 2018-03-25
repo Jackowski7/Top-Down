@@ -73,38 +73,53 @@ public class WeaponBehavior : MonoBehaviour
     public void FireWeapon(Transform player, Vector3 playerVelocity)
     {
 
-        Vector3 pos = player.position;
-        Vector3 _rot = player.forward.normalized;
-        Quaternion rot = player.rotation;
-
         if (tag == "Staff")
         {
+            Vector3 pos = player.position;
+            Vector3 _rot = player.forward.normalized;
+            Quaternion rot = player.rotation;
+
             pos += _rot;
+
+            GameObject bullet = Instantiate(bulletPrefab, pos, rot);
+
+            Rigidbody rb = bullet.transform.GetComponent<Rigidbody>();
+            Vector3 dir = player.forward.normalized;
+            dir.y = 0;
+            dir.x += Random.Range(-bulletSpread / 100, bulletSpread / 100);
+
+            rb.velocity = dir * bulletSpeed + (playerVelocity);
+
+            float _bulletDamage = bulletDamage * Mathf.RoundToInt((Random.Range(.9f, 1.1f)) * 10) * .1f;
+
+            BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
+            bulletBehavior.damage = _bulletDamage;
+            bulletBehavior.damageType = damageType;
+            bulletBehavior.durability = bulletDurability;
+            bulletBehavior.lifetime = bulletLifetime;
+            bulletBehavior.knockback = bulletKnockback;
+            bulletBehavior.team = player.tag;
         }
 
-
-        GameObject bullet = Instantiate(bulletPrefab, pos, rot);
-        BulletBehavior bulletBehavior = bullet.GetComponent<BulletBehavior>();
-
-        Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        Vector3 dir = player.forward.normalized;
-        dir.y = 0;
-        dir.x += Random.Range(-bulletSpread / 100, bulletSpread / 100);
-        rb.velocity = dir * bulletSpeed + (playerVelocity);
-
-        //little variation on damage
-        float _bulletDamage = bulletDamage * Mathf.RoundToInt((Random.Range(.9f, 1.1f)) * 10) * .1f;
-
-        bulletBehavior.damage = _bulletDamage;
-        bulletBehavior.damageType = damageType;
-        bulletBehavior.durability = bulletDurability;
-        bulletBehavior.lifetime = bulletLifetime;
-        bulletBehavior.knockback = bulletKnockback;
-        bulletBehavior.team = player.tag;
-
-        if (tag != "Staff")
+        if (tag == "Sword")
         {
-            bulletBehavior.invincible = true;
+            Vector3 pos = player.position;
+            Vector3 _rot = player.forward.normalized;
+            Quaternion rot = player.rotation;
+
+            GameObject bullet = Instantiate(bulletPrefab, pos, rot);
+
+            Rigidbody rb = bullet.transform.GetChild(0).GetComponent<Rigidbody>();
+            Vector3 dir = player.forward.normalized;
+            bullet.transform.localScale = Vector3.zero;
+
+            float _bulletDamage = bulletDamage * Mathf.RoundToInt((Random.Range(.9f, 1.1f)) * 10) * .1f;
+
+            SwordSwingBehavior swordSwingBehavior = bullet.GetComponent<SwordSwingBehavior>();
+            swordSwingBehavior.damage = _bulletDamage;
+            swordSwingBehavior.damageType = damageType;
+            swordSwingBehavior.knockback = bulletKnockback;
+            swordSwingBehavior.team = player.tag;
         }
 
         return;
