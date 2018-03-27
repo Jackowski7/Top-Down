@@ -369,6 +369,7 @@ MonoBehaviour:
   hitMarker: {fileID: 1741298198480972, guid: ec3fc635a00e6b34985cb11712e3d7bc, type: 2}
   dead: 0
   invincible: 0
+  shielding: 0
 --- !u!114 &114247323417625334
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -111,10 +111,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fireSpeed: 1
-  chargeSpeed: 2
+  chargeSpeed: 4
   PlayerRotSlow: 0
   EnergyDrainAmount: 0
   knockBack: 10
+  kineticDamage: 0
+  fireDamage: 0
+  iceDamage: 0
+  electricDamage: 0
   damageType: 
   damageAbsorb: 25
 --- !u!212 &212144041884126956

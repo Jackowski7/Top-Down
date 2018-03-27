@@ -228,20 +228,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1572913392945714, guid: d771641fdb0216f4180c59c1047ebacc,
     type: 2}
-  sword: 0
-  staff: 1
-  shield: 0
+  animated: 0
   fireSpeed: 0.5
-  ChargeTime: 0.5
+  chargeSpeed: 0.2
   PlayerRotSlow: 50
   EnergyDrainAmount: 0
+  kineticDamage: 0
+  fireDamage: 0
+  iceDamage: 0
+  electricDamage: 0
   bulletDamage: 10
-  bulletKnockback: 5
+  bulletKnockback: 0
   bulletSpeed: 8
   bulletSpread: 25
   bulletDurability: 2
   bulletLifetime: 1.5
-  shieldOut: 0
+  damageType: 
 --- !u!135 &135080638406785730
 SphereCollider:
   m_ObjectHideFlags: 1

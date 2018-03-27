@@ -14,7 +14,7 @@ public class Stats : MonoBehaviour {
     public bool dead;
     [HideInInspector]
     public bool invincible;
-
+    [HideInInspector]
     public bool shielding;
 
     // Use this for initialization
@@ -28,13 +28,22 @@ public class Stats : MonoBehaviour {
 	}
 
     public void Damage(float damageAmount, string damageType, Vector3 hitDirection, GameObject entity)
-    {
-        health -= damageAmount;
-        GameObject hit = Instantiate(hitMarker);
-        hit.transform.position = transform.position - hitDirection;
-        hit.transform.rotation = Quaternion.Euler(90,0,0);
+    { 
 
-        HitMarker hitScript = hit.GetComponent<HitMarker>();
-        hitScript.SetHitMarker(damageAmount, damageType, entity);
+        if (damageAmount > 0)
+        {
+            health -= damageAmount;
+            GameObject hit = Instantiate(hitMarker);
+            hit.transform.position = transform.position - hitDirection;
+            hit.transform.rotation = Quaternion.Euler(90, 0, 0);
+
+            HitMarker hitScript = hit.GetComponent<HitMarker>();
+
+            hitScript.SetHitMarker(damageAmount, damageType, entity);
+        }
+        else
+        {
+            //Debug.Log("Got hit a 0");
+        }
     }
 }

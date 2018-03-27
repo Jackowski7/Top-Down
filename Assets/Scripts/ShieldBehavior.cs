@@ -100,7 +100,7 @@ public class ShieldBehavior : MonoBehaviour
 
     public void FireShield()
     {
-        Debug.Log("Fired my shield?");
+        //Debug.Log("Fired my shield?");
     }
 
     public void PutAway()

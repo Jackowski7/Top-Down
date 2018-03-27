@@ -177,13 +177,12 @@ MonoBehaviour:
   iceDamage: 0
   electricDamage: 0
   bulletDamage: 10
-  bulletKnockback: 5
+  bulletKnockback: 0
   bulletSpeed: 8
   bulletSpread: 5
   bulletDurability: 1
   bulletLifetime: 2
   damageType: 
-  shieldOut: 0
 --- !u!212 &212088512369736040
 SpriteRenderer:
   m_ObjectHideFlags: 1

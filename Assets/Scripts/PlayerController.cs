@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public float rotationSpeed = 10;
 
     public GameObject myCamera;
+    public GameObject MapCamera;
     public float cameraSpeed;
     public float cameraHeight;
 
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour
         Vector3 cameraTargetPos = this.transform.position;
         cameraTargetPos.y = cameraHeight;
         myCamera.transform.position = Vector3.Slerp(myCamera.transform.position, cameraTargetPos, (cameraSpeed / 10) * Time.deltaTime);
+        MapCamera.transform.position = cameraTargetPos;
 
         Vector3 targetDir = myCamera.transform.position - transform.position;
         Vector3 newDir = Vector3.RotateTowards(new Vector3(90, 0, 0), targetDir, 10, 0.0F);

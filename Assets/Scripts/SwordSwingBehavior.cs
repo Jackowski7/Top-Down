@@ -26,7 +26,21 @@ public class SwordSwingBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one, 5f * Time.time);
+    }
+
+    bool ShieldDirection(float shieldDir, float bulletDir)
+    {
+        float a = Mathf.Max(shieldDir, bulletDir);
+        float b = Mathf.Min(shieldDir, bulletDir);
+
+        if (a - b > 140 && a - b < 220)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void OnTriggerEnter(Collider col)
@@ -44,25 +58,26 @@ public class SwordSwingBehavior : MonoBehaviour
                     Transform shield = col.transform.Find("Equipment").Find("ShieldSlot").GetChild(0).transform;
                     ShieldBehavior shieldBehavior = shield.GetComponent<ShieldBehavior>();
 
+                    bool shieldFacingBullet = ShieldDirection(col.transform.eulerAngles.y, transform.rotation.eulerAngles.y);
 
-                    if (shieldBehavior.damageType == damageType)
+                    if (shieldFacingBullet == true)
                     {
-                        damage -= shieldBehavior.damageAbsorb;
-                    }
-                    else
-                    {
-                        damage -= (shieldBehavior.damageAbsorb / 2);
+                        if (shieldBehavior.damageType == damageType)
+                        {
+                            damage -= shieldBehavior.damageAbsorb;
+                        }
+                        else
+                        {
+                            damage -= (shieldBehavior.damageAbsorb / 2);
+                        }
+
+                        knockback = knockback / 2;
                     }
 
-                    knockback = knockback / 4;
-                    stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
-                    stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
                 }
-                else
-                {
-                    stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
-                    stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
-                }
+
+                stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
+                stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
 
             }
         }

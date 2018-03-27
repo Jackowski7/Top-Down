@@ -41,6 +41,21 @@ public class BulletBehavior : MonoBehaviour
 
     }
 
+    bool ShieldDirection(float shieldDir, float bulletDir)
+    {
+        float a = Mathf.Max(shieldDir, bulletDir);
+        float b = Mathf.Min(shieldDir, bulletDir);
+
+        if (a - b > 140 && a - b < 220)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     private void OnTriggerEnter(Collider col)
     {
 
@@ -52,33 +67,34 @@ public class BulletBehavior : MonoBehaviour
 
                 if (stats.shielding == true)
                 {
-                    Transform shield = col.gameObject.transform.Find("Equipment").Find("ShieldSlot").GetChild(0).transform;
+
+                    Transform shield = col.transform.Find("Equipment").Find("ShieldSlot").GetChild(0).transform;
                     ShieldBehavior shieldBehavior = shield.GetComponent<ShieldBehavior>();
 
+                    bool shieldFacingBullet = ShieldDirection(col.transform.eulerAngles.y, transform.rotation.eulerAngles.y);
 
-                    if (shieldBehavior.damageType == damageType)
+                    if (shieldFacingBullet == true)
                     {
-                        damage -= shieldBehavior.damageAbsorb;
-                    }
-                    else
-                    {
-                        damage -= (shieldBehavior.damageAbsorb / 2);
+                        if (shieldBehavior.damageType == damageType)
+                        {
+                            damage -= shieldBehavior.damageAbsorb;
+                        }
+                        else
+                        {
+                            damage -= (shieldBehavior.damageAbsorb / 2);
+                        }
+
+                        knockback = knockback / 2;
+                        durability--;
                     }
 
-                    knockback = knockback / 4;
-                    stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
-                    stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
-                    durability--;
-                    Explode();
                 }
-                else
-                {
-                    stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
-                    stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
-                    durability--;
-                }
+
+                stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
+                stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
 
             }
+
         }
         else if (col.tag == "Destructible" || col.tag == "Effect")
         {

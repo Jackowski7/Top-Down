@@ -28,8 +28,6 @@ public class WeaponBehavior : MonoBehaviour
     [HideInInspector]
     public string damageType;
 
-    public bool shieldOut = false;
-
     void OnValidate()
     {
         fireSpeed = Mathf.Max(fireSpeed, .5f);
@@ -107,11 +105,12 @@ public class WeaponBehavior : MonoBehaviour
             Vector3 _rot = player.forward.normalized;
             Quaternion rot = player.rotation;
 
+            pos += _rot;
+
             GameObject bullet = Instantiate(bulletPrefab, pos, rot);
 
-            Rigidbody rb = bullet.transform.GetChild(0).GetComponent<Rigidbody>();
+            Rigidbody rb = bullet.GetComponent<Rigidbody>();
             Vector3 dir = player.forward.normalized;
-            bullet.transform.localScale = Vector3.zero;
 
             float _bulletDamage = bulletDamage * Mathf.RoundToInt((Random.Range(.9f, 1.1f)) * 10) * .1f;
 
