@@ -30,13 +30,13 @@ public class GameManager : MonoBehaviour {
     {
         BuildMap();
         menuActive = false;
-        eventSystem.transform.Find("Welcome Menu").gameObject.SetActive(false);
+        eventSystem.transform.Find("Screen").Find("Welcome Menu").gameObject.SetActive(false);
     }
 
     public void LevelFinished()
     {
         menuActive = true;
-        eventSystem.transform.Find("Level Summary").gameObject.SetActive(true);
+        eventSystem.transform.Find("Screen").Find("Level Summary").gameObject.SetActive(true);
         levelDifficulty++;
     }
 
@@ -44,7 +44,7 @@ public class GameManager : MonoBehaviour {
     {
         BuildMap();
         menuActive = false;
-        eventSystem.transform.Find("Level Summary").gameObject.SetActive(false);
+        eventSystem.transform.Find("Screen").Find("Level Summary").gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -69,8 +69,8 @@ public class GameManager : MonoBehaviour {
 
     public void CloseAllWindows()
     {
-        eventSystem.transform.Find("Level Summary").gameObject.SetActive(false);
-        eventSystem.transform.Find("Welcome Menu").gameObject.SetActive(false);
+        eventSystem.transform.Find("Screen").Find("Level Summary").gameObject.SetActive(false);
+        eventSystem.transform.Find("Screen").Find("Welcome Menu").gameObject.SetActive(false);
     }
 
     public void MovePlayer(Vector3 startPoint)

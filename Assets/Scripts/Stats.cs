@@ -8,6 +8,19 @@ public class Stats : MonoBehaviour {
     public float health;
     public float energy;
 
+    public float speed;
+    public float rotationSpeed;
+
+
+    public float thornsDamage;
+    public string thornsDamageType;
+    public float thornsKnockback;
+
+    public bool thornsKineticDamage;
+    public bool thornsFireDamage;
+    public bool thornsIceDamage;
+    public bool thornsElectricDamage;
+
     public GameObject hitMarker;
 
     [HideInInspector]
@@ -17,13 +30,28 @@ public class Stats : MonoBehaviour {
     [HideInInspector]
     public bool shielding;
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
+    void Start()
+    {
+        if (thornsKineticDamage == true || (thornsKineticDamage != true && thornsFireDamage != true && thornsIceDamage != true && thornsElectricDamage != true))
+        {
+            thornsDamageType = "Kinetic";
+        }
+        else if (thornsFireDamage == true)
+        {
+            thornsDamageType = "Fire";
+        }
+        else if (thornsIceDamage == true)
+        {
+            thornsDamageType = "Ice";
+        }
+        else if (thornsElectricDamage == true)
+        {
+            thornsDamageType = "Electric";
+        }
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 

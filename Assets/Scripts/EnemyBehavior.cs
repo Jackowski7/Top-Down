@@ -6,15 +6,10 @@ public class EnemyBehavior : MonoBehaviour
 {
 
     GameObject player;
-    Stats playerStats;
     Stats stats;
     Equipment equipment;
 
-    public float thornsDamage;
-    public float thornsKnockback;
     public float seeDistance;
-    public float speed;
-    public float rotationSpeed;
 
     int lookingMask;
 
@@ -46,7 +41,6 @@ public class EnemyBehavior : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
-        playerStats = player.GetComponent<Stats>();
         stats = GetComponent<Stats>();
         equipment = GetComponent<Equipment>();
         playerAnimator = GetComponent<Animator>();
@@ -80,10 +74,10 @@ public class EnemyBehavior : MonoBehaviour
 
             playerDirection.y = 0;
             Quaternion rotation = Quaternion.LookRotation(playerDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * stats.rotationSpeed);
 
             moveDirection = playerDirection.normalized;
-            moveDirection *= speed * 200;
+            moveDirection *= stats.speed * 200;
 
             if (hit.distance > 3f && firing == false)
             {
@@ -135,7 +129,7 @@ public class EnemyBehavior : MonoBehaviour
         WeaponBehavior weaponBehavior = weapon.GetComponent<WeaponBehavior>();
         Vector4 weaponInfo = weaponBehavior.WeaponInfo();
 
-        float _rotationSpeed = rotationSpeed;
+        float _rotationSpeed = stats.rotationSpeed;
         float fireSpeed = weaponInfo.x;
         float chargeSpeed = weaponInfo.y;
         float playerRotSlow = weaponInfo.z;
@@ -179,7 +173,7 @@ public class EnemyBehavior : MonoBehaviour
         }
 
         //slow player rotation by weapon amount
-        rotationSpeed = rotationSpeed - (rotationSpeed * playerRotSlow / 100);
+        stats.rotationSpeed = stats.rotationSpeed - (stats.rotationSpeed * playerRotSlow / 100);
 
         float lastFireTime = 0;
         while (firingWeapon == weaponNumber && stats.energy - energyDrainAmount >= 0)
@@ -203,7 +197,7 @@ public class EnemyBehavior : MonoBehaviour
         }
 
         //set rotation speed to normal
-        rotationSpeed = _rotationSpeed;
+        stats.rotationSpeed = _rotationSpeed;
         Animate(Idle_Animation);
         playerAnimator.SetFloat("FireSpeed", 1);
 
@@ -227,7 +221,7 @@ public class EnemyBehavior : MonoBehaviour
 
         ShieldBehavior shieldBehavior = shield.GetComponent<ShieldBehavior>();
 
-        float _rotationSpeed = rotationSpeed;
+        float _rotationSpeed = stats.rotationSpeed;
 
         Vector4 weaponInfo = shieldBehavior.ShieldInfo();
 
@@ -237,7 +231,7 @@ public class EnemyBehavior : MonoBehaviour
         float energyDrainAmount = weaponInfo.w;
 
         Animate(Shielding_Animation);
-        rotationSpeed = rotationSpeed - (rotationSpeed * playerRotSlow / 100);
+        stats.rotationSpeed = stats.rotationSpeed - (stats.rotationSpeed * playerRotSlow / 100);
 
         playerAnimator.SetFloat("FireSpeed", fireSpeed);
         playerAnimator.SetFloat("ChargeSpeed", chargeSpeed);
@@ -257,7 +251,7 @@ public class EnemyBehavior : MonoBehaviour
         }
 
         //set rotation speed to normal
-        rotationSpeed = _rotationSpeed;
+        stats.rotationSpeed = _rotationSpeed;
         Animate(Idle_Animation);
         firing = false;
 
@@ -333,16 +327,63 @@ public class EnemyBehavior : MonoBehaviour
 
     IEnumerator ThornsDamage(GameObject damagee)
     {
+
+        Stats playerStats = damagee.GetComponent<Stats>();
+
         while (applyThorns == true && playerStats.invincible != true && playerStats.dead != true)
         {
-            Stats stats = player.GetComponent<Stats>();
-            stats.health -= thornsDamage;
-            Debug.Log(thornsDamage + " thorns damage applied" + damagee.name);
-            Rigidbody rb = damagee.GetComponent<Rigidbody>();
+
+            float damage = stats.thornsDamage;
+            float knockback = stats.thornsKnockback;
+            string damageType = stats.thornsDamageType;
+
+            if (playerStats.shielding == true)
+            {
+
+                Transform shield = damagee.transform.Find("Equipment").Find("ShieldSlot").GetChild(0).transform;
+                ShieldBehavior shieldBehavior = shield.GetComponent<ShieldBehavior>();
+
+                bool shieldFacingBullet = ShieldDirection(damagee.transform.eulerAngles.y, transform.rotation.eulerAngles.y);
+
+                if (shieldFacingBullet == true)
+                {
+                    if (shieldBehavior.damageType == damageType)
+                    {
+                        damage -= shieldBehavior.damageAbsorb;
+                    }
+                    else
+                    {
+                        damage -= (shieldBehavior.damageAbsorb / 2);
+                    }
+
+                    knockback = knockback / 2;
+                }
+
+            }
+
+            playerStats.Damage(Mathf.Max(0, damage), damageType, transform.forward, damagee);
+
             Vector3 dir = (transform.position - damagee.transform.position).normalized;
             dir.y = 0;
-            rb.AddForce(-dir * thornsKnockback, ForceMode.Impulse);
-            yield return new WaitForSeconds(1f);
+            playerStats.GetComponent<Rigidbody>().AddForce(-dir * knockback, ForceMode.Impulse);
+
+
+            yield return new WaitForSecondsRealtime(1f);
+        }
+    }
+
+    bool ShieldDirection(float shieldDir, float bulletDir)
+    {
+        float a = Mathf.Max(shieldDir, bulletDir);
+        float b = Mathf.Min(shieldDir, bulletDir);
+
+        if (a - b > 140 && a - b < 220)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

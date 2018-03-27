@@ -364,8 +364,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.28, y: 0.2, z: 0.63}
-  m_Center: {x: 0, y: 0, z: 0.03}
+  m_Size: {x: 1.2, y: 0.2, z: 0.46}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!95 &95773641935419182
 Animator:
   serializedVersion: 3
@@ -415,11 +415,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ed2c840c74379489e3aba4e490b147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thornsDamage: 5
-  thornsKnockback: 1
   seeDistance: 10
-  speed: 8
-  rotationSpeed: 9
   dead: 0
   invincible: 0
 --- !u!114 &114977182079393672
@@ -435,6 +431,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 50
   energy: 100
+  speed: 8
+  rotationSpeed: 9
+  thornsDamage: 5
+  thornsDamageType: 
+  thornsKnockback: 10
+  thornsKineticDamage: 0
+  thornsFireDamage: 0
+  thornsIceDamage: 0
+  thornsElectricDamage: 0
   hitMarker: {fileID: 1741298198480972, guid: ec3fc635a00e6b34985cb11712e3d7bc, type: 2}
   dead: 0
   invincible: 0
