@@ -5,8 +5,15 @@ using UnityEngine.UI;
 
 public class Stats : MonoBehaviour {
 
+    public float maxHealth;
     public float health;
+    public float healthRecoverSpeed;
+    float lastDamagedTime;
+
+    public float maxEnergy;    
     public float energy;
+    public float energyRecoverSpeed;
+    public float lastEnergyUsedTime;
 
     public float speed;
     public float rotationSpeed;
@@ -32,6 +39,7 @@ public class Stats : MonoBehaviour {
 
     void Start()
     {
+
         if (thornsKineticDamage == true || (thornsKineticDamage != true && thornsFireDamage != true && thornsIceDamage != true && thornsElectricDamage != true))
         {
             thornsDamageType = "Kinetic";
@@ -52,8 +60,32 @@ public class Stats : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
-	}
+
+        if (health <= maxHealth)
+        {
+            if (Time.time > lastDamagedTime + 15f)
+            {
+                health = Mathf.Min((health + (healthRecoverSpeed * 3 * Time.smoothDeltaTime)), maxHealth);
+            }
+            else
+            {
+                health = Mathf.Min((health + (healthRecoverSpeed * Time.smoothDeltaTime)), maxHealth);
+            }
+        }
+        if (energy <= maxEnergy)
+        {
+            if (Time.time > lastEnergyUsedTime + 9f)
+            {
+                energy = Mathf.Min((energy + (energyRecoverSpeed * 3 * Time.smoothDeltaTime)), maxEnergy);
+            }
+            else
+            {
+                energy = Mathf.Min((energy + (energyRecoverSpeed * Time.smoothDeltaTime)), maxEnergy);
+            }
+
+        }
+
+    }
 
     public void Damage(float damageAmount, string damageType, Vector3 hitDirection, GameObject entity)
     { 
@@ -68,6 +100,7 @@ public class Stats : MonoBehaviour {
             HitMarker hitScript = hit.GetComponent<HitMarker>();
 
             hitScript.SetHitMarker(damageAmount, damageType, entity);
+            lastDamagedTime = Time.time;
         }
         else
         {

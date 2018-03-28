@@ -87,7 +87,7 @@ MonoBehaviour:
   fireSpeed: 1
   chargeSpeed: 1
   PlayerRotSlow: 20
-  EnergyDrainAmount: 0
+  EnergyDrainAmount: 10
   kineticDamage: 1
   fireDamage: 0
   iceDamage: 0
@@ -99,7 +99,6 @@ MonoBehaviour:
   bulletDurability: 0
   bulletLifetime: 0.1
   damageType: 
-  shieldOut: 0
 --- !u!212 &212436893081102402
 SpriteRenderer:
   m_ObjectHideFlags: 1

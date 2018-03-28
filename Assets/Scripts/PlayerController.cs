@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
         //move player
         Rigidbody rb = GetComponent<Rigidbody>();
         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));       
-        moveDirection *= stats.speed * 200;
+        moveDirection *= stats.speed * 100;
         rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
 
         playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
@@ -166,8 +166,6 @@ public class PlayerController : MonoBehaviour
             if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
             {
                 lastFireTime = Time.time;
-
-                stats.energy -= energyDrainAmount;
                 playerAnimator.SetTrigger("Fire");
 
                 if (weaponBehavior.animated == true)
@@ -226,7 +224,6 @@ public class PlayerController : MonoBehaviour
 
             if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
             {
-                stats.energy -= energyDrainAmount;
                 playerAnimator.SetTrigger("Fire");
                 lastFireTime = Time.time;
             }
@@ -251,6 +248,8 @@ public class PlayerController : MonoBehaviour
     void FireWeapon()
     {
         WeaponBehavior weapon = transform.Find("Equipment").Find("WeaponSlot").GetChild(activeWeapon).GetChild(0).GetComponent<WeaponBehavior>();
+        stats.energy -= weapon.EnergyDrainAmount;
+        stats.lastEnergyUsedTime = Time.time;
         weapon.FireWeapon(transform, playerVelocity);
     }
 
@@ -263,6 +262,9 @@ public class PlayerController : MonoBehaviour
     void FireShield()
     {
         ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
+        stats.energy -= shield.EnergyDrainAmount;
+        stats.lastEnergyUsedTime = Time.time;
+
         shield.FireShield();
     }
 

@@ -77,7 +77,7 @@ public class EnemyBehavior : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * stats.rotationSpeed);
 
             moveDirection = playerDirection.normalized;
-            moveDirection *= stats.speed * 200;
+            moveDirection *= stats.speed * 100;
 
             if (hit.distance > 3f && firing == false)
             {
