@@ -96,7 +96,7 @@ public class BulletBehavior : MonoBehaviour
             }
 
         }
-        else if (col.tag == "Destructible" || col.tag == "Effect")
+        else if (col.tag == "Destructible" || col.tag == "Effect" || col.gameObject.layer == LayerMask.NameToLayer("Environment"))
         {
             durability--;
         }

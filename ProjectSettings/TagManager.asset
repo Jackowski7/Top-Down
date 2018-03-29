@@ -13,6 +13,8 @@ TagManager:
   - Sword
   - Staff
   - Effect
+  - Environment_Wall
+  - Environment_Ground
   layers:
   - Default
   - TransparentFX
@@ -27,8 +29,8 @@ TagManager:
   - Effects
   - NPCs
   - MiniMap_Enemy
-  - 
-  - 
+  - MiniMap_Tile
+  - MiniMap_Player
   - 
   - 
   - 

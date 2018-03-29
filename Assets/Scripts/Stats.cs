@@ -61,7 +61,7 @@ public class Stats : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (health <= maxHealth)
+        if (health < maxHealth)
         {
             if (Time.time > lastDamagedTime + 15f)
             {
@@ -72,7 +72,7 @@ public class Stats : MonoBehaviour {
                 health = Mathf.Min((health + (healthRecoverSpeed * Time.smoothDeltaTime)), maxHealth);
             }
         }
-        if (energy <= maxEnergy)
+        if (energy < maxEnergy)
         {
             if (Time.time > lastEnergyUsedTime + 9f)
             {

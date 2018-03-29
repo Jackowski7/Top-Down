@@ -9,6 +9,9 @@ public class EnemyBehavior : MonoBehaviour
     Stats stats;
     Equipment equipment;
 
+    GameObject healthBar;
+    GameObject energyBar;
+
     public float seeDistance;
 
     int lookingMask;
@@ -46,12 +49,21 @@ public class EnemyBehavior : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
+        healthBar = transform.Find("Stats/HealthPanel").GetChild(0).gameObject;
+        energyBar = transform.Find("Stats/EnergyPanel").GetChild(0).gameObject;
+
         lookingMask = LayerMask.GetMask("Player", "Environment");
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        float healthPercent = Mathf.Clamp((stats.health / stats.maxHealth), 0, 1);
+        healthBar.GetComponent<RectTransform>().localScale = Vector3.Slerp(healthBar.GetComponent<RectTransform>().localScale, (new Vector3(healthPercent, 1, 1)), 1f * Time.time);
+
+        float energyPercent = Mathf.Clamp((stats.energy / stats.maxEnergy), 0, 1);
+        energyBar.GetComponent<RectTransform>().localScale = Vector3.Slerp(energyBar.GetComponent<RectTransform>().localScale, (new Vector3(energyPercent, 1, 1)), 1f * Time.time);
 
         if (stats.health <= 0)
         {
@@ -182,8 +194,6 @@ public class EnemyBehavior : MonoBehaviour
             if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
             {
                 lastFireTime = Time.time;
-
-                stats.energy -= energyDrainAmount;
                 playerAnimator.SetTrigger("Fire");
 
                 if (weaponBehavior.animated == true)
@@ -242,7 +252,6 @@ public class EnemyBehavior : MonoBehaviour
 
             if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
             {
-                stats.energy -= energyDrainAmount;
                 playerAnimator.SetTrigger("Fire");
                 lastFireTime = Time.time;
             }
@@ -265,6 +274,8 @@ public class EnemyBehavior : MonoBehaviour
     void FireWeapon()
     {
         WeaponBehavior weapon = transform.Find("Equipment").Find("WeaponSlot").GetChild(activeWeapon).GetChild(0).GetComponent<WeaponBehavior>();
+        stats.energy -= weapon.EnergyDrainAmount;
+        stats.lastEnergyUsedTime = Time.time;
         weapon.FireWeapon(transform, playerVelocity);
     }
 
@@ -277,6 +288,8 @@ public class EnemyBehavior : MonoBehaviour
     void FireShield()
     {
         ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
+        stats.energy -= shield.EnergyDrainAmount;
+        stats.lastEnergyUsedTime = Time.time;
         shield.FireShield();
     }
 
@@ -303,7 +316,6 @@ public class EnemyBehavior : MonoBehaviour
         }
 
     }
-
 
     public void OnCollisionEnter(Collision col)
     {
