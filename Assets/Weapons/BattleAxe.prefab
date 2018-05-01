@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4991348472706088}
   - component: {fileID: 114830175373143586}
+  - component: {fileID: 65028173185581844}
   m_Layer: 0
   m_Name: BattleAxe
   m_TagString: Sword
@@ -63,13 +64,25 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1684792491197442}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -0.14642525, y: -2.0493846, z: 15.812894}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4858184638073346}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &65028173185581844
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1684792491197442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 0.42, y: 0.2, z: 1.12}
+  m_Center: {x: 0, y: 0, z: 0.34}
 --- !u!114 &114830175373143586
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,8 +96,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1572913392945714, guid: f85bebde63583894e83c6eea60ba4f14,
     type: 2}
-  animated: 0
-  fireSpeed: 1
+  fireSpeed: 1.5
   chargeSpeed: 1
   PlayerRotSlow: 20
   EnergyDrainAmount: 10
@@ -92,9 +104,9 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   electricDamage: 0
-  bulletDamage: 20
-  bulletKnockback: 10
-  bulletSpeed: 10
+  damage: 10
+  knockback: 3
+  bulletSpeed: 0
   bulletSpread: 0
   bulletDurability: 0
   bulletLifetime: 0.1

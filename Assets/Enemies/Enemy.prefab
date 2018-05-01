@@ -83,7 +83,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4008674949245148}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: WeaponSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -98,7 +98,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4645199623135178}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Slot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -113,7 +113,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4974469055920886}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Slot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4409979353904312}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: ShieldSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 114493172942621140}
   - component: {fileID: 95773641935419182}
   - component: {fileID: 136055379985332498}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4728234602380400}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Equipment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,11 +436,11 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 5
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
+  m_Constraints: 116
+  m_CollisionDetection: 2
 --- !u!95 &95773641935419182
 Animator:
   serializedVersion: 3
@@ -653,19 +653,12 @@ MonoBehaviour:
   health: 50
   healthRecoverSpeed: 2
   maxEnergy: 50
-  energy: 50
-  energyRecoverSpeed: 2
-  lastEnergyUsedTime: 0
-  speed: 8
+  energy: 100
+  energyRecoverSpeed: 10
+  movementSpeed: 0
   rotationSpeed: 9
-  thornsDamage: 5
-  thornsDamageType: 
-  thornsKnockback: 10
-  thornsKineticDamage: 0
-  thornsFireDamage: 0
-  thornsIceDamage: 0
-  thornsElectricDamage: 0
   hitMarker: {fileID: 1741298198480972, guid: ec3fc635a00e6b34985cb11712e3d7bc, type: 2}
+  lastEnergyUsedTime: 0
   dead: 0
   invincible: 0
   shielding: 0
@@ -675,13 +668,13 @@ CapsuleCollider:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1474503786125174}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3dae19d75f3967c42a3395ceab5b5d6e, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.35
-  m_Height: 1.5
+  m_Radius: 0.45
+  m_Height: 1
   m_Direction: 1
-  m_Center: {x: 0, y: -0.5, z: 0}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!212 &212067641915564292
 SpriteRenderer:
   m_ObjectHideFlags: 1

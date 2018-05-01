@@ -56,7 +56,7 @@ public class EnemyBehavior : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         float healthPercent = Mathf.Clamp((stats.health / stats.maxHealth), 0, 1);
@@ -86,10 +86,10 @@ public class EnemyBehavior : MonoBehaviour
 
             playerDirection.y = 0;
             Quaternion rotation = Quaternion.LookRotation(playerDirection);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * stats.rotationSpeed);
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * stats.rotationSpeed));
 
             moveDirection = playerDirection.normalized;
-            moveDirection *= stats.speed * 100;
+            moveDirection *= stats.movementSpeed * 100;
 
             if (hit.distance > 3f && firing == false)
             {
@@ -119,7 +119,7 @@ public class EnemyBehavior : MonoBehaviour
 
             if (hit.distance > .5f)
             {
-                rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
+                rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Force);
             }
 
 
@@ -148,7 +148,7 @@ public class EnemyBehavior : MonoBehaviour
         float energyDrainAmount = weaponInfo.w;
 
         Animator weaponAnimator = null;
-        if (weaponBehavior.animated == true)
+        if (weapon.GetComponent<Animator>())
         {
             weaponAnimator = weapon.GetComponent<Animator>();
         }
@@ -177,7 +177,7 @@ public class EnemyBehavior : MonoBehaviour
             Animate(Meleeing_Animation); // animate appropriate weapon type animation
         }
 
-        if (weaponBehavior.animated == true)
+        if (weaponAnimator != null)
         {
             weaponAnimator.SetBool("Firing", true);
             weaponAnimator.SetFloat("ChargeSpeed", chargeSpeed);
@@ -196,7 +196,7 @@ public class EnemyBehavior : MonoBehaviour
                 lastFireTime = Time.time;
                 playerAnimator.SetTrigger("Fire");
 
-                if (weaponBehavior.animated == true)
+                if (weaponAnimator != null)
                 {
                     weaponAnimator.SetTrigger("Fire");
                 }
@@ -211,7 +211,7 @@ public class EnemyBehavior : MonoBehaviour
         Animate(Idle_Animation);
         playerAnimator.SetFloat("FireSpeed", 1);
 
-        if (weaponBehavior.animated == true)
+        if (weaponAnimator != null)
         {
             weaponAnimator.SetFloat("FireSpeed", 1);
             weaponAnimator.SetBool("Firing", false);
@@ -279,10 +279,18 @@ public class EnemyBehavior : MonoBehaviour
         weapon.FireWeapon(transform, playerVelocity);
     }
 
+    void DeactivateSword()
+    {
+        WeaponBehavior weapon = transform.Find("Equipment").Find("WeaponSlot").GetChild(activeWeapon).GetChild(0).GetComponent<WeaponBehavior>();
+        weapon.GetComponent<Collider>().enabled = false;
+    }
+
     void DrawShield()
     {
         ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
         shield.DrawShield(transform);
+        shield.GetComponent<Collider>().enabled = true;
+
     }
 
     void FireShield()
@@ -297,6 +305,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
         shield.PutAway();
+        shield.GetComponent<Collider>().enabled = false;
     }
 
     private void Animate(string boolName)
@@ -315,73 +324,6 @@ public class EnemyBehavior : MonoBehaviour
             }
         }
 
-    }
-
-    public void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            if (applyThorns == false)
-            {
-                applyThorns = true;
-                StartCoroutine(ThornsDamage(col.gameObject));
-            }
-        }
-    }
-
-    public void OnCollisionExit(Collision col)
-    {
-        if (col.gameObject.tag == "Player")
-        {
-            applyThorns = false;
-        }
-    }
-
-    IEnumerator ThornsDamage(GameObject damagee)
-    {
-
-        Stats playerStats = damagee.GetComponent<Stats>();
-
-        while (applyThorns == true && playerStats.invincible != true && playerStats.dead != true)
-        {
-
-            float damage = stats.thornsDamage;
-            float knockback = stats.thornsKnockback;
-            string damageType = stats.thornsDamageType;
-
-            if (playerStats.shielding == true)
-            {
-
-                Transform shield = damagee.transform.Find("Equipment").Find("ShieldSlot").GetChild(0).transform;
-                ShieldBehavior shieldBehavior = shield.GetComponent<ShieldBehavior>();
-
-                bool shieldFacingBullet = ShieldDirection(damagee.transform.eulerAngles.y, transform.rotation.eulerAngles.y);
-
-                if (shieldFacingBullet == true)
-                {
-                    if (shieldBehavior.damageType == damageType)
-                    {
-                        damage -= shieldBehavior.damageAbsorb;
-                    }
-                    else
-                    {
-                        damage -= (shieldBehavior.damageAbsorb / 2);
-                    }
-
-                    knockback = knockback / 2;
-                }
-
-            }
-
-            playerStats.Damage(Mathf.Max(0, damage), damageType, transform.forward, damagee);
-
-            Vector3 dir = (transform.position - damagee.transform.position).normalized;
-            dir.y = 0;
-            playerStats.GetComponent<Rigidbody>().AddForce(-dir * knockback, ForceMode.Impulse);
-
-
-            yield return new WaitForSecondsRealtime(1f);
-        }
     }
 
     bool ShieldDirection(float shieldDir, float bulletDir)

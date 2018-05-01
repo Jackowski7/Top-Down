@@ -23,6 +23,8 @@ public class BulletBehavior : MonoBehaviour
     [HideInInspector]
     public float lifetime;
     [HideInInspector]
+    public float bulletSpeed;
+    [HideInInspector]
     public float knockback;
 
     // Use this for initialization
@@ -38,7 +40,6 @@ public class BulletBehavior : MonoBehaviour
         {
             Explode();
         }
-
     }
 
     bool ShieldDirection(float shieldDir, float bulletDir)
@@ -75,13 +76,16 @@ public class BulletBehavior : MonoBehaviour
 
                     if (shieldFacingBullet == true)
                     {
+
+                        damage -= shieldBehavior.baseDamageAbsorb;
+
                         if (shieldBehavior.damageType == damageType)
                         {
-                            damage -= shieldBehavior.damageAbsorb;
+                            damage *= (shieldBehavior.damageAbsorbPercent * .01f);
                         }
                         else
                         {
-                            damage -= (shieldBehavior.damageAbsorb / 2);
+                            damage *= ((shieldBehavior.damageAbsorbPercent / 2) * .01f);
                         }
 
                         knockback = knockback / 2;
@@ -91,7 +95,7 @@ public class BulletBehavior : MonoBehaviour
                 }
 
                 stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
-                stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.Impulse);
+                stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.VelocityChange);
 
             }
 
@@ -100,6 +104,12 @@ public class BulletBehavior : MonoBehaviour
         {
             durability--;
         }
+
+        else if (col.tag =="Shield")
+        {
+
+        }
+
 
     }
 

@@ -6,57 +6,30 @@ using UnityEngine.UI;
 public class Stats : MonoBehaviour {
 
     public float maxHealth;
+    [HideInInspector]
     public float health;
     public float healthRecoverSpeed;
-    float lastDamagedTime;
 
-    public float maxEnergy;    
+    public float maxEnergy;
+    [HideInInspector]
     public float energy;
     public float energyRecoverSpeed;
-    public float lastEnergyUsedTime;
 
-    public float speed;
+    public float movementSpeed;
     public float rotationSpeed;
-
-
-    public float thornsDamage;
-    public string thornsDamageType;
-    public float thornsKnockback;
-
-    public bool thornsKineticDamage;
-    public bool thornsFireDamage;
-    public bool thornsIceDamage;
-    public bool thornsElectricDamage;
 
     public GameObject hitMarker;
 
+    [HideInInspector]
+    float lastDamagedTime;
+    [HideInInspector]
+    public float lastEnergyUsedTime;
     [HideInInspector]
     public bool dead;
     [HideInInspector]
     public bool invincible;
     [HideInInspector]
     public bool shielding;
-
-    void Start()
-    {
-
-        if (thornsKineticDamage == true || (thornsKineticDamage != true && thornsFireDamage != true && thornsIceDamage != true && thornsElectricDamage != true))
-        {
-            thornsDamageType = "Kinetic";
-        }
-        else if (thornsFireDamage == true)
-        {
-            thornsDamageType = "Fire";
-        }
-        else if (thornsIceDamage == true)
-        {
-            thornsDamageType = "Ice";
-        }
-        else if (thornsElectricDamage == true)
-        {
-            thornsDamageType = "Electric";
-        }
-    }
 
     // Update is called once per frame
     void Update () {

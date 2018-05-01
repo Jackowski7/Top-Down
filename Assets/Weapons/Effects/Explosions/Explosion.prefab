@@ -22,7 +22,6 @@ GameObject:
   - component: {fileID: 114379983764426660}
   - component: {fileID: 198129064118665104}
   - component: {fileID: 199961119711883588}
-  - component: {fileID: 54333603529265066}
   m_Layer: 10
   m_Name: Explosion
   m_TagString: Effect
@@ -43,21 +42,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &54333603529265066
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1865308414767878}
-  serializedVersion: 2
-  m_Mass: 0.0000001
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &114379983764426660
 MonoBehaviour:
   m_ObjectHideFlags: 1

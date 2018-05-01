@@ -15,6 +15,7 @@ TagManager:
   - Effect
   - Environment_Wall
   - Environment_Ground
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -31,7 +32,7 @@ TagManager:
   - MiniMap_Enemy
   - MiniMap_Tile
   - MiniMap_Player
-  - 
+  - Enemy
   - 
   - 
   - 

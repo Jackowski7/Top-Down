@@ -431,7 +431,7 @@ MonoBehaviour:
   energy: 100
   energyRecoverSpeed: 4
   lastEnergyUsedTime: 0
-  speed: 9
+  movementSpeed: 8
   rotationSpeed: 9
   thornsDamage: 0
   thornsDamageType: 

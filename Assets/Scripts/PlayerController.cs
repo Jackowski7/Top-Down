@@ -12,7 +12,6 @@ public class PlayerController : MonoBehaviour
     public GameObject MapCamera;
     public float cameraSpeed;
     public float cameraHeight;
-    public float shm;
 
     Vector3 moveDirection;
     Vector3 _prevPosition;
@@ -29,6 +28,7 @@ public class PlayerController : MonoBehaviour
     public static bool firing;
     public static bool charged = false;
     public static int activeWeapon = 0;
+    public static bool dashAvailable = true;
 
     private void Start()
     {
@@ -38,8 +38,21 @@ public class PlayerController : MonoBehaviour
         stats = GetComponent<Stats>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
+        //move player
+        Rigidbody rb = GetComponent<Rigidbody>();
+        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        moveDirection *= stats.movementSpeed * 100;
+        rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Force);
+
+        playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
+        playerVelocity.y = 0;
+        speed_Animation = Vector3.Distance(transform.position, _prevPosition);
+        _prevPosition = transform.position;
+
+        playerAnimator.SetFloat("MovementSpeed", speed_Animation);
+
         // rotate player body towards mouse
         Plane playerPlane = new Plane(Vector3.up, transform.position);
 
@@ -51,21 +64,8 @@ public class PlayerController : MonoBehaviour
             Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
             targetRotation.x = 0;
             targetRotation.z = 0;
-            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, stats.rotationSpeed * Time.deltaTime);
+            rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, stats.rotationSpeed * Time.deltaTime));
         }
-
-        //move player
-        Rigidbody rb = GetComponent<Rigidbody>();
-        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));       
-        moveDirection *= stats.speed * 100;
-        rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
-
-        playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
-        playerVelocity.y = 0;
-        speed_Animation = Vector3.Distance(transform.position, _prevPosition);
-        _prevPosition = transform.position;
-
-        playerAnimator.SetFloat("MovementSpeed", speed_Animation);
 
         //move camera
         Vector3 cameraTargetPos = this.transform.position;
@@ -74,12 +74,10 @@ public class PlayerController : MonoBehaviour
         mainCameraTargetPos.y = cameraHeight;
         mainCameraTargetPos.z -= Screen.height / 5.69f / 100;
        
-
         myCamera.transform.position = Vector3.Slerp(myCamera.transform.position, mainCameraTargetPos, (cameraSpeed / 10) * Time.deltaTime);
         MapCamera.transform.position = cameraTargetPos;
 
         Vector3 targetDir = myCamera.transform.position - transform.position;
-
 
         Vector3 newDir = Vector3.RotateTowards(new Vector3(90, 0, 0), targetDir, 10, 0.0F);
         newDir.x = newDir.x * .15f;
@@ -88,6 +86,8 @@ public class PlayerController : MonoBehaviour
         myCamera.transform.rotation = Quaternion.Euler(newDir);
 
 
+
+        // user input
         if (Input.GetButton("Fire1") && firing == false)
         {
             StartCoroutine(_FireWeapon(0, "Fire1"));
@@ -100,6 +100,14 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(_FireShield(2, "Fire3"));
         }
+        if (Input.GetButton("Dash") && dashAvailable == true)
+        {
+            dashAvailable = false;
+            Vector3 bashDir = transform.forward;
+            rb.AddForce(bashDir * 300 * Time.deltaTime, ForceMode.VelocityChange);
+            StartCoroutine(DashCooldown());
+        }
+
 
     }
 
@@ -120,7 +128,7 @@ public class PlayerController : MonoBehaviour
         float energyDrainAmount = weaponInfo.w;
 
         Animator weaponAnimator = null;
-        if (weaponBehavior.animated == true)
+        if (weapon.GetComponent<Animator>())
         {
             weaponAnimator = weapon.GetComponent<Animator>();
         }
@@ -149,7 +157,7 @@ public class PlayerController : MonoBehaviour
             Animate(Meleeing_Animation); // animate appropriate weapon type animation
         }
 
-        if (weaponBehavior.animated == true)
+        if (weaponAnimator != null)
         {
             weaponAnimator.SetBool("Firing", true);
             weaponAnimator.SetFloat("ChargeSpeed", chargeSpeed);
@@ -168,7 +176,7 @@ public class PlayerController : MonoBehaviour
                 lastFireTime = Time.time;
                 playerAnimator.SetTrigger("Fire");
 
-                if (weaponBehavior.animated == true)
+                if (weaponAnimator != null)
                 {
                     weaponAnimator.SetTrigger("Fire");
                 }
@@ -182,8 +190,8 @@ public class PlayerController : MonoBehaviour
         stats.rotationSpeed = _rotationSpeed;
         Animate(Idle_Animation);
         playerAnimator.SetFloat("FireSpeed", 1);
-         
-        if (weaponBehavior.animated == true)
+
+        if (weaponAnimator != null)
         {
             weaponAnimator.SetFloat("FireSpeed", 1);
             weaponAnimator.SetBool("Firing", false);
@@ -204,6 +212,7 @@ public class PlayerController : MonoBehaviour
         ShieldBehavior shieldBehavior = shield.GetComponent<ShieldBehavior>();
 
         float _rotationSpeed = stats.rotationSpeed;
+        float _movementSpeed = stats.movementSpeed;
 
         Vector4 weaponInfo = shieldBehavior.ShieldInfo();
 
@@ -214,6 +223,8 @@ public class PlayerController : MonoBehaviour
 
         Animate(Shielding_Animation);
         stats.rotationSpeed = stats.rotationSpeed - (stats.rotationSpeed * playerRotSlow / 100);
+        stats.movementSpeed = stats.movementSpeed/2;
+
 
         playerAnimator.SetFloat("FireSpeed", fireSpeed);
         playerAnimator.SetFloat("ChargeSpeed", chargeSpeed);
@@ -233,11 +244,18 @@ public class PlayerController : MonoBehaviour
 
         //set rotation speed to normal
         stats.rotationSpeed = _rotationSpeed;
+        stats.movementSpeed = _movementSpeed;
         Animate(Idle_Animation);
         firing = false;
         charged = false;
 
 
+    }
+
+    IEnumerator DashCooldown()
+    {
+        yield return new WaitForSeconds(2);
+        dashAvailable = true;
     }
 
     public void SetCharged()
@@ -253,10 +271,20 @@ public class PlayerController : MonoBehaviour
         weapon.FireWeapon(transform, playerVelocity);
     }
 
+    void DeactivateSword()
+    {
+        WeaponBehavior weapon = transform.Find("Equipment").Find("WeaponSlot").GetChild(activeWeapon).GetChild(0).GetComponent<WeaponBehavior>();
+        if (weapon.GetComponent<Collider>())
+        {
+            weapon.GetComponent<Collider>().enabled = false;
+        }
+    }
+
     void DrawShield()
     {
         ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
         shield.DrawShield(transform);
+        shield.GetComponent<Collider>().enabled = true;
     }
 
     void FireShield()
@@ -272,6 +300,7 @@ public class PlayerController : MonoBehaviour
     {
         ShieldBehavior shield = transform.Find("Equipment").Find("ShieldSlot").GetChild(0).GetComponent<ShieldBehavior>();
         shield.PutAway();
+        shield.GetComponent<Collider>().enabled = false;
     }
 
     private void Animate(string boolName)

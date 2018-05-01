@@ -19,7 +19,8 @@ public class ShieldBehavior : MonoBehaviour
 
     [HideInInspector]
     public string damageType;
-    public float damageAbsorb;
+    public float baseDamageAbsorb;
+    public float damageAbsorbPercent;
 
     Transform playerBody;
 
