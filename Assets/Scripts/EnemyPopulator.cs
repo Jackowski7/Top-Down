@@ -7,12 +7,17 @@ public class EnemyPopulator : MonoBehaviour
 
     public GameObject enemyPrefab;
     public GameObject enemySpawnPoint;
+    Transform enemyFolder;
+
 
     string[] enemyNames;
 
     // Use this for initialization
     void Start()
     {
+
+        enemyFolder = GameObject.Find("Enemies").transform;
+
         enemyNames = new string[1];
         enemyNames[0] = "jim";
     }
@@ -73,8 +78,8 @@ public class EnemyPopulator : MonoBehaviour
                         Quaternion rot = Quaternion.Euler(0, _rot * 60, 0);
 
                         GameObject enemy = Instantiate(enemySpawnPoint, pos, rot);
-                        enemy.name = (enemyNames[Random.Range(0, enemyNames.Length)]);
-                        enemy.transform.parent = transform.Find("Enemies").transform;
+                        enemy.name = "EnemySpawner";
+                        enemy.transform.parent = enemyFolder;
 
                     }
                 }
@@ -127,7 +132,7 @@ public class EnemyPopulator : MonoBehaviour
 
                             GameObject enemy = Instantiate(enemyPrefab, pos, rot);
                             enemy.name = (enemyNames[Random.Range(0, enemyNames.Length)]);
-                            enemy.transform.parent = transform.Find("Enemies").transform;
+                            enemy.transform.parent = enemyFolder;
 
                             enemiesLeftToSpawnInGroup--;
                         }

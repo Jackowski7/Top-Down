@@ -167,17 +167,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1572913392945714, guid: f96260529fc5903499c83fe03d3360e5,
     type: 2}
-  fireSpeed: 6
-  chargeSpeed: 2
+  fireSpeed: 3.5
+  chargeSpeed: 4
   PlayerRotSlow: 50
   EnergyDrainAmount: 2
-  kineticDamage: 1
-  fireDamage: 0
+  kineticDamage: 0
+  fireDamage: 1
   iceDamage: 0
   electricDamage: 0
-  damage: 5
-  knockback: 1
-  bulletSpeed: 3
+  damage: 25
+  knockback: 1.5
+  bulletSpeed: 8
   bulletSpread: 5
   bulletDurability: 1
   bulletLifetime: 2

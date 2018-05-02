@@ -26,7 +26,6 @@ GameObject:
   - component: {fileID: 198560361338406044}
   - component: {fileID: 96824524092041824}
   - component: {fileID: 108636231821149098}
-  - component: {fileID: 33988432787962058}
   m_Layer: 0
   m_Name: BasicBullet
   m_TagString: Bullet
@@ -47,13 +46,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &33988432787962058
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1572913392945714}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &54370816099936192
 Rigidbody:
   m_ObjectHideFlags: 1

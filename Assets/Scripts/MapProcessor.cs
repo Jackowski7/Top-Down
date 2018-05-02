@@ -5,9 +5,9 @@ using UnityEngine;
 public class MapProcessor : MonoBehaviour
 {
 
-    NewMap newMap;
-
+    [HideInInspector]
     public int width;
+    [HideInInspector]
     public int height;
     float seed;
     public Vector4[,] points;
@@ -33,7 +33,6 @@ public class MapProcessor : MonoBehaviour
     public void ProcessMap(int _width, int _height, int outerBorderSize, int innerBorderSize, int mapWidth, int mapHeight, Vector4[,] _points, int[,] generatedMap, float _seed)
     {
 
-        newMap = GetComponent<NewMap>();
 
         width = _width;
         height = _height;

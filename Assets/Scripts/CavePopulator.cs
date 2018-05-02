@@ -5,21 +5,9 @@ using UnityEngine;
 public class CavePopulator : MonoBehaviour
 {
 
-    NewMap newMap;
-
     GameObject[] mapTiles;
-
-    public int width;
-    public int height;
-    public int innerBorderSize;
-    public int outerBorderSize;
-    public float wallThreshold;
-    public float roomThreshold;
-    public int mapSmoothness;
-    public int hallwaySize;
-    [Range(0, 100)]
-    public int randomFillPercent;
-    public float seed;
+    Transform mapFolder;
+    CaveEntrance caveEntrance;
 
     public GameObject enterPoint;
     public GameObject exitPoint;
@@ -65,22 +53,12 @@ public class CavePopulator : MonoBehaviour
     public GameObject water8;
     public GameObject water9;
 
-    public void SetValues(float _seed)
+
+    private void Start()
     {
-        newMap = GetComponent<NewMap>();
-        newMap.width = width;
-        newMap.height = height;
-        newMap.innerBorderSize = innerBorderSize;
-        newMap.outerBorderSize = outerBorderSize;
-        newMap.wallThreshold = wallThreshold;
-        newMap.roomThreshold = roomThreshold;
-        newMap.mapSmoothness = mapSmoothness;
-        newMap.hallwaySize = hallwaySize;
-        newMap.randomFillPercent = randomFillPercent;
-        seed = _seed;
-
+        mapFolder = GameObject.Find("Map").transform;
+        caveEntrance = GetComponent<CaveEntrance>();
     }
-
     public void PopulateMap(int width, int height, float halfWidth, float halfHeight, Vector4[,] points)
     {
 
@@ -194,7 +172,7 @@ public class CavePopulator : MonoBehaviour
 
                 GameObject tile = Instantiate(tileType, pos, rot);
                 tile.name = (tileType.name + _tileType);
-                tile.transform.parent = transform.Find("Map").transform;
+                tile.transform.parent = mapFolder;
 
 
                 //scale walls according to area
@@ -207,22 +185,22 @@ public class CavePopulator : MonoBehaviour
                     GameObject groundTileType = mapTiles[Random.Range(0, 3)];
                     GameObject groundTile = Instantiate(groundTileType, pos, rot);
                     groundTile.name = (groundTileType.name);
-                    groundTile.transform.parent = transform.Find("Map").transform;
+                    groundTile.transform.parent = mapFolder;
                 }
 
 
                 //set where the player spwans
-                if (_tileType == 51 && GameManager.enterBackwards == false)
+                if (_tileType == 51)
                 {
                     pos.y++;
-                    NewMap.enterPoint = pos;
+                    GameManager.enterPoint = pos;
                 }
 
                 //did we enter backwards?
-                if (_tileType == 52 && GameManager.enterBackwards == true)
+                if (_tileType == 52)
                 {
                     pos.y++;
-                    NewMap.enterPoint = pos;
+                    //GameManager.enterPoint = pos;
                 }
 
 
@@ -245,7 +223,6 @@ public class CavePopulator : MonoBehaviour
                 {
                     foundEntry = true;
                     points[x, y].x = 51;
-                    GameManager.enterPoint = new Vector2(x, y);
                 }
 
             }

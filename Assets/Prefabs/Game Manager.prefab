@@ -1726,7 +1726,7 @@ Camera:
   far clip plane: 1000
   field of view: 80
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 7
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -1750,13 +1750,13 @@ Rigidbody:
   m_GameObject: {fileID: 1179025003263536}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 5
+  m_Drag: 3
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 116
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!81 &81439956485595108
 AudioListener:
   m_ObjectHideFlags: 1
@@ -2574,7 +2574,7 @@ MonoBehaviour:
   myCamera: {fileID: 1990145309917088}
   MapCamera: {fileID: 1337972931210502}
   cameraSpeed: 35
-  cameraHeight: 3
+  cameraHeight: 5
 --- !u!114 &114276203058379946
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3513,17 +3513,10 @@ MonoBehaviour:
   maxEnergy: 100
   energy: 100
   energyRecoverSpeed: 4
-  lastEnergyUsedTime: 0
-  movementSpeed: 8
+  movementSpeed: 7
   rotationSpeed: 9
-  thornsDamage: 0
-  thornsDamageType: 
-  thornsKnockback: 0
-  thornsKineticDamage: 0
-  thornsFireDamage: 0
-  thornsIceDamage: 0
-  thornsElectricDamage: 0
   hitMarker: {fileID: 1741298198480972, guid: ec3fc635a00e6b34985cb11712e3d7bc, type: 2}
+  lastEnergyUsedTime: 0
   dead: 0
   invincible: 0
   shielding: 0
@@ -4075,7 +4068,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.35
+  m_Radius: 0.45
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}

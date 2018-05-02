@@ -17,8 +17,11 @@ public class Stats : MonoBehaviour {
 
     public float movementSpeed;
     public float rotationSpeed;
+    public float dashSpeed;
+    public float dashRecovery;
 
     public GameObject hitMarker;
+    public GameObject dashTrail;
 
     [HideInInspector]
     float lastDamagedTime;
@@ -67,7 +70,8 @@ public class Stats : MonoBehaviour {
         {
             health -= damageAmount;
             GameObject hit = Instantiate(hitMarker);
-            hit.transform.position = transform.position - hitDirection;
+            Vector3 hitMarkerPos = transform.position - hitDirection;
+            hit.transform.position = hitMarkerPos;
             hit.transform.rotation = Quaternion.Euler(90, 0, 0);
 
             HitMarker hitScript = hit.GetComponent<HitMarker>();

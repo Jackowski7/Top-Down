@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour
 {
@@ -30,12 +32,18 @@ public class PlayerController : MonoBehaviour
     public static int activeWeapon = 0;
     public static bool dashAvailable = true;
 
+    GameObject aimLine;
+    bool aimLineOn = false;
+    float aimLineOpacity;
+
+
     private void Start()
     {
         gameManager = transform.parent.GetComponent<GameManager>();
         equipment = transform.GetComponent<Equipment>();
         playerAnimator = GetComponent<Animator>();
         stats = GetComponent<Stats>();
+        aimLine = transform.Find("AimLine").gameObject;
     }
 
     void FixedUpdate()
@@ -44,7 +52,7 @@ public class PlayerController : MonoBehaviour
         Rigidbody rb = GetComponent<Rigidbody>();
         moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         moveDirection *= stats.movementSpeed * 100;
-        rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Force);
+        rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
 
         playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
         playerVelocity.y = 0;
@@ -73,7 +81,7 @@ public class PlayerController : MonoBehaviour
         Vector3 mainCameraTargetPos = cameraTargetPos;
         mainCameraTargetPos.y = cameraHeight;
         mainCameraTargetPos.z -= Screen.height / 5.69f / 100;
-       
+
         myCamera.transform.position = Vector3.Slerp(myCamera.transform.position, mainCameraTargetPos, (cameraSpeed / 10) * Time.deltaTime);
         MapCamera.transform.position = cameraTargetPos;
 
@@ -84,7 +92,6 @@ public class PlayerController : MonoBehaviour
         newDir.z = newDir.z * .15f;
         newDir.y = 90;
         myCamera.transform.rotation = Quaternion.Euler(newDir);
-
 
 
         // user input
@@ -104,9 +111,23 @@ public class PlayerController : MonoBehaviour
         {
             dashAvailable = false;
             Vector3 bashDir = transform.forward;
-            rb.AddForce(bashDir * 300 * Time.deltaTime, ForceMode.VelocityChange);
+            rb.AddForce(bashDir * stats.dashSpeed * 100 * Time.deltaTime, ForceMode.VelocityChange);
+            GameObject _dashTrail = Instantiate(stats.dashTrail, transform.position, transform.rotation);
+            _dashTrail.transform.parent = this.transform;
+
             StartCoroutine(DashCooldown());
         }
+
+        if (aimLineOn == true)
+        {
+            aimLineOpacity = Mathf.Lerp(aimLineOpacity, 1, 2f * Time.deltaTime);
+        }
+        else
+        {
+            aimLineOpacity = Mathf.Lerp(aimLineOpacity, 0, 7f * Time.deltaTime);
+        }
+
+        aimLine.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, aimLineOpacity);
 
 
     }
@@ -151,6 +172,7 @@ public class PlayerController : MonoBehaviour
         if (weaponType == "Staff")
         {
             Animate(Casting_Animation);
+            aimLineOn = true;
         }
         if (weaponType == "Sword" || weaponType == "Dagger") // or any melee type..
         {
@@ -168,9 +190,9 @@ public class PlayerController : MonoBehaviour
         stats.rotationSpeed = stats.rotationSpeed - (stats.rotationSpeed * playerRotSlow / 100);
 
         float lastFireTime = 0;
-        while (Input.GetButton(button) && stats.energy - energyDrainAmount >= 0 )
+        while (Input.GetButton(button) && stats.energy - energyDrainAmount >= 0)
         {
- 
+
             if (Time.time >= lastFireTime + (1 / fireSpeed) && charged == true)
             {
                 lastFireTime = Time.time;
@@ -199,6 +221,7 @@ public class PlayerController : MonoBehaviour
 
         firing = false;
         charged = false;
+        aimLineOn = false;
 
     }
 
@@ -223,7 +246,7 @@ public class PlayerController : MonoBehaviour
 
         Animate(Shielding_Animation);
         stats.rotationSpeed = stats.rotationSpeed - (stats.rotationSpeed * playerRotSlow / 100);
-        stats.movementSpeed = stats.movementSpeed/2;
+        stats.movementSpeed = stats.movementSpeed / 2;
 
 
         playerAnimator.SetFloat("FireSpeed", fireSpeed);
@@ -254,7 +277,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator DashCooldown()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(stats.dashRecovery);
         dashAvailable = true;
     }
 

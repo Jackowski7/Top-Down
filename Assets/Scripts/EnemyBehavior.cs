@@ -282,7 +282,10 @@ public class EnemyBehavior : MonoBehaviour
     void DeactivateSword()
     {
         WeaponBehavior weapon = transform.Find("Equipment").Find("WeaponSlot").GetChild(activeWeapon).GetChild(0).GetComponent<WeaponBehavior>();
-        weapon.GetComponent<Collider>().enabled = false;
+        if (weapon.GetComponent<Collider>())
+        {
+            weapon.GetComponent<Collider>().enabled = false;
+        }
     }
 
     void DrawShield()

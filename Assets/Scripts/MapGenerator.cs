@@ -22,12 +22,10 @@ public class MapGenerator : MonoBehaviour
 
     int[,] map;
 
-    NewMap newMap;
 
-    public void GenerateMap(int mapWidth, int mapHeight, float _wallThreshold, float _roomThreshold, int _mapSmoothness, int _hallwaySize, int _randomFillPercent, float _seed)
+    public int[,] GenerateMap(int mapWidth, int mapHeight, float _wallThreshold, float _roomThreshold, int _mapSmoothness, int _hallwaySize, int _randomFillPercent, float _seed)
     {
 
-        newMap = GetComponent<NewMap>();
         width = mapWidth;
         height = mapHeight;
         wallThreshold = _wallThreshold;
@@ -47,7 +45,7 @@ public class MapGenerator : MonoBehaviour
         }
 
         ProcessMap();
-        newMap.generatedMap = map;
+        return map;
 
     }
 
