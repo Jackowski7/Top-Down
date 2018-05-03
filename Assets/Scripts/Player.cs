@@ -33,15 +33,6 @@ public class PlayerEquipment : MonoBehaviour
         EquipGear();
     }
 
-    public void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Exit")
-        {
-            gameManager.LevelFinished();
-            Debug.Log("level Finished");
-        }
-    }
-
     void SetUpEquipment()
     {
         equipment = new GameObject[4];

@@ -10,6 +10,8 @@ public class UIController : MonoBehaviour {
     Stats playerStats;
     GameObject damageScreen;
 
+    public GameObject menu;
+
     // Use this for initialization
     void Start () {
 
@@ -36,4 +38,34 @@ public class UIController : MonoBehaviour {
         float energyPercent = Mathf.Clamp((playerStats.energy / playerStats.maxEnergy), 0, 1);
         energyBar.GetComponent<RectTransform>().localScale = Vector3.Slerp(energyBar.GetComponent<RectTransform>().localScale, (new Vector3(1, energyPercent, 1)), 1f * Time.time);
     }
+
+    public void OpenMenu()
+    {
+        menu.SetActive(true);
+        Time.timeScale = 0;
+
+    }
+
+    public void CloseMenu()
+    {
+        menu.SetActive(false);
+        Time.timeScale = 1;
+
+    }
+
+    public void ToggleMenu()
+    {
+        if (menu.activeSelf == true)
+        {
+            menu.SetActive(false);
+            Time.timeScale = 1;
+        }
+        else
+        {
+            menu.SetActive(true);
+            Time.timeScale = 0;
+
+        }
+    }
+
 }

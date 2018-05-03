@@ -40,7 +40,6 @@ public class EnemyBehavior : MonoBehaviour
     private int firingWeapon;
     private bool applyThorns;
 
-    // Use this for initialization
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -55,8 +54,7 @@ public class EnemyBehavior : MonoBehaviour
         lookingMask = LayerMask.GetMask("Player", "Environment");
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
 
         float healthPercent = Mathf.Clamp((stats.health / stats.maxHealth), 0, 1);

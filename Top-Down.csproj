@@ -296,6 +296,7 @@
     <Compile Include="Assets\Scripts\CaveNext.cs" />
     <Compile Include="Assets\Scripts\CavePopulator.cs" />
     <Compile Include="Assets\Scripts\CavePrevious.cs" />
+    <Compile Include="Assets\Scripts\ControllerDetector.cs" />
     <Compile Include="Assets\Scripts\DestroyOnParticleEnd.cs" />
     <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
     <Compile Include="Assets\Scripts\EnemyPopulator.cs" />

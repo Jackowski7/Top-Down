@@ -7,8 +7,11 @@ using UnityEngine.EventSystems;
 public class PlayerController : MonoBehaviour
 {
     GameManager gameManager;
+    UIController UIController;
     Equipment equipment;
     Stats stats;
+    Rigidbody rb;
+    ControllerDetector controllerDetector;
 
     public GameObject myCamera;
     public GameObject MapCamera;
@@ -16,6 +19,7 @@ public class PlayerController : MonoBehaviour
     public float cameraHeight;
 
     Vector3 moveDirection;
+    Quaternion LookDirection;
     Vector3 _prevPosition;
     Camera mainCamera;
     Vector3 playerVelocity;
@@ -39,40 +43,87 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
-        gameManager = transform.parent.GetComponent<GameManager>();
+        gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        UIController = gameManager.GetComponent<UIController>();
+        controllerDetector = gameManager.GetComponent<ControllerDetector>();
         equipment = transform.GetComponent<Equipment>();
         playerAnimator = GetComponent<Animator>();
         stats = GetComponent<Stats>();
+        rb = GetComponent<Rigidbody>();
         aimLine = transform.Find("AimLine").gameObject;
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        //move player
-        Rigidbody rb = GetComponent<Rigidbody>();
-        moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        moveDirection *= stats.movementSpeed * 100;
-        rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
 
-        playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
-        playerVelocity.y = 0;
-        speed_Animation = Vector3.Distance(transform.position, _prevPosition);
-        _prevPosition = transform.position;
-
-        playerAnimator.SetFloat("MovementSpeed", speed_Animation);
-
-        // rotate player body towards mouse
-        Plane playerPlane = new Plane(Vector3.up, transform.position);
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        float hitdist = 0.0f;
-        if (playerPlane.Raycast(ray, out hitdist))
+        if (Input.GetButtonDown("Menu"))
         {
-            Vector3 targetPoint = ray.GetPoint(hitdist);
-            Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
-            targetRotation.x = 0;
-            targetRotation.z = 0;
-            rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, stats.rotationSpeed * Time.deltaTime));
+            UIController.ToggleMenu();
+        }
+
+        if (UIController.menu.activeSelf == false)
+        {
+
+            if (Input.GetButton("Fire1") && firing == false)
+            {
+                StartCoroutine(_FireWeapon(0, "Fire1"));
+            }
+            if (Input.GetButton("Fire2") && firing == false)
+            {
+                StartCoroutine(_FireWeapon(1, "Fire2"));
+            }
+            if (Input.GetButton("Shield") && firing == false)
+            {
+                StartCoroutine(_FireShield(2, "Shield"));
+            }
+            if (Input.GetButton("Dash") && dashAvailable == true)
+            {
+                Dash();
+            }
+
+#if UNITY_STANDALONE
+
+            if (controllerDetector.Xbox_One_Controller == false && controllerDetector.PS4_Controller == false)
+            {
+                // rotate player body towards mouse
+                Plane playerPlane = new Plane(Vector3.up, transform.position);
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                float hitdist = 0.0f;
+                if (playerPlane.Raycast(ray, out hitdist))
+                {
+                    Vector3 targetPoint = ray.GetPoint(hitdist);
+                    Quaternion targetRotation = Quaternion.LookRotation(targetPoint - transform.position);
+                    targetRotation.x = 0;
+                    targetRotation.z = 0;
+                    rb.MoveRotation(Quaternion.Slerp(transform.rotation, targetRotation, stats.rotationSpeed * Time.deltaTime));
+                }
+            }
+            else
+            {
+                Vector3 _LookDirection = new Vector3(0, Mathf.Atan2(Input.GetAxis("AimVertical"), Input.GetAxis("AimHorizontal")) * 180 / Mathf.PI, 0);
+
+                if (Input.GetAxis("AimVertical") > .1f || Input.GetAxis("AimHorizontal") > .1f || Input.GetAxis("AimVertical") < -.1f || Input.GetAxis("AimHorizontal") < -.1f)
+                {
+                    LookDirection = Quaternion.Euler(0, _LookDirection.y + 90, 0);
+                    rb.MoveRotation(Quaternion.Slerp(transform.rotation, LookDirection, stats.rotationSpeed * Time.deltaTime));
+                }
+            }
+
+#endif
+
+            //move player
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection *= stats.movementSpeed * 100;
+            rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
+
+            playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
+            playerVelocity.y = 0;
+            speed_Animation = Vector3.Distance(transform.position, _prevPosition);
+            _prevPosition = transform.position;
+
+            playerAnimator.SetFloat("MovementSpeed", speed_Animation);
+
         }
 
         //move camera
@@ -94,30 +145,6 @@ public class PlayerController : MonoBehaviour
         myCamera.transform.rotation = Quaternion.Euler(newDir);
 
 
-        // user input
-        if (Input.GetButton("Fire1") && firing == false)
-        {
-            StartCoroutine(_FireWeapon(0, "Fire1"));
-        }
-        if (Input.GetButton("Fire2") && firing == false)
-        {
-            StartCoroutine(_FireWeapon(1, "Fire2"));
-        }
-        if (Input.GetButton("Fire3") && firing == false)
-        {
-            StartCoroutine(_FireShield(2, "Fire3"));
-        }
-        if (Input.GetButton("Dash") && dashAvailable == true)
-        {
-            dashAvailable = false;
-            Vector3 bashDir = transform.forward;
-            rb.AddForce(bashDir * stats.dashSpeed * 100 * Time.deltaTime, ForceMode.VelocityChange);
-            GameObject _dashTrail = Instantiate(stats.dashTrail, transform.position, transform.rotation);
-            _dashTrail.transform.parent = this.transform;
-
-            StartCoroutine(DashCooldown());
-        }
-
         if (aimLineOn == true)
         {
             aimLineOpacity = Mathf.Lerp(aimLineOpacity, 1, 2f * Time.deltaTime);
@@ -130,6 +157,17 @@ public class PlayerController : MonoBehaviour
         aimLine.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, aimLineOpacity);
 
 
+    }
+
+    void Dash()
+    {
+        dashAvailable = false;
+        Vector3 bashDir = transform.forward;
+        rb.AddForce(bashDir * stats.dashSpeed * 100 * Time.deltaTime, ForceMode.VelocityChange);
+        GameObject _dashTrail = Instantiate(stats.dashTrail, transform.position, transform.rotation);
+        _dashTrail.transform.parent = this.transform;
+
+        StartCoroutine(DashCooldown());
     }
 
     IEnumerator _FireWeapon(int weaponNumber, string button)

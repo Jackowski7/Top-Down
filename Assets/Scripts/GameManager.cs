@@ -23,33 +23,6 @@ public class GameManager : MonoBehaviour {
         eventSystem = transform.Find("EventSystem").gameObject;
     }
 
-    public void StartGame()
-    {
-        eventSystem.transform.Find("Screen").Find("Welcome Menu").gameObject.SetActive(false);
-    }
-
-    public void LevelFinished()
-    {
-        eventSystem.transform.Find("Screen").Find("Level Summary").gameObject.SetActive(true);
-    }
-
-
-    // Update is called once per frame
-    void Update() {
-
-        if (Input.GetAxisRaw("NewMap") != 0)
-        {
-            CloseAllWindows();
-        }
-
-    }
-
-    public void CloseAllWindows()
-    {
-        eventSystem.transform.Find("Screen").Find("Level Summary").gameObject.SetActive(false);
-        eventSystem.transform.Find("Screen").Find("Welcome Menu").gameObject.SetActive(false);
-    }
-
     public void MovePlayer()
     {
         player.transform.position = enterPoint;

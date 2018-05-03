@@ -106,6 +106,7 @@ public class WeaponBehavior : MonoBehaviour
         if (tag == "Sword")
         { 
             this.GetComponent<Collider>().enabled = true;
+            this.GetComponent<ParticleSystem>().Play();
             StartCoroutine(DeactivateSword());
 
             team = player.tag;
