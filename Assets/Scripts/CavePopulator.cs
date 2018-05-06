@@ -5,9 +5,10 @@ using UnityEngine;
 public class CavePopulator : MonoBehaviour
 {
 
+    Map map;
+
     GameObject[] mapTiles;
     Transform mapFolder;
-    CaveEntrance caveEntrance;
 
     public GameObject enterPoint;
     public GameObject exitPoint;
@@ -18,7 +19,6 @@ public class CavePopulator : MonoBehaviour
     public GameObject unbreakableWallTile;
     public GameObject waterTile;
     public GameObject lavaTile;
-
 
     public GameObject ground0;
     public GameObject ground1;
@@ -54,12 +54,12 @@ public class CavePopulator : MonoBehaviour
     public GameObject water9;
 
 
-    private void Start()
+    private void Awake()
     {
+        map = GameObject.Find("Map").GetComponent<Map>();
         mapFolder = GameObject.Find("Map").transform;
-        caveEntrance = GetComponent<CaveEntrance>();
     }
-    public void PopulateMap(int width, int height, float halfWidth, float halfHeight, Vector4[,] points)
+    public void PopulateMap(int width, int height, float halfWidth, float halfHeight, Vector4[,] points, int numberInSet)
     {
 
 
@@ -115,11 +115,11 @@ public class CavePopulator : MonoBehaviour
 
         EntryExit(width, height, halfWidth, halfHeight, points);
 
-        PlaceTiles(width, height, halfWidth, halfHeight, points);
+        PlaceTiles(width, height, halfWidth, halfHeight, points, numberInSet);
 
     }
 
-    public void PlaceTiles(int width, int height, float halfWidth, float halfHeight, Vector4[,] points)
+    public void PlaceTiles(int width, int height, float halfWidth, float halfHeight, Vector4[,] points, int numberInSet)
     {
 
         for (int x = 0; x < width; x++)
@@ -127,7 +127,7 @@ public class CavePopulator : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
 
-                Vector3 pos = new Vector3(x - halfWidth + .5f, 0, -(y - halfHeight + .5f) * 1.155f);
+                Vector3 pos = new Vector3(x - halfWidth + .5f + ((width + 5) * numberInSet), 0, -(y - halfHeight + .5f) * 1.155f);
                 if (x % 2 == 0) pos.z -= .578f;
 
                 float area = (int)points[x, y].y * .08f;
@@ -138,7 +138,7 @@ public class CavePopulator : MonoBehaviour
                     _rot = Random.Range(0, 6);
 
                 Quaternion rot = Quaternion.Euler(0, _rot * 60, 0);
-                
+
 
                 int _numberAdjacent = (int)points[x, y].z;
 
@@ -189,18 +189,18 @@ public class CavePopulator : MonoBehaviour
                 }
 
 
-                //set where the player spwans
+                //set a spawnpoint at the entrance
                 if (_tileType == 51)
                 {
                     pos.y++;
-                    GameManager.enterPoint = pos;
+                    map.enterPoints[numberInSet] = pos;
                 }
 
-                //did we enter backwards?
+                //set a spawnpoint at the exit for going backwards
                 if (_tileType == 52)
                 {
                     pos.y++;
-                    //GameManager.enterPoint = pos;
+                    map.exitPoints[numberInSet] = pos;
                 }
 
 
@@ -219,10 +219,11 @@ public class CavePopulator : MonoBehaviour
             for (int y = 0; y < height; y++)
             {
 
-                if (points[x, y].x == 0 && points[x, y].y >= 3 && foundEntry == false) // if this is ground, and area is 3 or more
+                if (points[x, y].x == 0 && points[x, y].y >= 1 && foundEntry == false) // if this is ground, and area is 1 or more
                 {
                     foundEntry = true;
                     points[x, y].x = 51;
+                    map.enterPointXY = new Vector2(x, y);
                 }
 
             }
@@ -238,24 +239,13 @@ public class CavePopulator : MonoBehaviour
             for (int y = height - 1; y > 0; y--)
             {
 
-                if (points[x, y].x == 0 && points[x, y].y >= 3 && foundExit1 == false && foundExit2 == false) // if this is ground, and area is 3 or more
+                if (points[x, y].x == 0 && points[x, y].y >= 1 && foundExit1 == false && foundExit2 == false) // if this is ground, and area is 1 or more
                 {
                     points[x, y].x = 52;
                     foundExit1 = true;
+                    map.exitPointXY = new Vector2(x, y);
                     exitFoundAt = new Vector2(x, y);
                 }
-
-                /* if (points[x, y].x == 0 && points[x, y].y >= 3 && foundExit1 == true && foundExit2 == false) // if this is ground, and area is 3 or more
-                 {
-                     if (x < exitFoundAt.x - 10 || x > exitFoundAt.x + 10 || y < exitFoundAt.y - 10 || y > exitFoundAt.y + 10)
-                     {
-                         points[x, y].x = 53;
-                         foundExit2 = true;
-                         x = 0;
-                         y = 0;
-                     }
-                 }
-                 */
 
             }
         }

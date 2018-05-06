@@ -5,21 +5,24 @@ using System;
 
 public class MapGenerator : MonoBehaviour
 {
-
+    [HideInInspector]
     int width;
+    [HideInInspector]
     int height;
-
+    [HideInInspector]
     float wallThreshold;
+    [HideInInspector]
     float roomThreshold;
+    [HideInInspector]
     int mapSmoothness;
+    [HideInInspector]
     int hallwaySize;
-
-
+    [HideInInspector]
     string seed;
-
+    [HideInInspector]
     [Range(0, 100)]
     int randomFillPercent;
-
+    [HideInInspector]
     int[,] map;
 
 

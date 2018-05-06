@@ -12,9 +12,13 @@ public class ControllerDetector : MonoBehaviour
 
     void Start()
     {
+        Check();
+    }
+
+    private void Check()
+    {
         if (disableControllers == false)
         {
-
             string[] names = Input.GetJoystickNames();
             for (int x = 0; x < names.Length; x++)
             {
@@ -33,4 +37,5 @@ public class ControllerDetector : MonoBehaviour
 
         }
     }
+
 }

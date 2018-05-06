@@ -635,7 +635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70ed2c840c74379489e3aba4e490b147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  seeDistance: 10
+  seeDistance: 6
   dead: 0
   invincible: 0
 --- !u!114 &114977182079393672

@@ -53,14 +53,16 @@ public class PlayerController : MonoBehaviour
         aimLine = transform.Find("AimLine").gameObject;
     }
 
-    void Update()
+    private void Update()
     {
-
         if (Input.GetButtonDown("Menu"))
         {
             UIController.ToggleMenu();
         }
+    }
 
+    void FixedUpdate()
+    {
         if (UIController.menu.activeSelf == false)
         {
 
@@ -101,10 +103,15 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                Vector3 _LookDirection = new Vector3(0, Mathf.Atan2(Input.GetAxis("AimVertical"), Input.GetAxis("AimHorizontal")) * 180 / Mathf.PI, 0);
-
                 if (Input.GetAxis("AimVertical") > .1f || Input.GetAxis("AimHorizontal") > .1f || Input.GetAxis("AimVertical") < -.1f || Input.GetAxis("AimHorizontal") < -.1f)
                 {
+                    Vector3 _LookDirection = new Vector3(0, Mathf.Atan2(Input.GetAxis("AimVertical"), Input.GetAxis("AimHorizontal")) * 180 / Mathf.PI, 0);
+                    LookDirection = Quaternion.Euler(0, _LookDirection.y + 90, 0);
+                    rb.MoveRotation(Quaternion.Slerp(transform.rotation, LookDirection, stats.rotationSpeed * Time.deltaTime));
+                }
+                else if (Input.GetAxis("Vertical") > .1f || Input.GetAxis("Horizontal") > .1f || Input.GetAxis("Vertical") < -.1f || Input.GetAxis("Horizontal") < -.1f)
+                {
+                    Vector3 _LookDirection = new Vector3(0, Mathf.Atan2(Input.GetAxis("Vertical") * -1, Input.GetAxis("Horizontal")) * 180 / Mathf.PI, 0);
                     LookDirection = Quaternion.Euler(0, _LookDirection.y + 90, 0);
                     rb.MoveRotation(Quaternion.Slerp(transform.rotation, LookDirection, stats.rotationSpeed * Time.deltaTime));
                 }

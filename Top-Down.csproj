@@ -292,20 +292,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BulletBehavior.cs" />
-    <Compile Include="Assets\Scripts\CaveEntrance.cs" />
-    <Compile Include="Assets\Scripts\CaveNext.cs" />
     <Compile Include="Assets\Scripts\CavePopulator.cs" />
-    <Compile Include="Assets\Scripts\CavePrevious.cs" />
     <Compile Include="Assets\Scripts\ControllerDetector.cs" />
     <Compile Include="Assets\Scripts\DestroyOnParticleEnd.cs" />
     <Compile Include="Assets\Scripts\EnemyBehavior.cs" />
-    <Compile Include="Assets\Scripts\EnemyPopulator.cs" />
+    <Compile Include="Assets\Scripts\EnemySpawnPoint.cs" />
+    <Compile Include="Assets\Scripts\EnemySpawns.cs" />
+    <Compile Include="Assets\Scripts\EnterExit.cs" />
     <Compile Include="Assets\Scripts\Equipment.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\HitMarker.cs" />
+    <Compile Include="Assets\Scripts\Map.cs" />
     <Compile Include="Assets\Scripts\MapGenerator.cs" />
-    <Compile Include="Assets\Scripts\MapProcessor.cs" />
-    <Compile Include="Assets\Scripts\Player.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\ShieldBehavior.cs" />
     <Compile Include="Assets\Scripts\Stats.cs" />

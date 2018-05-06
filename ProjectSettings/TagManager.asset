@@ -16,6 +16,8 @@ TagManager:
   - Environment_Wall
   - Environment_Ground
   - Bullet
+  - NextArea
+  - PreviousArea
   layers:
   - Default
   - TransparentFX

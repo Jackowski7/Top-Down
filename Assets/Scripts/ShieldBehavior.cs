@@ -23,6 +23,7 @@ public class ShieldBehavior : MonoBehaviour
     public float damageAbsorbPercent;
 
     Transform playerBody;
+    Light light;
 
     string target = null;
     string firer = null;
@@ -35,6 +36,9 @@ public class ShieldBehavior : MonoBehaviour
 
     void Start()
     {
+
+        light = transform.Find("Light").GetComponent<Light>();
+
         if (kineticDamage == true || (kineticDamage != true && iceDamage != true && fireDamage != true && electricDamage != true))
         {
             damageType = "Kinetic";
@@ -95,6 +99,7 @@ public class ShieldBehavior : MonoBehaviour
         }
 
         Stats stats = playerBody.GetComponent<Stats>();
+        light.enabled = true;
         stats.shielding = true;
 
     }
@@ -108,6 +113,8 @@ public class ShieldBehavior : MonoBehaviour
     {
         Stats stats = playerBody.GetComponent<Stats>();
         stats.shielding = false;
+        light.enabled = false;
+
     }
 
 
