@@ -14,13 +14,19 @@ public class EnterExit : MonoBehaviour
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
         map = GameObject.Find("Map").GetComponent<Map>();
 
+        Deactivate();
+    }
+
+    public void Deactivate()
+    {
+        StopCoroutine(Activate());
         GetComponent<Collider>().enabled = false;
         StartCoroutine(Activate());
     }
 
     IEnumerator Activate()
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(5);
         GetComponent<Collider>().enabled = true;
     }
 
@@ -31,12 +37,12 @@ public class EnterExit : MonoBehaviour
 
             if (this.tag == "NextArea")
             {
-                // NextArea();
+                 map.NextArea();
             }
 
             if (this.tag == "PreviousArea")
             {
-                // PreviousArea();
+                map.PreviousArea();
             }
 
         }

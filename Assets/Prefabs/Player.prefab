@@ -396,7 +396,7 @@ Rigidbody:
   m_GameObject: {fileID: 1338211421021994}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 3
+  m_Drag: 1
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -437,10 +437,12 @@ MonoBehaviour:
   maxEnergy: 100
   energy: 100
   energyRecoverSpeed: 4
+  maxDashEnergy: 100
+  dashEnergy: 0
+  dashEnergyRecoverSpeed: 0
   movementSpeed: 7
   rotationSpeed: 9
   dashSpeed: 2.5
-  dashRecovery: 1.75
   hitMarker: {fileID: 1741298198480972, guid: ec3fc635a00e6b34985cb11712e3d7bc, type: 2}
   dashTrail: {fileID: 1820545515964622, guid: aa71cde27877d404c8fd568e480237f5, type: 2}
   lastEnergyUsedTime: 0

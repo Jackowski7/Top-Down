@@ -98,6 +98,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 1572913392945714, guid: f85bebde63583894e83c6eea60ba4f14,
     type: 2}
+  aimLine: {fileID: 1431334460666960, guid: 61a0f80423fb4fb42baba279a676ff4c, type: 2}
   fireSpeed: 1.5
   chargeSpeed: 1
   PlayerRotSlow: 20

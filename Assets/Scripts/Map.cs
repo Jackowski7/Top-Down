@@ -8,6 +8,8 @@ public class Map : MonoBehaviour
     GameObject player;
 
     GameManager gameManager;
+    UIController uiController;
+    PlayerController playerController;
     MapGenerator mapGenerator;
     EnemySpawns enemySpawns;
     CavePopulator cavePopulator;
@@ -36,7 +38,9 @@ public class Map : MonoBehaviour
     void Awake()
     {
         player = GameObject.Find("Player");
+        playerController = player.GetComponent<PlayerController>();
         gameManager = GameObject.Find("Game Manager").GetComponent<GameManager>();
+        uiController = GameObject.Find("EventSystem").GetComponent<UIController>();
         mapGenerator = GetComponent<MapGenerator>();
         enemySpawns = GetComponent<EnemySpawns>();
         cavePopulator = GetComponent<CavePopulator>();
@@ -62,6 +66,21 @@ public class Map : MonoBehaviour
 
    public void NextArea()
     {
+        GameObject[] PrevDoors = new GameObject[20];
+        PrevDoors = GameObject.FindGameObjectsWithTag("PreviousArea");
+        foreach (GameObject door in PrevDoors)
+        {
+            door.GetComponent<EnterExit>().Deactivate();
+        }
+        StartCoroutine(uiController.CrossFade());
+        StartCoroutine(_NextArea());
+    }
+
+
+    IEnumerator _NextArea()
+    {
+        yield return new WaitForSeconds(.5f);
+
         if (gameManager.path[gameManager.pathProgress + 1].w == 0)
         {
             BuildMap(gameManager.path[gameManager.pathProgress + 1].x, gameManager.path[gameManager.pathProgress + 1].y, gameManager.path[gameManager.pathProgress + 1].z);
@@ -74,6 +93,21 @@ public class Map : MonoBehaviour
 
     public void PreviousArea()
     {
+        GameObject[] nextDoors = new GameObject[20];
+        nextDoors = GameObject.FindGameObjectsWithTag("NextArea");
+        foreach (GameObject door in nextDoors)
+        {
+            door.GetComponent<EnterExit>().Deactivate();
+        }
+        StartCoroutine(uiController.CrossFade());
+        StartCoroutine(_PreviousArea());
+    }
+
+
+    IEnumerator _PreviousArea()
+    {
+        yield return new WaitForSeconds(.5f);
+
         if (gameManager.path[gameManager.pathProgress].x > 0)
         {
             if (numberInSet > 1)
@@ -139,18 +173,23 @@ public class Map : MonoBehaviour
 
     public void MovePlayer(bool backwards)
     {
+
         if (backwards == false)
         {
             player.transform.position = enterPoints[numberInSet];
+            playerController.MapCamera.transform.position = enterPoints[numberInSet];
+            playerController.myCamera.transform.position = enterPoints[numberInSet];
             StartCoroutine(WalkRight());
             numberInSet++;
             gameManager.pathProgress++;
         }
         else
-        {
+        {    
             numberInSet--;
             gameManager.pathProgress--;
             player.transform.position = exitPoints[numberInSet-1];
+            playerController.MapCamera.transform.position = exitPoints[numberInSet-1];
+            playerController.myCamera.transform.position = exitPoints[numberInSet-1];
             StartCoroutine(WalkLeft());
         }
     }
@@ -163,7 +202,7 @@ public class Map : MonoBehaviour
         float walkingFor = 0;
         while (walkingFor < 1.5f)
         {
-            playerRb.AddForce(Vector3.right * 3, ForceMode.Acceleration);
+            playerRb.AddForce(Vector3.right * 15, ForceMode.Acceleration);
             walkingFor += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
@@ -177,7 +216,7 @@ public class Map : MonoBehaviour
         float walkingFor = 0;
         while (walkingFor < 1.5f)
         {
-            playerRb.AddForce(Vector3.left * 3, ForceMode.Acceleration);
+            playerRb.AddForce(Vector3.left * 15, ForceMode.Acceleration);
             walkingFor += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }

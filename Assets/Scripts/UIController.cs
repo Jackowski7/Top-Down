@@ -7,21 +7,27 @@ public class UIController : MonoBehaviour {
 
     GameObject healthBar;
     GameObject energyBar;
+    GameObject dashEnergyBar;
     Stats playerStats;
-    GameObject damageScreen;
+    GameObject damageOverlay;
+
+    GameObject crossFade;
+    float crossFadeOpacity;
 
     public GameObject menu;
 
     // Use this for initialization
-    void Start () {
+    void Start()
+    {
 
         playerStats = GameObject.Find("Player").GetComponent<Stats>();
 
         healthBar = GameObject.Find("PlayerHealthBar");
         energyBar = GameObject.Find("PlayerEnergyBar");
+        dashEnergyBar = GameObject.Find("PlayerDashBar");
 
-        damageScreen = GameObject.Find("CameraScreen");
-
+        damageOverlay = GameObject.Find("DamageOverlay");
+        crossFade = GameObject.Find("CrossFade");
 
     }
 
@@ -32,11 +38,17 @@ public class UIController : MonoBehaviour {
         healthBar.GetComponent<RectTransform>().localScale = Vector3.Slerp(healthBar.GetComponent<RectTransform>().localScale, (new Vector3(1, healthPercent, 1)), 1f * Time.time);
 
         float healthPercentGone = 1 - healthPercent;
-        float damageScreenOpacity = healthPercentGone;
-        damageScreen.GetComponent<RawImage>().color = new Color(255,0,0, damageScreenOpacity);
+        float damageOverlayOpacity = healthPercentGone;
+        damageOverlay.GetComponent<RawImage>().color = new Color(255,0,0, damageOverlayOpacity);
+
+        crossFade.GetComponent<RawImage>().color = new Color(0, 0, 0, crossFadeOpacity);
 
         float energyPercent = Mathf.Clamp((playerStats.energy / playerStats.maxEnergy), 0, 1);
         energyBar.GetComponent<RectTransform>().localScale = Vector3.Slerp(energyBar.GetComponent<RectTransform>().localScale, (new Vector3(1, energyPercent, 1)), 1f * Time.time);
+
+        float dashEnergyPercent = Mathf.Clamp((playerStats.dashEnergy / playerStats.maxDashEnergy), 0, 1);
+        dashEnergyBar.GetComponent<RectTransform>().localScale = Vector3.Slerp(dashEnergyBar.GetComponent<RectTransform>().localScale, (new Vector3(dashEnergyPercent, 1, 1)), 1f * Time.time);
+
     }
 
     public void OpenMenu()
@@ -67,5 +79,28 @@ public class UIController : MonoBehaviour {
 
         }
     }
+
+
+    public IEnumerator CrossFade()
+    {
+        crossFadeOpacity = 0;
+        while (crossFadeOpacity < 1)
+        {
+            crossFadeOpacity += Time.smoothDeltaTime * 2f;
+            yield return new WaitForEndOfFrame();
+        }
+
+        yield return new WaitForSeconds(.25f);
+
+        while (crossFadeOpacity > 0)
+        {
+            crossFadeOpacity -= Time.smoothDeltaTime * 2f;
+            yield return new WaitForEndOfFrame();
+        }
+        crossFadeOpacity = 0;
+    }
+
+
+
 
 }

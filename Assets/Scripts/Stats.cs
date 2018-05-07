@@ -15,10 +15,15 @@ public class Stats : MonoBehaviour {
     public float energy;
     public float energyRecoverSpeed;
 
+    //[HideInInspector]
+    public float maxDashEnergy = 100;
+    //[HideInInspector]
+    public float dashEnergy = 100;
+    public float dashEnergyRecoverSpeed;
+
     public float movementSpeed;
     public float rotationSpeed;
     public float dashSpeed;
-    public float dashRecovery;
 
     public GameObject hitMarker;
     public GameObject dashTrail;
@@ -33,6 +38,13 @@ public class Stats : MonoBehaviour {
     public bool invincible;
     [HideInInspector]
     public bool shielding;
+
+    private void Start()
+    {
+        GameObject _dashTrail = Instantiate(dashTrail, transform.position, transform.rotation);
+        _dashTrail.transform.parent = this.transform;
+        _dashTrail.name = "DashTrail";
+    }
 
     // Update is called once per frame
     void Update () {
@@ -59,6 +71,10 @@ public class Stats : MonoBehaviour {
                 energy = Mathf.Min((energy + (energyRecoverSpeed * Time.smoothDeltaTime)), maxEnergy);
             }
 
+        }
+        if (dashEnergy < maxDashEnergy)
+        {
+            dashEnergy = Mathf.Min((dashEnergy + (dashEnergyRecoverSpeed * 3 * Time.smoothDeltaTime)), maxDashEnergy);
         }
 
     }

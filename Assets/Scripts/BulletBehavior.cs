@@ -89,13 +89,13 @@ public class BulletBehavior : MonoBehaviour
                         }
 
                         knockback = knockback / 2;
-                        durability--;
                     }
 
                 }
 
                 stats.Damage(Mathf.Max(0, damage), damageType, transform.forward, col.gameObject);
                 stats.GetComponent<Rigidbody>().AddForce(transform.forward * knockback, ForceMode.VelocityChange);
+                durability--;
 
             }
 

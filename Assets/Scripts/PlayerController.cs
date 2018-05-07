@@ -34,12 +34,8 @@ public class PlayerController : MonoBehaviour
     public static bool firing;
     public static bool charged = false;
     public static int activeWeapon = 0;
-    public static bool dashAvailable = true;
 
-    GameObject aimLine;
-    bool aimLineOn = false;
-    float aimLineOpacity;
-
+    bool aimLineOn;
 
     private void Start()
     {
@@ -50,7 +46,6 @@ public class PlayerController : MonoBehaviour
         playerAnimator = GetComponent<Animator>();
         stats = GetComponent<Stats>();
         rb = GetComponent<Rigidbody>();
-        aimLine = transform.Find("AimLine").gameObject;
     }
 
     private void Update()
@@ -78,7 +73,7 @@ public class PlayerController : MonoBehaviour
             {
                 StartCoroutine(_FireShield(2, "Shield"));
             }
-            if (Input.GetButton("Dash") && dashAvailable == true)
+            if (Input.GetButtonDown("Dash") && stats.dashEnergy >= 99f)
             {
                 Dash();
             }
@@ -121,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
             //move player
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            moveDirection *= stats.movementSpeed * 100;
+            moveDirection *= stats.movementSpeed * 200;
             rb.AddForce(moveDirection * Time.deltaTime, ForceMode.Acceleration);
 
             playerVelocity = ((transform.position - _prevPosition) / Time.fixedDeltaTime).normalized * 1.25f;
@@ -150,31 +145,17 @@ public class PlayerController : MonoBehaviour
         newDir.z = newDir.z * .15f;
         newDir.y = 90;
         myCamera.transform.rotation = Quaternion.Euler(newDir);
-
-
-        if (aimLineOn == true)
-        {
-            aimLineOpacity = Mathf.Lerp(aimLineOpacity, 1, 2f * Time.deltaTime);
-        }
-        else
-        {
-            aimLineOpacity = Mathf.Lerp(aimLineOpacity, 0, 7f * Time.deltaTime);
-        }
-
-        aimLine.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, aimLineOpacity);
-
-
     }
 
     void Dash()
     {
-        dashAvailable = false;
+        stats.dashEnergy -= 100;
         Vector3 bashDir = transform.forward;
-        rb.AddForce(bashDir * stats.dashSpeed * 100 * Time.deltaTime, ForceMode.VelocityChange);
-        GameObject _dashTrail = Instantiate(stats.dashTrail, transform.position, transform.rotation);
-        _dashTrail.transform.parent = this.transform;
+        rb.AddForce(bashDir * stats.dashSpeed * 200 * Time.deltaTime, ForceMode.VelocityChange);
+        GameObject dashTrail = transform.Find("DashTrail").gameObject;
+        dashTrail.GetComponent<ParticleSystem>().Play();
+        dashTrail.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
 
-        StartCoroutine(DashCooldown());
     }
 
     IEnumerator _FireWeapon(int weaponNumber, string button)
@@ -214,10 +195,15 @@ public class PlayerController : MonoBehaviour
         playerAnimator.SetFloat("FireSpeed", fireSpeed);
         playerAnimator.SetFloat("ChargeSpeed", chargeSpeed);
 
+        if (weaponBehavior.aimLine != null)
+        {
+            aimLineOn = true;
+            StartCoroutine(AimLine());
+        }
+
         if (weaponType == "Staff")
         {
             Animate(Casting_Animation);
-            aimLineOn = true;
         }
         if (weaponType == "Sword" || weaponType == "Dagger") // or any melee type..
         {
@@ -266,7 +252,41 @@ public class PlayerController : MonoBehaviour
 
         firing = false;
         charged = false;
-        aimLineOn = false;
+
+        if (weaponBehavior.aimLine != null)
+        {
+            aimLineOn = false;
+        }
+
+    }
+
+    IEnumerator AimLine()
+    {
+        Transform weapon = transform.Find("Equipment").Find("WeaponSlot").GetChild(activeWeapon).transform.GetChild(0);
+        WeaponBehavior weaponBehavior = weapon.GetComponent<WeaponBehavior>();
+
+        float aimLineOpacity;
+        GameObject aimLine = Instantiate(weaponBehavior.aimLine, transform.position, transform.rotation);
+        aimLine.transform.parent = rb.transform;
+        Color color = aimLine.transform.GetChild(0).GetComponent<SpriteRenderer>().color;
+
+        aimLineOpacity = 0;
+        while (aimLineOn == true)
+        {
+            aimLineOpacity = Mathf.Lerp(aimLineOpacity, 1, 2f * Time.deltaTime);
+            aimLine.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, aimLineOpacity);
+            yield return new WaitForEndOfFrame();
+        }
+
+        while (aimLineOpacity > .01f)
+        {
+            aimLineOpacity = Mathf.Lerp(aimLineOpacity, 0, 10f * Time.deltaTime);
+            aimLine.transform.GetChild(0).GetComponent<SpriteRenderer>().color = new Color(color.r, color.g, color.b, aimLineOpacity);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Destroy(aimLine);
+
 
     }
 
@@ -318,12 +338,6 @@ public class PlayerController : MonoBehaviour
         charged = false;
 
 
-    }
-
-    IEnumerator DashCooldown()
-    {
-        yield return new WaitForSeconds(stats.dashRecovery);
-        dashAvailable = true;
     }
 
     public void SetCharged()

@@ -21,10 +21,12 @@ public class GameManager : MonoBehaviour
         map = GameObject.Find("Map").GetComponent<Map>();
 
         path = new Vector4[100];
-
-        GeneratePath();
     }
 
+    private void Start()
+    {
+        GeneratePath();
+    }
 
     void GeneratePath()
     {

@@ -16,6 +16,7 @@ TagManager:
   - Environment_Wall
   - Environment_Ground
   - Bullet
+  - EnterExit
   - NextArea
   - PreviousArea
   layers:
